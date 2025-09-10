@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="icon" href="assets/favicon.ico" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/v4-shims.min.css" />
+    <link rel="stylesheet" href="css/management.css" />
+    <title>Management | Price Estimation System</title>
+    
+</head>
+<body>
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <h1>
+            <span class="logo"></span>
+            Price Estimation
+        </h1>
+        <div class="top-nav-icons">
+            <button class="icon-btn"><i class="fas fa-cog"></i></button>
+            <button class="icon-btn"><i class="fas fa-user-circle"></i></button>
+        </div>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <a href="dashboard.html" class="nav-item">Dashboard</a>
+        <a href="management.html" class="nav-item active">Management</a>
+        <a href="contact.html" class="nav-item">Contacts</a>
+        <a href="task.html" class="nav-item">Tasks</a>
+        <a href="report.html" class="nav-item">Report</a>
+        <a href="estimation.html" class="nav-item">Estimation</a>
+        <a href="profile.html" class="nav-item">Profile</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Fixed Header Section -->
+        <div class="fixed-header">
+            <div class="page-header">
+                <h2>Management</h2>
+            </div>
+
+            <!-- Tab Navigation (only visible in detail view) -->
+            <div class="tab-navigation" id="tabNavigation" style="display: none;">
+                <button class="back-button" onclick="showMainView()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="tab-container">
+                    <button class="tab-button active" onclick="showOverview()">Overview</button>
+                    <button class="tab-button" onclick="showActivities()">Activities</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scrollable Content -->
+        <div class="scrollable-content">
+            <!-- Main Management View -->
+            <div id="mainView" class="main-view">
+                <!-- Filter and Search Section -->
+                <div class="filter-section">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search contacts..." id="searchInput">
+                        <button type="button" onclick="searchContacts()">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                    </div>
+                    <div class="filter-options">
+                        <select id="statusFilter" onchange="filterByStatus()">
+                            <option value="">All Status</option>
+                            <option value="Open Deal">Open Deal</option>
+                            <option value="Not Interested">Not Interested</option>
+                            <option value="Close Deal">Close Deal</option>
+                            <option value="Signing Contract">Signing Contract</option>
+                            <option value="New Leads">New Leads</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Management Table -->
+                <div class="management-container">
+                    <div class="table-container">
+                        <table class="management-table">
+                            <thead>
+                                <tr>
+                                    <th onclick="sortTable(0)">Name</th>
+                                    <th onclick="sortTable(1)">Address</th>
+                                    <th onclick="sortTable(2)">Number</th>
+                                    <th onclick="sortTable(3)">Email</th>
+                                    <th onclick="sortTable(4)">Tag</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contactTableBody">
+                                <tr onclick="showDetailView('Arvin Coronel', 'arvin@gmail.com', '0943 543 5543', '0975 345 6657', 'Proposal')">
+                                    <td>Arvin Coronel</td>
+                                    <td>San Isidro, Tarlac City</td>
+                                    <td>09435435543</td>
+                                    <td>arvin@gmail.com</td>
+                                    <td><span class="status-tag status-open-deal">Open Deal</span></td>
+                                </tr>
+                                <tr onclick="showDetailView('Elmerson C.', 'elmer@gmail.com', '0964 654 5466', '0912 345 6789', 'Not Interested')">
+                                    <td>Elmerson C.</td>
+                                    <td>Carangian, Tarlac City</td>
+                                    <td>09646545466</td>
+                                    <td>elmer@gmail.com</td>
+                                    <td><span class="status-tag status-not-interested">Not Interested</span></td>
+                                </tr>
+                                <tr onclick="showDetailView('Kenneth Facun', 'kenneth@gmail.com', '0954 353 4534', '0923 456 7890', 'Closed')">
+                                    <td>Kenneth Facun</td>
+                                    <td>San Vicente, Tarlac City</td>
+                                    <td>09543534534</td>
+                                    <td>kenneth@gmail.com</td>
+                                    <td><span class="status-tag status-close-deal">Close Deal</span></td>
+                                </tr>
+                                <tr onclick="showDetailView('Vert Valencia', 'vert@gmail.com', '0923 567 5689', '0934 567 8901', 'Contract')">
+                                    <td>Vert Valencia</td>
+                                    <td>Carangian, Tarlac City</td>
+                                    <td>09235675689</td>
+                                    <td>vert@gmail.com</td>
+                                    <td><span class="status-tag status-signing-contract">Signing Contract</span></td>
+                                </tr>
+                                <tr onclick="showDetailView('Prince Fabros', 'prince@gmail.com', '0931 231 2312', '0945 678 9012', 'New Lead')">
+                                    <td>Prince Fabros</td>
+                                    <td>San Vicente, Tarlac City</td>
+                                    <td>09312312312</td>
+                                    <td>prince@gmail.com</td>
+                                    <td><span class="status-tag status-new-leads">New Leads</span></td>
+                                </tr>
+                                <tr onclick="showDetailView('Jigs Paras', 'jigs@gmail.com', '0923 567 5689', '0956 789 0123', 'Not Interested')">
+                                    <td>Jigs Paras</td>
+                                    <td>San Pablo, Tarlac City</td>
+                                    <td>09235675689</td>
+                                    <td>jigs@gmail.com</td>
+                                    <td><span class="status-tag status-not-interested">Not Interested</span></td>
+                                </tr>
+                                <tr onclick="showDetailView('Mark F.', 'mark@gmail.com', '0923 567 5689', '0967 890 1234', 'Closed')">
+                                    <td>Mark F.</td>
+                                    <td>Carangian, Tarlac City</td>
+                                    <td>09235675689</td>
+                                    <td>mark@gmail.com</td>
+                                    <td><span class="status-tag status-close-deal">Close Deal</span></td>
+                                </tr>
+                                <tr onclick="showDetailView('Angelo V.', 'angelo@gmail.com', '0923 567 5689', '0978 901 2345', 'Contract')">
+                                    <td>Angelo V.</td>
+                                    <td>San Isidro, Tarlac City</td>
+                                    <td>09235675689</td>
+                                    <td>angelo@gmail.com</td>
+                                    <td><span class="status-tag status-signing-contract">Signing Contract</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination-container">
+                        <div class="pagination">
+                            <button onclick="previousPage()" id="prevBtn">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="active" onclick="goToPage(1)">1</button>
+                            <button onclick="goToPage(2)">2</button>
+                            <button onclick="goToPage(3)">3</button>
+                            <button onclick="goToPage(4)">4</button>
+                            <span>...</span>
+                            <button onclick="nextPage()" id="nextBtn">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detail View - Overview -->
+            <div id="overviewView" class="detail-view">
+                <div class="lead-info-container">
+                    <div class="lead-info-row">
+                        <span class="lead-info-label">Lead name :</span>
+                        <span class="lead-info-value" id="leadName">Arvin Coronel</span>
+                    </div>
+                    <div class="lead-info-row">
+                        <span class="lead-info-label">Email :</span>
+                        <span class="lead-info-value" id="leadEmail">arvin@gmail.com</span>
+                    </div>
+                    <div class="lead-info-row">
+                        <span class="lead-info-label">Phone :</span>
+                        <span class="lead-info-value" id="leadPhone">0943 543 5543</span>
+                    </div>
+                    <div class="lead-info-row">
+                        <span class="lead-info-label">Mobile :</span>
+                        <span class="lead-info-value" id="leadMobile">0975 345 6657</span>
+                    </div>
+                    <div class="lead-info-row">
+                        <span class="lead-info-label">Lead Status :</span>
+                        <span class="lead-info-value" id="leadStatus">Proposal</span>
+                    </div>
+                </div>
+
+                <div class="property-info-section">
+                    <div class="property-info-title">Property Information</div>
+                    <div class="property-info-container">
+                        <div class="property-info-grid">
+                            <div class="property-info-item">
+                                <label>Address :</label>
+                                <span>Sitio Poroba 2, Carangian, Tarlac City, 2300</span>
+                            </div>
+                            <div class="property-info-item">
+                                <label>Price :</label>
+                                <span>₱100,000.00</span>
+                            </div>
+                            <div class="property-info-item">
+                                <label>Property size :</label>
+                                <span>100 sqm</span>
+                            </div>
+                            <div class="property-info-item">
+                                <label>Bed :</label>
+                                <span>2</span>
+                            </div>
+                            <div class="property-info-item">
+                                <label>Property type :</label>
+                                <span>Single Family Residential</span>
+                            </div>
+                            <div class="property-info-item">
+                                <label>Bath :</label>
+                                <span>1</span>
+                            </div>
+                            <div class="property-info-item">
+                                <label>Built in :</label>
+                                <span>2020</span>
+                            </div>
+                            <div class="property-info-item">
+                                <label>Materials :</label>
+                                <span>Bricks/Cement/</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="notes-section">
+                    <div class="notes-title">Notes</div>
+                    <div class="notes-container">
+                        • Sent ₱100K proposal on March 15, 2025<br>
+                        • Follow up scheduled for April 18, 2025<br>
+                        • Client interested in expanding property<br>
+                        • Need to review contract terms<br>
+                        • Waiting for bank approval confirmation
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detail View - Activities -->
+            <div id="activitiesView" class="detail-view">
+                <div class="activities-header">
+                    <h3>Activities</h3>
+                    <div class="task-assigned">
+                        Task assigned to <strong>Angelo Vert Valencia</strong>
+                    </div>
+                    
+                    <div class="task-item">
+                        <div class="task-item-header">
+                            <input type="checkbox" class="task-checkbox">
+                            <div class="task-details">
+                                <div><strong>Meeting with Arvin Coronel</strong></div>
+                                <div>April 15, 2025</div>
+                                <div class="task-status">Status: Upcoming</div>
+                                <div class="task-status">Priority: High</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="task-tabs-section">
+                    <button class="add-task-btn">Add Task</button>
+                    <div class="task-tabs">
+                        <div class="task-tab active">
+                            To - do
+                            <div class="task-tab-badge">1</div>
+                        </div>
+                        <div class="task-tab">Calls</div>
+                        <div class="task-tab">Email</div>
+                    </div>
+                    <div class="task-content">
+                        <div class="task-item">
+                            <div class="task-item-header">
+                                <input type="checkbox" class="task-checkbox">
+                                <div class="task-details">
+                                    <div><strong>Meeting with Arvin Coronel</strong></div>
+                                    <div>April 15, 2025</div>
+                                    <div>Vert Valencia</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="script/management.js"></script>
+</body>
+</html>

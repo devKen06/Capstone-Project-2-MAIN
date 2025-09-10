@@ -1,0 +1,26 @@
+/* ===========================================
+   GLOBAL STYLES - Applied to all pages
+   =========================================== */
+
+/* Remove default browser margins and padding */
+html, body {
+  height: 100vh;             /* Set full viewport height */
+  width: 100vw;              /* Set full viewport width */
+  margin: 0;                 /* Remove default margin */
+  padding: 0;                /* Remove default padding */
+}
+
+/* Base body styling for all pages */
+body {
+    font-family: Arial, sans-serif;    /* Set consistent font across all pages */
+    background-color: #f4f4f4;         /* Default background color */
+}
+
+/* ===========================================
+   LOGO COMPONENT - Used on multiple pages
+   =========================================== */
+
+
+
+
+

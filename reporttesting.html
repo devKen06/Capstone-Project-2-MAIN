@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="icon" href="assets/favicon.ico" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/v4-shims.min.css" />
+    <title>Report | Price Estimation System</title>
+    
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background-color: #0044cc;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5px;
+            z-index: 1000;
+        }
+
+        .top-nav h1 {
+            display: flex;
+            align-items: center;
+            font-size: 25px;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 45px;
+            height: 45px;
+            background: url('/assets/reverse-logo-removebg-preview.png') no-repeat center center;
+            background-size: contain;
+        }
+
+        .top-nav-icons button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 30px;
+            margin-left: 1px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .sidebar {
+            width: 300px;
+            background-color: #e4e4e4;
+            padding-top: 50px;
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 20px 25px;
+            text-decoration: none;
+            color: black;
+            border-bottom: 1px solid #ccc;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .nav-item.active {
+            background-color: #001d9e;
+            color: white;
+        }
+
+        .main-content {
+            margin-left: 300px;
+            margin-top: 60px;
+            padding: 0;
+            overflow-y: auto;
+            width: calc(100% - 300px);
+            height: calc(100vh - 60px);
+        }
+
+        /* ---------- FIXED HEADER SECTION ---------- */
+        .fixed-header {
+            position: sticky;
+            top: 0;
+            background-color: white;
+            z-index: 100;
+            padding: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .page-header {
+            background-color: #001d9e;
+            color: white;
+            padding: 1px 10px;
+            clip-path: polygon(0 0, 90% 0, 100% 50%, 90% 100%, 0 100%);
+            width: 15%;
+            height: 40px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .page-header h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        /* ---------- REPORT CONTENT ---------- */
+        .report-container {
+            padding: 20px;
+        }
+
+        .report-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .download-btn {
+            background-color: #001d9e;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .download-btn:hover {
+            background-color: #0033aa;
+        }
+
+        .progress-tabs {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 0;
+        }
+
+        .tab {
+            position: relative;
+            background-color: #001d9e;
+            color: white;
+            padding: 15px 40px 15px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%, 20px 50%);
+            margin-right: -20px;
+        }
+
+        .tab:first-child {
+            clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 50%, calc(100% - 20px) 100%, 0 100%);
+            padding-left: 25px;
+        }
+
+        .tab:last-child {
+            clip-path: polygon(20px 0, 100% 0, 100% 100%, 20px 100%, 0 50%);
+            margin-right: 0;
+        }
+
+        .notification-badge {
+            background-color: #ff4444;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            margin-left: 8px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .report-card {
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .report-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 6px;
+        }
+
+        .card-type {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 6px;
+        }
+
+        .card-address {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .card-price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 6px;
+        }
+
+        .card-date {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin: 30px 0 15px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #001d9e;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <h1>
+            <span class="logo"></span>
+            Price Estimation
+        </h1>
+        <div class="top-nav-icons">
+            <button class="icon-btn"><i class="fas fa-cog"></i></button>
+            <button class="icon-btn"><i class="fas fa-user-circle"></i></button>
+        </div>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <a href="dashboard.html" class="nav-item">Dashboard</a>
+        <a href="management.html" class="nav-item">Management</a>
+        <a href="contact.html" class="nav-item">Contacts</a>
+        <a href="task.html" class="nav-item">Tasks</a>
+        <a href="report.html" class="nav-item active">Report</a>
+        <a href="estimation.html" class="nav-item">Estimation</a>
+        <a href="profile.html" class="nav-item">Profile</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Fixed Header Section -->
+        <div class="fixed-header">
+            <div class="page-header">
+                <h2>Report</h2>
+            </div>
+        </div>
+        
+        <div class="report-container">
+            <!-- Report Header with Download Button -->
+            <div class="report-header">
+                <div></div>
+                <button class="download-btn">Download Report</button>
+            </div>
+
+            <!-- Progress Tabs -->
+            <div class="progress-tabs">
+                <div class="tab">
+                    Proposal
+                    <span class="notification-badge">2</span>
+                </div>
+                <div class="tab">
+                    Negotiation
+                    <span class="notification-badge">1</span>
+                </div>
+                <div class="tab">
+                    Signing Contract
+                    <span class="notification-badge">3</span>
+                </div>
+                <div class="tab">
+                    Close Deal
+                    <span class="notification-badge">3</span>
+                </div>
+            </div>
+
+            <!-- Cards Grid -->
+            <div class="cards-grid">
+                <!-- Proposal Cards -->
+                <div class="report-card">
+                    <div class="card-name">Arvin Coronel</div>
+                    <div class="card-type">Price Proposal</div>
+                    <div class="card-address">123 Main St</div>
+                    <div class="card-price">₱150,00.00</div>
+                    <div class="card-date">April 3, 2025</div>
+                </div>
+
+                <div class="report-card">
+                    <div class="card-name">Vert Valencia</div>
+                    <div class="card-type">Price Proposal</div>
+                    <div class="card-address">123 Main St</div>
+                    <div class="card-price">₱180,00.00</div>
+                    <div class="card-date">April 3, 2025</div>
+                </div>
+
+                <!-- Negotiation Card -->
+                <div class="report-card">
+                    <div class="card-name">Jigs Paras</div>
+                    <div class="card-type">Price Negotiation</div>
+                    <div class="card-address">123 Main St</div>
+                    <div class="card-price">₱200,00.00</div>
+                    <div class="card-date">April 3, 2025</div>
+                </div>
+
+                <!-- Signing Contract Cards -->
+                <div class="report-card">
+                    <div class="card-name">Prince Fabros</div>
+                    <div class="card-type">Signing Contract</div>
+                    <div class="card-address">123 Main St</div>
+                    <div class="card-price">₱170,00.00</div>
+                    <div class="card-date">April 3, 2025</div>
+                </div>
+
+                <div class="report-card">
+                    <div class="card-name">Elmer Gonzales</div>
+                    <div class="card-type">Signing Contract</div>
+                    <div class="card-address">123 Main St</div>
+                    <div class="card-price">₱500,00.00</div>
+                    <div class="card-date">April 3, 2025</div>
+                </div>
+
+                <div class="report-card">
+                    <div class="card-name">Vert Sta Cruz</div>
+                    <div class="card-type">Signing Contract</div>
+                    <div class="card-address">123 Main St</div>
+                    <div class="card-price">₱100,00.00</div>
+                    <div class="card-date">April 3, 2025</div>
+                </div>
+
+                <!-- Close Deal Cards -->
+                <div class="report-card">
+                    <div class="card-name">Ken Coronel</div>
+                    <div class="card-type">Close Deal</div>
+                    <div class="card-address">123 Main St</div>
+                    <div class="card-price">₱300,00.00</div>
+                    <div class="card-date">April 3, 2025</div>
+                </div>
+
+                <div class="report-card">
+                    <div class="card-name">Mark Facun</div>
+                    <div class="card-type">Close Deal</div>
+                    <div class="card-address">123 Main St</div>
+                    <div class="card-price">₱100,00.00</div>
+                    <div class="card-date">April 3, 2025</div>
+                </div>
+
+                <div class="report-card">
+                    <div class="card-name">Arvin Valencia</div>
+                    <div class="card-type">Close Deal</div>
+                    <div class="card-address">123 Main St</div>
+                    <div class="card-price">₱100,00.00</div>
+                    <div class="card-date">April 3, 2025</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Add click functionality to download button
+        document.querySelector('.download-btn').addEventListener('click', function() {
+            // Simulate download functionality
+            alert('Report download started!');
+        });
+
+        // Add hover effects and potential filtering functionality
+        document.querySelectorAll('.report-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Add click functionality for individual cards
+                const name = this.querySelector('.card-name').textContent;
+                console.log('Clicked on:', name);
+            });
+        });
+    </script>
+</body>
+</html>
