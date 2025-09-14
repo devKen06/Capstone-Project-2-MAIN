@@ -43,9 +43,189 @@
                 <h2>Tasks</h2>
             </div>
         </div>
-        <div class="contact-container">
 
+        <!-- Add Task Button -->
+        <div class="add-task-container">
+            <button class="add-task-btn" onclick="openCreateTaskModal()">
+                Add Task
+            </button>
+        </div>
+
+        <!-- Task Columns Container -->
+        <div class="task-columns-container">
+            <div class="task-columns">
+                <!-- To-do Column -->
+                <div class="task-column">
+                    <div class="column-header">
+                        To - do
+                        <div class="notification-badge">3</div>
+                    </div>
+                    
+                    <div class="task-item">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-title">Meeting with Arvin Coronel</div>
+                            <div class="task-date">April 15, 2025</div>
+                            <div class="task-assignee">
+                                <i class="fas fa-user"></i>
+                                <span>Vert Valencia</span>
+                            </div>
+                            <div class="task-details">
+                                <div class="task-status status-upcoming">Status: Upcoming</div>
+                                <div class="task-priority priority-high">Priority: High</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-item">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-title">Negotiation for 123 Main St</div>
+                            <div class="task-date">April 20, 2025</div>
+                            <div class="task-assignee">
+                                <i class="fas fa-user"></i>
+                                <span>Vert Valencia</span>
+                            </div>
+                            <div class="task-details">
+                                <div class="task-status status-on-progress">Status: On Progress</div>
+                                <div class="task-priority priority-medium">Priority: Medium</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="task-item">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-title">Do a report about sales</div>
+                            <div class="task-date">April 20, 2025</div>
+                            <div class="task-assignee">
+                                <i class="fas fa-user"></i>
+                                <span>Vert Valencia</span>
+                            </div>
+                            <div class="task-details">
+                                <div class="task-status status-not-started">Status: Not Started</div>
+                                <div class="task-priority priority-medium">Priority: Medium</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Calls Column -->
+                <div class="task-column">
+                    <div class="column-header">
+                        Calls
+                        <div class="notification-badge">2</div>
+                    </div>
+                    
+                    <div class="task-item">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-title">Call Elmerson G.</div>
+                            <div class="task-assignee">
+                                <i class="fas fa-user"></i>
+                                <span>Vert Valencia</span>
+                            </div>
+                            <div class="task-date">April 06, 2025</div>
+                        </div>
+                    </div>
+
+                    <div class="task-item">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-title">Call Kenneth F.</div>
+                            <div class="task-assignee">
+                                <i class="fas fa-user"></i>
+                                <span>Vert Valencia</span>
+                            </div>
+                            <div class="task-date">April 15, 2025</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email Column -->
+                <div class="task-column">
+                    <div class="column-header">
+                        Email
+                        <div class="notification-badge">1</div>
+                    </div>
+                    
+                    <div class="task-item">
+                        <input type="checkbox" class="task-checkbox">
+                        <div class="task-content">
+                            <div class="task-title">Email Prince Fabros Sales Report</div>
+                            <div class="task-assignee">
+                                <i class="fas fa-user"></i>
+                                <span>Vert Valencia</span>
+                            </div>
+                            <div class="task-date">April 06, 2025</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
+    
+    <!-- Create Task Modal -->
+    <div class="modal-overlay" id="createTaskModal">
+        <div class="create-task-modal">
+            <div class="modal-header">Create Task</div>
+            
+            <form id="createTaskForm">
+                <div class="form-group">
+                    <label class="form-label">Task Title *</label>
+                    <input type="text" class="form-input" placeholder="Meeting with Arvin Coronel" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Task Type *</label>
+                        <select class="form-select" required>
+                            <option value="todo">To-do</option>
+                            <option value="call">Call</option>
+                            <option value="email">Email</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Priority *</label>
+                        <select class="form-select" required>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Assigned to :</label>
+                    <input type="text" class="form-input" placeholder="Angelo Vert Valencia">
+                </div>
+
+                <div class="date-time-row">
+                    <div class="form-group">
+                        <label class="form-label">Date :</label>
+                        <input type="date" class="form-input" value="2025-04-15">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Time :</label>
+                        <input type="time" class="form-input" value="08:00">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Queue :</label>
+                        <input type="number" class="form-input" value="1" min="1">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Notes</label>
+                    <textarea class="form-textarea" placeholder="-Sent 100k proposal"></textarea>
+                </div>
+
+                <div class="modal-buttons">
+                    <button type="submit" class="btn-create">Create</button>
+                    <button type="button" class="btn-cancel" onclick="closeCreateTaskModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="script/task.js"></script>
 </body>
 </html>
