@@ -1,0 +1,307 @@
+/* ===========================================
+            LOGIN PAGE STYLES
+   =========================================== */
+ body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Container for logo and text */
+.logo-container {
+    position: fixed;          /* Fixes the logo at the top of page */
+    top: 0;                   /* Zero distance from top edge */
+    left: 0;                  /* Zero distance from left edge */
+    display: flex;            /* Put image and text side by side */
+    align-items: center;      /* Vertically center logo and text */
+    padding: 10px;           /* Add some padding around logo */
+    background-color: white;  /* White background for visibility */
+    z-index: 999;            /* Stay above all other content */
+}
+
+/* Logo image styling */
+.logo-container img {
+    height: 40px;              /* Set height for proportional size */
+    width: auto;               /* Maintain aspect ratio */
+    margin-right: 10px;        /* Add space between logo and text */
+    object-fit: contain;       /* Ensure image fits without stretching */
+    color: #0044cc;           /* Blue color for logo */
+}
+
+/* Logo text styling */
+.logo-container span {
+    font-size: 30px;          /* Large text size */
+    color: #0044cc;           /* Blue color matching logo */
+    font-weight: bold;        /* Make text bold */
+}
+/* Main container for login page */
+.login-container {
+    display: flex;            /* Split page into two sections */
+    height: 100vh;            /* Full viewport height */
+    width: 100vw;             /* Full viewport width */
+    overflow: hidden;         /* Prevent scrolling */
+}
+
+/* Left section containing login form */
+.login-section {
+    width: 50%;               /* Take up half the screen */
+    padding: 40px;            /* Add padding inside section */
+    display: flex;            /* Use flexbox for centering */
+    flex-direction: column;   /* Stack items vertically */
+    justify-content: center;  /* Center items vertically */
+    align-items: center;      /* Center items horizontally */
+    background-color: #fff;   /* White background */
+}
+
+/* Logo image in login section */
+.login-section img {
+    width: 150px;             /* Set specific width for logo */
+    margin-bottom: 20px;      /* Space below logo */
+}
+
+/* Paragraph text in login section */
+.login-section p {
+    margin-bottom: 20px;      /* Space below paragraph */
+                                /* Large text size */
+    color: #0011ff;           /* Blue color for text */
+}
+
+/* Main heading in login section */
+.login-section h1 {
+    margin-bottom: 50px;      /* Large space below heading */
+    font-size: 60px;          /* Very large text size */
+    color: #000000;           /* Blue color for heading */
+    text-align: center;       /* Center the heading */
+}
+
+/* Container for form labels and inputs */
+.label-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center labels and inputs horizontally */
+  padding-bottom: 15px;
+  width: 100%;
+}
+
+/* Input fields in login form */
+.label-container input {
+  width: 100%;
+  max-width: 400px;        /* Prevents full width stretching */
+  font-size: 20px;
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #f9f9f9; /* Light gray background */
+  transition: border-color 0.3s ease; /* Smooth border transition */
+  color: #000000;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+  box-sizing: border-box;
+  height: 60px;
+}
+/* Labels for input fields */
+.label-container label {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 1px;
+  text-align: left;
+  width: 100%;
+  max-width: 400px;
+}
+/* Individual buttons in login section */
+.login-section button {
+    width: 20%;               /* Set button width */
+    height: 50px;             /* Set button height */
+    font-size: 20px;          /* Large text size */
+    padding: 10px;            /* Padding inside button */
+    background-color: #0044cc; /* Blue background */
+    color: white;             /* White text */
+    border: none;             /* Remove default border */
+    border-radius: 5px;       /* Rounded corners */
+    cursor: pointer;          /* Show pointer on hover */
+}
+
+/* Hover effect for individual buttons */
+.login-section button:hover {
+    background-color: #001d9e; /* Darker blue on hover */
+}
+
+/* Container for multiple buttons */
+.button-group {
+  display: flex;              /* Arrange buttons horizontally */
+  width: 40%;                 /* Set container width */
+  gap: 100px;                 /* Add space between buttons */
+  padding-top: 30px;          /* Add top padding */
+}
+
+/* Buttons within button group */
+.button-group button {
+  flex: 1;                    /* Make both buttons equal width */
+  padding: 10px;              /* Padding inside buttons */
+  background-color: #0044cc;  /* Blue background */
+  color: white;               /* White text */
+  border: none;               /* Remove default border */
+  border-radius: 5px;         /* Rounded corners */
+  cursor: pointer;            /* Show pointer on hover */
+  transition: transform 0.3s ease; /* Smooth hover transition */
+}
+
+/* Hover effect for button group buttons */
+.button-group button:hover {
+ 
+  background-color: #001d9e; /* Lighter blue on hover */
+}
+
+/* Right section with background image */
+.image-section {
+    width: 50%;               /* Take up half the screen */
+    background-image: url('assets/login-bg.png'); /* Background image */
+    background-size: cover;    /* Cover entire section */
+    background-position: center; /* Center the image */
+}
+/* Tablet and small desktop */
+    @media (max-width: 768px) {
+        .login-container {
+            flex-direction: column; /* Stack sections vertically */
+        }
+        
+        .login-section {
+            width: 100%;           /* Full width on tablet */
+            padding: 30px;         /* Reduce padding */
+        }
+        
+        .image-section {
+            width: 100%;           /* Full width on tablet */
+            height: 200px;         /* Fixed height for background */
+        }
+        
+        .login-section h1 {
+            font-size: 40px;       /* Smaller heading on tablet */
+            margin-bottom: 30px;   /* Less space below heading */
+        }
+        
+        .button-group {
+            width: 60%;            /* Wider button group */
+            gap: 50px;             /* Less gap between buttons */
+        }
+    }
+
+    /* Mobile phones */
+    @media (max-width: 480px) {
+        body {
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            align-items: center !important;
+            padding: 20px !important;
+            min-height: 100vh !important;
+        }
+        
+        .logo-container {
+            position: static !important;
+            background: transparent !important;
+            justify-content: center !important;
+            padding: 0 0 30px 0 !important;
+            z-index: 1000 !important;
+        }
+        
+        .logo-container img {
+            filter: brightness(0) invert(1) !important;
+            display: block !important;
+            height: 40px !important;
+            width: auto !important;
+        }
+        
+        .logo-container span {
+            color: white !important;
+            font-size: 24px !important;
+        }
+        
+        .login-container {
+            display: block !important;
+            height: auto !important;
+            width: auto !important;
+            background: none !important;
+            position: relative !important;
+            z-index: 100 !important;
+        }
+        
+        .login-section {
+            width: 100% !important;
+            max-width: 350px !important;
+            padding: 40px 30px !important;
+            background: white !important;
+            border-radius: 15px !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+            position: relative !important;
+            z-index: 100 !important;
+            display: flex !important;
+        }
+        
+        .image-section {
+            display: block !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            z-index: -1 !important;
+            background-image: url('assets/login-bg.png') !important;
+            background-size: cover !important;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+        }
+        
+        .image-section img {
+            display: none !important;
+        }
+        
+        .login-section h1 {
+            font-size: 24px;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+        
+        .label-container input {
+            max-width: 100%;
+            font-size: 16px;
+            height: 50px;
+            padding: 12px;
+        }
+        
+        .label-container label {
+            font-size: 16px;
+            max-width: 100%;
+        }
+        
+        .button-group {
+            width: 100%;
+            gap: 15px;
+            padding-top: 20px;
+        }
+        
+        .button-group button {
+            height: 50px;
+            font-size: 16px;
+        }
+    }
+
+    /* Very small phones */
+    @media (max-width: 320px) {
+        .login-container {
+            padding: 0 15px;       /* Less side padding */
+        }
+        
+        .login-section {
+            padding: 25px 20px;    /* Less padding */
+        }
+        
+        .login-section h1 {
+            font-size: 24px;       /* Even smaller heading */
+        }
+        
+        .logo-container span {
+            font-size: 20px;       /* Smaller logo text */
+        }
+    }

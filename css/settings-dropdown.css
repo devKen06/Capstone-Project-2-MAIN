@@ -1,0 +1,71 @@
+ .settings-dropdown {
+            position: absolute; /* ← Must be absolute */
+            top: 100%; /* ← This puts it below the button */
+            right: 0; /* ← This aligns it to the right */
+            background: white;
+            min-width: 200px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            z-index: 2000; /* ← Higher than your nav */
+            opacity: 0; /* ← Hidden by default */
+            visibility: hidden; /* ← Hidden by default */
+            transform: translateY(-10px); /* ← Slide effect */
+            transition: all 0.3s ease; /* ← Smooth animation */
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+
+        /* ========== STEP 3: THIS MAKES IT VISIBLE ========== */
+        .settings-dropdown.active {
+            opacity: 1; /* ← Shows the dropdown */
+            visibility: visible; /* ← Makes it clickable */
+            transform: translateY(0); /* ← Slides into place */
+        }
+        .settings-header {
+            padding: 15px 20px 10px 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+            text-align: center;
+
+        }
+        /* ========== STEP 4: STYLE THE DROPDOWN ITEMS ========== */
+        .dropdown-item {
+            display: block;
+            align-items: center;
+            padding: 12px 20px;
+            color: #333;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            border-bottom: 1px solid #f5f5f5;
+            font-size: 14px;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none; /* ← Remove border from last item */
+        }
+
+        .dropdown-item:hover {
+            background-color: #f8f9fa; /* ← Light gray on hover */
+        }
+
+        .dropdown-item.logout {
+            color: #ffffff;
+            font-weight: 600;
+            background-color: #001d9e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 20px;   /* ← CHANGED: More side margin */
+            border-radius: 5px;
+            padding: 8px 16px;   /* ← CHANGED: Less padding */
+            min-height: 16px;    /* ← CHANGED: Smaller height */
+            text-align: center;
+            font-size: 14px;     /* ← ADDED: Consistent font size */
+        }
+
+        .dropdown-item.logout:hover {
+            background-color: #002cee; /* ← Light red on hover */
+        }

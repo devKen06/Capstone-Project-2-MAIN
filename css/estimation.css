@@ -1,0 +1,423 @@
+
+        /* ========== ESTIMATION CONTAINER - ONLY THIS SCALED 125% ========== */
+        .estimation-container {
+            padding: 5px; /* SCALED UP FROM 20px */
+            max-width: 2000px; /* SCALED UP FROM 1400px */
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* ========== INPUT FORM SECTION - SCALED 125% ========== */
+        .property-form-box {
+            background-color: #001d9e;
+            color: white;
+            padding: 38px; /* SCALED UP FROM 30px */
+            border-radius: 13px; /* SCALED UP FROM 10px */
+            margin: 0 auto 38px auto; /* SCALED UP FROM 30px */
+            max-width: 750px; /* SCALED UP FROM 600px */
+            width: 100%;
+        }
+
+        .property-form-box h3 {
+            margin: 0 0 25px 0; /* SCALED UP FROM 20px */
+            font-size: 30px; /* SCALED UP FROM 24px */
+            font-weight: normal;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr; /* SCALED UP FROM 200px */
+            gap: 25px 38px; /* SCALED UP FROM 20px 30px */
+            margin-bottom: 38px; /* SCALED UP FROM 30px */
+        }
+
+        .form-field {
+            display: contents;
+        }
+
+        .form-field label {
+            font-size: 23px; /* SCALED UP FROM 18px */
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            grid-column: 1;
+        }
+
+        .form-field input {
+            padding: 15px; /* SCALED UP FROM 12px */
+            border: none;
+            border-radius: 6px; /* SCALED UP FROM 5px */
+            font-size: 20px; /* SCALED UP FROM 16px */
+            grid-column: 2;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            gap: 38px; /* SCALED UP FROM 30px */
+            margin-top: 38px; /* SCALED UP FROM 30px */
+        }
+
+        .btn-clear,
+        .btn-estimate,
+        .btn-download {
+            padding: 15px 50px; /* SCALED UP FROM 12px 40px */
+            border: none;
+            border-radius: 32px; /* SCALED UP FROM 25px */
+            font-size: 23px; /* SCALED UP FROM 18px */
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-clear {
+            background-color: #cccccc;
+            color: #333;
+        }
+
+        .btn-clear:hover {
+            background-color: #b0b0b0;
+            transform: translateY(-2px);
+        }
+
+        .btn-estimate {
+            background-color: #001d9e;
+            color: white;
+        }
+
+        .btn-estimate:hover {
+            background-color: #0033ff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 33, 158, 0.3);
+        }
+
+        .btn-download {
+            background-color: #001d9e;
+            color: white;
+        }
+
+        .btn-download:hover {
+            background-color: #0033ff;
+            transform: translateY(-2px);
+        }
+
+        /* ========== PAGE TRANSITIONS ========== */
+        .form-page {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        .form-page.hidden {
+            display: none;
+        }
+
+        .results-section {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* EXACT MOCKUP LAYOUT - SCALED 125% - FIXED */
+        .results-container {
+            display: grid;
+            grid-template-columns: 1fr 350px; /* Chart takes available space, metrics gets fixed 350px */
+            gap: 10px; /* SCALED UP FROM 20px */
+            margin-bottom: 5px; /* SCALED UP FROM 20px */
+            max-width: 100%;
+            overflow: hidden;
+            padding-right: 5px; /* Small gap from right edge */
+        }
+
+        /* ========== CHART BOX - SCALED 125% ========== */
+        .chart-container {
+            background-color: white;
+            border: 3px solid #001d9e; /* SCALED UP FROM 2px */
+            border-radius: 10px; /* SCALED UP FROM 8px */
+            overflow: hidden;
+            min-width: 0;
+            width: 100%;
+            /* Removed max-width to allow chart to expand fully */
+        }
+
+        .chart-header {
+            background-color: #001d9e;
+            color: white;
+            padding: 13px 19px; /* SCALED UP FROM 10px 15px */
+            font-size: 20px; /* SCALED UP FROM 16px */
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .chart-content {
+            padding: 19px 19px 0 19px; /* SCALED UP FROM 15px */
+            position: relative;
+            overflow: visible;
+        }
+
+        .price-chart {
+            width: 100%;
+            height: 500px; /* SCALED UP FROM 400px */
+            border: 1px solid #ddd;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* SVG CHART - SCALED */
+        .chart-svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            max-width: 100%;
+        }
+
+        .price-line {
+            fill: none;
+            stroke: #001d9e;
+            stroke-width: 4; /* SCALED UP FROM 3 */
+            stroke-linecap: round;
+        }
+
+        .price-area {
+            fill: rgba(0, 29, 158, 0.1);
+        }
+
+        .chart-point {
+            fill: #001d9e;
+            stroke: white;
+            stroke-width: 3; /* SCALED UP FROM 2 */
+            r: 5; /* SCALED UP FROM 4 */
+        }
+
+        .projected-point {
+            fill: #ff4444;
+            stroke: white;
+            stroke-width: 3; /* SCALED UP FROM 2 */
+            r: 6; /* SCALED UP FROM 5 */
+        }
+
+        /* YEAR LABELS - SCALED */
+        .year-labels {
+            display: flex;
+            justify-content: space-between;
+            padding: 13px 19px; /* SCALED UP FROM 10px 15px */
+            font-size: 16px; /* SCALED UP FROM 13px */
+            color: #666;
+            margin: 0;
+            background: white;
+            position: relative;
+            height: auto;
+            align-items: center;
+        }
+
+        .year-labels span {
+            text-align: center;
+            flex: 0 0 auto;
+            line-height: 1;
+        }
+
+        /* ========== METRICS PANEL - SCALED 125% - FIXED ========== */
+        .metrics-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* SCALED UP FROM 12px */
+            min-width: 0;
+            width: 100%; /* Takes full width of its grid column (350px) */
+            padding-top: 0; /* Remove top padding to align with chart top */
+            flex-shrink: 0; /* Prevents shrinking */
+            height: 100%; /* Full height to match chart container */
+            justify-content: flex-start; /* Align metrics to top */
+        }
+
+        .metric-box {
+            background-color: white;
+            border-radius: 10px; /* SCALED UP FROM 8px */
+            padding: 15px; /* SCALED UP FROM 12px */
+            text-align: right;
+            position: relative;
+            min-width: 0;
+            padding-top: 10%;
+        }
+
+        .metric-label {
+            font-size: 20px; /* SCALED UP FROM 13px */
+            color: #333;
+            margin-bottom: 8px; /* SCALED UP FROM 6px */
+            font-weight: bold;
+            display: block;
+            position: relative;
+            text-align: left; /* LEFT ALIGN LABELS */
+        }
+
+        .metric-value {
+            font-size: 23px; /* SCALED UP FROM 18px */
+            font-weight: bold;
+            color: #000;
+            border: 1px solid #ddd;
+            padding: 8px 13px; /* SCALED UP FROM 6px 10px */
+            border-radius: 4px;
+            background: #f9f9f9;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: left; /* LEFT ALIGN VALUES */
+        }
+
+        /* ========== PROPERTY INFO SECTION - SCALED 125% - FIXED ========== */
+        .property-section {
+            display: grid;
+            grid-template-columns: 1fr 350px; /* Same width as metrics container (350px) */
+            gap: 10px; /* Match the gap from results-container */
+            margin-top: 5px; /* SCALED UP FROM 20px */
+            max-width: 100%;
+            padding-right: 5px; /* Match the padding from results-container */
+        }
+
+        .property-info-container {
+            background-color: white;
+            border: 3px solid #001d9e; /* SCALED UP FROM 2px */
+            border-radius: 10px; /* SCALED UP FROM 8px */
+            min-width: 0;
+            overflow: hidden;
+            /* Removed max-width to match chart container width */
+            width: 100%;
+        }
+
+        .property-header {
+            background-color: #001d9e;
+            color: white;
+            padding: 13px 19px; /* SCALED UP FROM 10px 15px */
+            font-size: 20px; /* SCALED UP FROM 16px */
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .property-content {
+            padding: 19px; /* SCALED UP FROM 15px */
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr); /* Single column for better readability */
+            gap: 15px 25px; /* SCALED UP FROM 12px 20px */
+            max-width: 100%;
+        }
+
+        .property-item {
+            display: flex;
+            align-items: center;
+            font-size: 18px; /* SCALED UP FROM 14px */
+            min-width: 0;
+            gap: 10px; /* Space between label and value */
+        }
+
+        .property-label {
+            flex: 0 0 163px; /* SCALED UP FROM 130px */
+            color: #333;
+            font-weight: normal;
+        }
+
+        .property-value {
+            color: #333;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* SIDE BUTTONS - BIGGER AND CENTERED */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 25px; /* Increased gap between buttons */
+            width: 100%; /* Made container wider */
+            justify-content: center; /* Centers buttons vertically */
+            align-items: center; /* Centers buttons horizontally */
+            height: 100%; /* Takes full height for better centering */
+        }
+
+        .action-buttons .btn-clear,
+        .action-buttons .btn-download {
+            padding: 20px 35px; /* Much bigger padding */
+            border: none;
+            border-radius: 30px; /* More rounded */
+            font-size: 20px; /* Bigger font */
+            cursor: pointer;
+            font-weight: bold;
+            width: 200px; /* Fixed width for consistency */
+            transition: all 0.3s ease; /* Smooth hover effect */
+        }
+
+        .action-buttons .btn-clear {
+            background-color: #cccccc;
+            color: #333;
+        }
+
+        .action-buttons .btn-clear:hover {
+            background-color: #b0b0b0;
+            transform: translateY(-2px);
+        }
+
+        .action-buttons .btn-download {
+            background-color: #001d9e;
+            color: white;
+        }
+
+        .action-buttons .btn-download:hover {
+            background-color: #0033ff;
+            transform: translateY(-2px);
+        }
+        /* ========== RESPONSIVE - ORIGINAL BREAKPOINTS ========== */
+        @media (max-width: 1200px) {
+            .results-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-container {
+                flex-direction: row;
+                gap: 15px;
+                padding-top: 0;
+            }
+            
+            .metric-box {
+                flex: 1;
+            }
+
+            .property-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .property-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: row;
+                width: auto;
+                justify-content: center;
+            }
+            
+            .property-grid {
+                grid-template-columns: 1fr;
+            }
+        }

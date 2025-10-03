@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="icon" href="assets/favicon.ico" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <title>Price Estimation | Real Estate System</title>
+    
+    <style>
+        /* ========== BASE STYLES ========== */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden; /
+        }
+
+        /* ========== TOP NAVIGATION ========== */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+            background-color: #0044cc;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5px;
+            z-index: 1000;
+        }
+
+        .top-nav h1 {
+            display: flex;
+            align-items: center;
+            font-size: 25px;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 45px;
+            height: 45px;
+            background: url('/assets/reverse-logo-removebg-preview.png') no-repeat center center;
+            background-size: contain;
+        }
+
+        .top-nav-icons button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 30px;
+            margin-left: 1px;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        /* ========== SIDEBAR ========== */
+        .sidebar {
+            width: 300px;
+            background-color: #e4e4e4;
+            padding-top: 50px;
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 20px 25px;
+            text-decoration: none;
+            color: black;
+            border-bottom: 1px solid #ccc;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .nav-item.active {
+            background-color: #001d9e;
+            color: white;
+        }
+        
+        /* ========== MAIN CONTENT ========== */
+        .main-content {
+            margin-left: 300px;
+            margin-top: 60px;
+            padding: 0;
+            overflow-y: auto; /* Enable vertical scrolling */
+            width: calc(100% - 300px);
+            height: calc(100vh - 60px);
+        }
+
+        /* ========== HEADER ========== */
+        .fixed-header {
+            position: sticky;
+            top: 0;
+            background-color: white;
+            z-index: 100;
+            padding: 10px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .page-header {
+            background-color: #001d9e;
+            color: white;
+            padding: 1px 10px;
+            clip-path: polygon(0 0, 90% 0, 100% 50%, 90% 100%, 0 100%);
+            width: 15%;
+            height: 40px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .page-header h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        /* ========== ESTIMATION CONTAINER - ONLY THIS SCALED 125% ========== */
+        .estimation-container {
+            padding: 5px; /* SCALED UP FROM 20px */
+            max-width: 2000px; /* SCALED UP FROM 1400px */
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* ========== INPUT FORM SECTION - SCALED 125% ========== */
+        .property-form-box {
+            background-color: #001d9e;
+            color: white;
+            padding: 38px; /* SCALED UP FROM 30px */
+            border-radius: 13px; /* SCALED UP FROM 10px */
+            margin: 0 auto 38px auto; /* SCALED UP FROM 30px */
+            max-width: 750px; /* SCALED UP FROM 600px */
+            width: 100%;
+        }
+
+        .property-form-box h3 {
+            margin: 0 0 25px 0; /* SCALED UP FROM 20px */
+            font-size: 30px; /* SCALED UP FROM 24px */
+            font-weight: normal;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr; /* SCALED UP FROM 200px */
+            gap: 25px 38px; /* SCALED UP FROM 20px 30px */
+            margin-bottom: 38px; /* SCALED UP FROM 30px */
+        }
+
+        .form-field {
+            display: contents;
+        }
+
+        .form-field label {
+            font-size: 23px; /* SCALED UP FROM 18px */
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            grid-column: 1;
+        }
+
+        .form-field input {
+            padding: 15px; /* SCALED UP FROM 12px */
+            border: none;
+            border-radius: 6px; /* SCALED UP FROM 5px */
+            font-size: 20px; /* SCALED UP FROM 16px */
+            grid-column: 2;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            gap: 38px; /* SCALED UP FROM 30px */
+            margin-top: 38px; /* SCALED UP FROM 30px */
+        }
+
+        .btn-clear,
+        .btn-estimate,
+        .btn-download {
+            padding: 15px 50px; /* SCALED UP FROM 12px 40px */
+            border: none;
+            border-radius: 32px; /* SCALED UP FROM 25px */
+            font-size: 23px; /* SCALED UP FROM 18px */
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-clear {
+            background-color: #cccccc;
+            color: #333;
+        }
+
+        .btn-clear:hover {
+            background-color: #b0b0b0;
+            transform: translateY(-2px);
+        }
+
+        .btn-estimate {
+            background-color: #001d9e;
+            color: white;
+        }
+
+        .btn-estimate:hover {
+            background-color: #0033ff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 33, 158, 0.3);
+        }
+
+        .btn-download {
+            background-color: #001d9e;
+            color: white;
+        }
+
+        .btn-download:hover {
+            background-color: #0033ff;
+            transform: translateY(-2px);
+        }
+
+        /* ========== PAGE TRANSITIONS ========== */
+        .form-page {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        .form-page.hidden {
+            display: none;
+        }
+
+        .results-section {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* EXACT MOCKUP LAYOUT - SCALED 125% - FIXED */
+        .results-container {
+            display: grid;
+            grid-template-columns: 1fr 350px; /* Chart takes available space, metrics gets fixed 350px */
+            gap: 10px; /* SCALED UP FROM 20px */
+            margin-bottom: 5px; /* SCALED UP FROM 20px */
+            max-width: 100%;
+            overflow: hidden;
+            padding-right: 5px; /* Small gap from right edge */
+        }
+
+        /* ========== CHART BOX - SCALED 125% ========== */
+        .chart-container {
+            background-color: white;
+            border: 3px solid #001d9e; /* SCALED UP FROM 2px */
+            border-radius: 10px; /* SCALED UP FROM 8px */
+            overflow: hidden;
+            min-width: 0;
+            width: 100%;
+            /* Removed max-width to allow chart to expand fully */
+        }
+
+        .chart-header {
+            background-color: #001d9e;
+            color: white;
+            padding: 13px 19px; /* SCALED UP FROM 10px 15px */
+            font-size: 20px; /* SCALED UP FROM 16px */
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .chart-content {
+            padding: 19px 19px 0 19px; /* SCALED UP FROM 15px */
+            position: relative;
+            overflow: visible;
+        }
+
+        .price-chart {
+            width: 100%;
+            height: 500px; /* SCALED UP FROM 400px */
+            border: 1px solid #ddd;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* SVG CHART - SCALED */
+        .chart-svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            max-width: 100%;
+        }
+
+        .price-line {
+            fill: none;
+            stroke: #001d9e;
+            stroke-width: 4; /* SCALED UP FROM 3 */
+            stroke-linecap: round;
+        }
+
+        .price-area {
+            fill: rgba(0, 29, 158, 0.1);
+        }
+
+        .chart-point {
+            fill: #001d9e;
+            stroke: white;
+            stroke-width: 3; /* SCALED UP FROM 2 */
+            r: 5; /* SCALED UP FROM 4 */
+        }
+
+        .projected-point {
+            fill: #ff4444;
+            stroke: white;
+            stroke-width: 3; /* SCALED UP FROM 2 */
+            r: 6; /* SCALED UP FROM 5 */
+        }
+
+        /* YEAR LABELS - SCALED */
+        .year-labels {
+            display: flex;
+            justify-content: space-between;
+            padding: 13px 19px; /* SCALED UP FROM 10px 15px */
+            font-size: 16px; /* SCALED UP FROM 13px */
+            color: #666;
+            margin: 0;
+            background: white;
+            position: relative;
+            height: auto;
+            align-items: center;
+        }
+
+        .year-labels span {
+            text-align: center;
+            flex: 0 0 auto;
+            line-height: 1;
+        }
+
+        /* ========== METRICS PANEL - SCALED 125% - FIXED ========== */
+        .metrics-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* SCALED UP FROM 12px */
+            min-width: 0;
+            width: 100%; /* Takes full width of its grid column (350px) */
+            padding-top: 0; /* Remove top padding to align with chart top */
+            flex-shrink: 0; /* Prevents shrinking */
+            height: 100%; /* Full height to match chart container */
+            justify-content: flex-start; /* Align metrics to top */
+        }
+
+        .metric-box {
+            background-color: white;
+            border-radius: 10px; /* SCALED UP FROM 8px */
+            padding: 15px; /* SCALED UP FROM 12px */
+            text-align: right;
+            position: relative;
+            min-width: 0;
+            padding-top: 10%;
+        }
+
+        .metric-label {
+            font-size: 20px; /* SCALED UP FROM 13px */
+            color: #333;
+            margin-bottom: 8px; /* SCALED UP FROM 6px */
+            font-weight: bold;
+            display: block;
+            position: relative;
+            text-align: left; /* LEFT ALIGN LABELS */
+        }
+
+        .metric-value {
+            font-size: 23px; /* SCALED UP FROM 18px */
+            font-weight: bold;
+            color: #000;
+            border: 1px solid #ddd;
+            padding: 8px 13px; /* SCALED UP FROM 6px 10px */
+            border-radius: 4px;
+            background: #f9f9f9;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: left; /* LEFT ALIGN VALUES */
+        }
+
+        /* ========== PROPERTY INFO SECTION - SCALED 125% - FIXED ========== */
+        .property-section {
+            display: grid;
+            grid-template-columns: 1fr 350px; /* Same width as metrics container (350px) */
+            gap: 10px; /* Match the gap from results-container */
+            margin-top: 5px; /* SCALED UP FROM 20px */
+            max-width: 100%;
+            padding-right: 5px; /* Match the padding from results-container */
+        }
+
+        .property-info-container {
+            background-color: white;
+            border: 3px solid #001d9e; /* SCALED UP FROM 2px */
+            border-radius: 10px; /* SCALED UP FROM 8px */
+            min-width: 0;
+            overflow: hidden;
+            /* Removed max-width to match chart container width */
+            width: 100%;
+        }
+
+        .property-header {
+            background-color: #001d9e;
+            color: white;
+            padding: 13px 19px; /* SCALED UP FROM 10px 15px */
+            font-size: 20px; /* SCALED UP FROM 16px */
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .property-content {
+            padding: 19px; /* SCALED UP FROM 15px */
+        }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr); /* Single column for better readability */
+            gap: 15px 25px; /* SCALED UP FROM 12px 20px */
+            max-width: 100%;
+        }
+
+        .property-item {
+            display: flex;
+            align-items: center;
+            font-size: 18px; /* SCALED UP FROM 14px */
+            min-width: 0;
+            gap: 10px; /* Space between label and value */
+        }
+
+        .property-label {
+            flex: 0 0 163px; /* SCALED UP FROM 130px */
+            color: #333;
+            font-weight: normal;
+        }
+
+        .property-value {
+            color: #333;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* SIDE BUTTONS - BIGGER AND CENTERED */
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 25px; /* Increased gap between buttons */
+            width: 100%; /* Made container wider */
+            justify-content: center; /* Centers buttons vertically */
+            align-items: center; /* Centers buttons horizontally */
+            height: 100%; /* Takes full height for better centering */
+        }
+
+        .action-buttons .btn-clear,
+        .action-buttons .btn-download {
+            padding: 20px 35px; /* Much bigger padding */
+            border: none;
+            border-radius: 30px; /* More rounded */
+            font-size: 20px; /* Bigger font */
+            cursor: pointer;
+            font-weight: bold;
+            width: 200px; /* Fixed width for consistency */
+            transition: all 0.3s ease; /* Smooth hover effect */
+        }
+
+        .action-buttons .btn-clear {
+            background-color: #cccccc;
+            color: #333;
+        }
+
+        .action-buttons .btn-clear:hover {
+            background-color: #b0b0b0;
+            transform: translateY(-2px);
+        }
+
+        .action-buttons .btn-download {
+            background-color: #001d9e;
+            color: white;
+        }
+
+        .action-buttons .btn-download:hover {
+            background-color: #0033ff;
+            transform: translateY(-2px);
+        }
+        /* ========== RESPONSIVE - ORIGINAL BREAKPOINTS ========== */
+        @media (max-width: 1200px) {
+            .results-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-container {
+                flex-direction: row;
+                gap: 15px;
+                padding-top: 0;
+            }
+            
+            .metric-box {
+                flex: 1;
+            }
+
+            .property-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .property-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: row;
+                width: auto;
+                justify-content: center;
+            }
+            
+            .property-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <div class="top-nav">
+        <h1>
+            <span class="logo"></span>
+            Price Estimation
+        </h1>
+        <div class="top-nav-icons">
+            <button class="icon-btn"><i class="fas fa-cog"></i></button>
+            <button class="icon-btn"><i class="fas fa-user-circle"></i></button>
+        </div>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <a href="dashboard.html" class="nav-item">Dashboard</a>
+        <a href="management.html" class="nav-item">Management</a>
+        <a href="contact.html" class="nav-item">Contacts</a>
+        <a href="task.html" class="nav-item">Tasks</a>
+        <a href="report.html" class="nav-item">Report</a>
+        <a href="estimation.html" class="nav-item active">Estimation</a>
+        <a href="profile.html" class="nav-item">Profile</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Fixed Header Section -->
+        <div class="fixed-header">
+            <div class="page-header">
+                <h2>Price Estimation</h2>
+            </div>
+        </div>
+        
+        <!-- Estimation Container -->
+        <div class="estimation-container">
+            <!-- Form Page (Initial View) -->
+            <div id="form-page" class="form-page">
+                <!-- Property Information Input Form -->
+                <div class="property-form-box">
+                    <h3>Property Information</h3>
+                    <div class="form-grid">
+                        <div class="form-field">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" placeholder="Enter property owner name">
+                        </div>
+                        <div class="form-field">
+                            <label for="address">Address:</label>
+                            <input type="text" id="address" placeholder="Enter property address">
+                        </div>
+                        <div class="form-field">
+                            <label for="property-size">Property size:</label>
+                            <input type="number" id="property-size" placeholder="Enter size in sqm">
+                        </div>
+                        <div class="form-field">
+                            <label for="current-price">Current price:</label>
+                            <input type="number" id="current-price" placeholder="Enter current price">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="form-actions">
+                    <button class="btn-clear" onclick="clearForm()">Clear</button>
+                    <button class="btn-estimate" onclick="performEstimation()">Estimate</button>
+                </div>
+            </div>
+
+            <!-- Results Section (Hidden by default) -->
+            <div id="results-section" class="results-section">
+                <!-- Chart and Metrics Container -->
+                <div class="results-container">
+                    <!-- Price History Chart -->
+                    <div class="chart-container">
+                        <div class="chart-header">Price History</div>
+                        <div class="chart-content">
+                            <div class="price-chart">
+                                <svg class="chart-svg" viewBox="0 0 500 200">
+                                    <!-- Grid lines -->
+                                    <defs>
+                                        <pattern id="grid" width="83.33" height="40" patternUnits="userSpaceOnUse">
+                                            <path d="M 83.33 0 L 0 0 0 40" fill="none" stroke="#f0f0f0" stroke-width="1"/>
+                                        </pattern>
+                                    </defs>
+                                    <rect width="100%" height="100%" fill="url(#grid)" />
+                                    
+                                    <!-- Area under curve -->
+                                    <path id="price-area" class="price-area" d=""></path>
+                                    
+                                    <!-- Price line -->
+                                    <path id="price-line" class="price-line" d=""></path>
+                                    
+                                    <!-- Data points -->
+                                    <g id="chart-points"></g>
+                                </svg>
+                            </div>
+                            <!-- YEAR LABELS OUTSIDE CHART -->
+                            <div class="year-labels">
+                                <span>2021</span>
+                                <span>2022</span>
+                                <span>2023</span>
+                                <span>2024</span>
+                                <span>2025</span>
+                                <span style="color: #ff4444; font-weight: bold;">2026</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Metrics Panel -->
+                    <div class="metrics-container">
+                        <div class="metric-box">
+                            <div class="metric-label">Current Price:</div>
+                            <div class="metric-value" id="current-price-display">₱ 123,000</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-label">Estimated Price:</div>
+                            <div class="metric-value" id="estimated-price-display">₱ 170,000</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-label">Price Projection:</div>
+                            <div class="metric-value" id="profit-projection-display">₱ 47,000</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Property Info Section -->
+                <div class="property-section">
+                    <div class="property-info-container">
+                        <div class="property-header">Property Information</div>
+                        <div class="property-content">
+                            <div class="property-grid">
+                                <div class="property-item">
+                                    <span class="property-label">Name</span>
+                                    <span class="property-value" id="info-name">: Vert Valencia</span>
+                                </div>
+                                <div class="property-item">
+                                    <span class="property-label">Address</span>
+                                    <span class="property-value" id="info-address">: Sitio Paninaan Carangian</span>
+                                </div>
+                                <div class="property-item">
+                                    <span class="property-label">Property Size</span>
+                                    <span class="property-value" id="info-size">: 1,230</span>
+                                </div>
+                                <div class="property-item">
+                                    <span class="property-label">Current Price / sqm</span>
+                                    <span class="property-value" id="current-price-sqm">: Calculated</span>
+                                </div>
+                                <div class="property-item">
+                                    <span class="property-label">2026 Price / sqm</span>
+                                    <span class="property-value" id="price-2026">: Projected</span>
+                                </div>
+                                <div class="property-item">
+                                    <span class="property-label">2025 Price / sqm</span>
+                                    <span class="property-value" id="price-2025">: 100</span>
+                                </div>
+                                <div class="property-item">
+                                    <span class="property-label">2024 Price / sqm</span>
+                                    <span class="property-value" id="price-2024">: 85</span>
+                                </div>
+                                <div class="property-item">
+                                    <span class="property-label">2023 Price / sqm</span>
+                                    <span class="property-value" id="price-2023">: 73</span>
+                                </div>
+                                <div class="property-item">
+                                    <span class="property-label">2022 Price / sqm</span>
+                                    <span class="property-value" id="price-2022">: 61</span>
+                                </div>
+                                <div class="property-item">
+                                    <span class="property-label">2021 Price / sqm</span>
+                                    <span class="property-value" id="price-2021">: 52</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button class="btn-clear" onclick="clearResults()">Clear</button>
+                        <button class="btn-download" onclick="downloadReport()">Download</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Historical price data for Tarlac City (based on your research) - CORRECTED
+        const TARLAC_PRICE_DATA = {
+            2021: 52,  // ₱52 per sqm
+            2022: 61,  // ₱61 per sqm
+            2023: 73,  // ₱73 per sqm
+            2024: 85,  // ₱85 per sqm
+            2025: 100  // ₱100 per sqm (current BIR rate)
+        };
+
+        // Linear Regression Implementation - FIXED CALCULATION
+        function calculateLinearRegression(data) {
+            const n = data.length;
+            let sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
+            
+            // Calculate sums for linear regression formula: Y = a + bX
+            data.forEach((point, index) => {
+                const x = index; // Year index (0, 1, 2, 3, 4 for 2021-2025)
+                const y = point.value; // Price per sqm value
+                sumX += x;
+                sumY += y;
+                sumXY += x * y;
+                sumXX += x * x;
+            });
+            
+            // Calculate slope (b) and intercept (a) using proper linear regression formula
+            const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+            const intercept = (sumY - slope * sumX) / n;
+            
+            return { slope, intercept };
+        }
+
+        // Estimate future price using linear regression - CORRECTED LOGIC
+        function estimatePrice(currentPrice, propertySize, address) {
+            // Convert historical data to regression format (2021-2025)
+            const years = Object.keys(TARLAC_PRICE_DATA);
+            const regressionData = years.map((year, index) => ({
+                year: parseInt(year),
+                value: TARLAC_PRICE_DATA[year] // Price per sqm
+            }));
+            
+            // Calculate linear regression for price per sqm trend
+            const regression = calculateLinearRegression(regressionData);
+            
+            // Predict 2026 price per sqm using regression
+            const nextYearIndex = 5; // 2026 would be index 5 (after 0,1,2,3,4)
+            const predicted2026PricePerSqm = regression.intercept + (regression.slope * nextYearIndex);
+            
+            // Calculate CURRENT price per sqm from user input
+            const currentPricePerSqm = currentPrice / propertySize;
+            
+            // Calculate estimated TOTAL property price for 2026
+            const estimatedTotalPrice = predicted2026PricePerSqm * propertySize;
+            
+            // Calculate profit projection (difference between estimated and current total price)
+            const profitProjection = estimatedTotalPrice - currentPrice;
+            
+            // Calculate percentage growth
+            const percentageGrowth = ((estimatedTotalPrice - currentPrice) / currentPrice) * 100;
+            
+            return {
+                estimatedPrice: Math.round(estimatedTotalPrice),
+                profitProjection: Math.round(profitProjection),
+                predicted2026PricePerSqm: Math.round(predicted2026PricePerSqm),
+                currentPricePerSqm: Math.round(currentPricePerSqm),
+                percentageGrowth: Math.round(percentageGrowth * 100) / 100, // Round to 2 decimal places
+                regressionData: regressionData
+            };
+        }
+
+        // Draw the price chart - PERFECT ALIGNMENT WITH YEAR LABELS
+        function drawChart(data, estimationResult, propertySize) {
+            const svg = document.querySelector('.chart-svg');
+            const priceLine = document.getElementById('price-line');
+            const priceArea = document.getElementById('price-area');
+            const pointsContainer = document.getElementById('chart-points');
+            
+            // Clear existing points
+            pointsContainer.innerHTML = '';
+            
+            // Get actual container dimensions for responsive sizing
+            const chartContainer = document.querySelector('.price-chart');
+            const containerWidth = chartContainer.offsetWidth;
+            const containerHeight = chartContainer.offsetHeight; /* NO REDUCTION - use full height */
+            
+            // Chart dimensions - FIXED CHART SIZE
+            const width = containerWidth;
+            const height = 300; // FIXED HEIGHT, not dependent on container
+            const paddingLeft = 15;   // MATCH CHART CONTENT PADDING
+            const paddingRight = 15;  // MATCH CHART CONTENT PADDING
+            const paddingTop = 20;    
+            const paddingBottom = 20; 
+            const chartWidth = width - paddingLeft - paddingRight;
+            const chartHeight = height - paddingTop - paddingBottom;
+            
+            // Get price range for scaling
+            const prices = data.map(d => d.value);
+            prices.push(estimationResult.predicted2026PricePerSqm);
+            prices.push(estimationResult.currentPricePerSqm);
+            
+            const minPrice = Math.min(...prices) * 0.9;
+            const maxPrice = Math.max(...prices) * 1.1;
+            
+            // PERFECT ALIGNMENT: Calculate exact positions to match year labels
+            // Year labels use justify-content: space-between, so we match that exactly
+            const totalPoints = 6; // 2021, 2022, 2023, 2024, 2025, 2026
+            const positions = [];
+            
+            // First point at left edge, last point at right edge, others evenly spaced
+            for (let i = 0; i < totalPoints; i++) {
+                if (i === 0) {
+                    positions.push(paddingLeft); // First point at left edge
+                } else if (i === totalPoints - 1) {
+                    positions.push(width - paddingRight); // Last point at right edge
+                } else {
+                    // Evenly distribute middle points
+                    const progress = i / (totalPoints - 1);
+                    positions.push(paddingLeft + (progress * chartWidth));
+                }
+            }
+            
+            // Generate path coordinates - HISTORICAL DATA POINTS
+            let pathD = '';
+            let areaD = '';
+            const points = [];
+            
+            data.forEach((point, index) => {
+                const x = positions[index]; // Use calculated exact positions
+                const y = paddingTop + (chartHeight - ((point.value - minPrice) / (maxPrice - minPrice)) * chartHeight);
+                
+                if (index === 0) {
+                    pathD += `M ${x} ${y}`;
+                    areaD += `M ${x} ${y}`;
+                } else {
+                    pathD += ` L ${x} ${y}`;
+                    areaD += ` L ${x} ${y}`;
+                }
+                
+                points.push({ x, y, value: point.value, year: point.year });
+            });
+            
+            // Add projected point for 2026 - PERFECTLY ALIGNED WITH LAST LABEL
+            const projX = positions[5]; // Use exact last position
+            const projY = paddingTop + (chartHeight - ((estimationResult.predicted2026PricePerSqm - minPrice) / (maxPrice - minPrice)) * chartHeight);
+            pathD += ` L ${projX} ${projY}`;
+            areaD += ` L ${projX} ${projY} L ${projX} ${height - paddingBottom} L ${paddingLeft} ${height - paddingBottom} Z`;
+            
+            // Update SVG to use actual container dimensions
+            svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+            svg.setAttribute('width', width);
+            svg.setAttribute('height', height);
+            
+            // Update SVG elements
+            priceLine.setAttribute('d', pathD);
+            priceArea.setAttribute('d', areaD);
+            
+            // Add data points - PERFECTLY POSITIONED
+            const pointRadius = Math.max(4, Math.min(8, containerWidth / 100));
+            
+            points.forEach(point => {
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', point.x);
+                circle.setAttribute('cy', point.y);
+                circle.setAttribute('r', pointRadius);
+                circle.classList.add('chart-point');
+                circle.innerHTML = `<title>${point.year}: ₱${point.value}/sqm</title>`;
+                pointsContainer.appendChild(circle);
+            });
+            
+            // Add projected point for 2026 - EXACTLY ALIGNED
+            const projCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            projCircle.setAttribute('cx', projX);
+            projCircle.setAttribute('cy', projY);
+            projCircle.setAttribute('r', pointRadius + 2);
+            projCircle.classList.add('projected-point');
+            projCircle.innerHTML = `<title>2026 Projected: ₱${estimationResult.predicted2026PricePerSqm}/sqm</title>`;
+            pointsContainer.appendChild(projCircle);
+            
+            // Debug: Log positions for verification
+            console.log('Chart alignment debug:', {
+                containerWidth: containerWidth,
+                positions: positions,
+                yearLabels: ['2021', '2022', '2023', '2024', '2025', '2026']
+            });
+        }
+
+        // Clear form function
+        function clearForm() {
+            document.getElementById('name').value = '';
+            document.getElementById('address').value = '';
+            document.getElementById('property-size').value = '';
+            document.getElementById('current-price').value = '';
+        }
+
+        // Perform estimation with linear regression
+        function performEstimation() {
+            // Get input values
+            const name = document.getElementById('name').value;
+            const address = document.getElementById('address').value;
+            const propertySize = parseFloat(document.getElementById('property-size').value);
+            const currentPrice = parseFloat(document.getElementById('current-price').value);
+            
+            // Validate inputs
+            if (!name || !address || !propertySize || !currentPrice) {
+                alert('Please fill in all fields before estimating');
+                return;
+            }
+            
+            // Perform linear regression estimation - FIXED CALCULATION
+            const estimation = estimatePrice(currentPrice, propertySize, address);
+            
+            // Validate estimation results
+            if (estimation.estimatedPrice <= 0 || isNaN(estimation.estimatedPrice)) {
+                alert('Error in price calculation. Please check your input values.');
+                return;
+            }
+            
+            // Update display values - SHOW CORRECT AMOUNTS
+            document.getElementById('current-price-display').textContent = 
+                '₱ ' + currentPrice.toLocaleString();
+            document.getElementById('estimated-price-display').textContent = 
+                '₱ ' + estimation.estimatedPrice.toLocaleString();
+            document.getElementById('profit-projection-display').textContent = 
+                '₱ ' + estimation.profitProjection.toLocaleString();
+            
+            // Update property info - CORRECTED TO SHOW PROPER VALUES
+            document.getElementById('info-name').textContent = ': ' + name;
+            document.getElementById('info-address').textContent = ': ' + address;
+            document.getElementById('info-size').textContent = ': ' + propertySize.toLocaleString();
+            document.getElementById('current-price-sqm').textContent = ': ₱' + estimation.currentPricePerSqm + '/sqm';
+            document.getElementById('price-2026').textContent = ': ₱' + estimation.predicted2026PricePerSqm + '/sqm (Projected)';
+            document.getElementById('price-2025').textContent = ': ₱' + TARLAC_PRICE_DATA[2025] + '/sqm';
+            document.getElementById('price-2024').textContent = ': ₱' + TARLAC_PRICE_DATA[2024] + '/sqm';
+            
+            // Draw the chart with correct estimation data
+            drawChart(estimation.regressionData, estimation, propertySize);
+            
+            // REDRAW ON WINDOW RESIZE FOR RESPONSIVENESS  
+            window.addEventListener('resize', function() {
+                drawChart(estimation.regressionData, estimation, propertySize);
+            });
+            
+            console.log('Estimation Details:', {
+                currentPrice: currentPrice,
+                propertySize: propertySize,
+                currentPricePerSqm: estimation.currentPricePerSqm,
+                predicted2026PricePerSqm: estimation.predicted2026PricePerSqm,
+                estimatedTotalPrice: estimation.estimatedPrice,
+                profitProjection: estimation.profitProjection,
+                percentageGrowth: estimation.percentageGrowth + '%'
+            });
+            
+            // Show results
+            document.getElementById('form-page').classList.add('hidden');
+            document.getElementById('results-section').classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Clear results function
+        function clearResults() {
+            document.getElementById('results-section').classList.remove('active');
+            document.getElementById('form-page').classList.remove('hidden');
+            clearForm();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Download report function
+        function downloadReport() {
+            const name = document.getElementById('info-name').textContent.replace(': ', '');
+            const address = document.getElementById('info-address').textContent.replace(': ', '');
+            const currentPrice = document.getElementById('current-price-display').textContent;
+            const estimatedPrice = document.getElementById('estimated-price-display').textContent;
+            const profit = document.getElementById('profit-projection-display').textContent;
+            
+            const report = `
+REAL ESTATE PRICE ESTIMATION REPORT
+===================================
+Generated: ${new Date().toLocaleDateString()}
+System: Linear Regression Analysis
+
+PROPERTY INFORMATION:
+--------------------
+Owner Name: ${name}
+Property Address: ${address}
+Property Size: ${document.getElementById('info-size').textContent.replace(': ', '')} sqm
+
+PRICE ANALYSIS:
+--------------
+Current Market Price: ${currentPrice}
+Estimated Price (2026): ${estimatedPrice}
+Projected Profit: ${profit}
+
+HISTORICAL PRICE DATA (Tarlac City BIR):
+---------------------------------------
+2021 Price/sqm: ₱${TARLAC_PRICE_DATA[2021]}
+2022 Price/sqm: ₱${TARLAC_PRICE_DATA[2022]}
+2023 Price/sqm: ₱${TARLAC_PRICE_DATA[2023]}
+2024 Price/sqm: ₱${TARLAC_PRICE_DATA[2024]}
+2025 Price/sqm: ₱${TARLAC_PRICE_DATA[2025]}
+
+METHODOLOGY:
+-----------
+This estimation uses Linear Regression analysis based on historical
+Bureau of Internal Revenue (BIR) pricing data for Tarlac City.
+The algorithm calculates future price trends using the formula:
+Y = a + bX (where Y = price, X = time, a = intercept, b = slope)
+
+DISCLAIMER:
+-----------
+This estimation is for reference only and actual market conditions
+may vary. Please consult with real estate professionals for
+investment decisions.
+
+Generated by Real Estate Management System with Price Estimation Module
+            `;
+            
+            // Create downloadable file
+            const blob = new Blob([report], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Price_Estimation_Report_${name.replace(/\s+/g, '_')}_${new Date().getTime()}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            alert('Price estimation report downloaded successfully!');
+        }
+
+        // Initialize chart on page load
+        window.addEventListener('load', function() {
+            // Pre-populate with sample data for demonstration
+            const sampleData = Object.keys(TARLAC_PRICE_DATA).map(year => ({
+                year: parseInt(year),
+                value: TARLAC_PRICE_DATA[year]
+            }));
+            
+            // You can uncomment this to show a default chart
+            // drawChart(sampleData, 170000, 1230);
+        });
+
+        // Settings and utility functions (if needed)
+        function toggleSettingsDropdown() {
+            console.log('Settings clicked');
+        }
+
+        function confirmLogout() {
+            if (confirm('Are you sure you want to log out?')) {
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>

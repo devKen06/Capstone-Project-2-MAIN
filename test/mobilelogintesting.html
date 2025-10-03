@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="icon" href="assets/favicon.ico" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/v4-shims.min.css" />
+  <title>Login | Price Estimation</title>
+  <style>
+    /* ===========================================
+            LOGIN PAGE STYLES
+   =========================================== */
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    /* Container for logo and text */
+    .logo-container {
+        position: fixed;          /* Fixes the logo at the top of page */
+        top: 0;                   /* Zero distance from top edge */
+        left: 0;                  /* Zero distance from left edge */
+        display: flex;            /* Put image and text side by side */
+        align-items: center;      /* Vertically center logo and text */
+        padding: 10px;           /* Add some padding around logo */
+        background-color: white;  /* White background for visibility */
+        z-index: 999;            /* Stay above all other content */
+    }
+
+    /* Logo image styling */
+    .logo-container img {
+        height: 40px;              /* Set height for proportional size */
+        width: auto;               /* Maintain aspect ratio */
+        margin-right: 10px;        /* Add space between logo and text */
+        object-fit: contain;       /* Ensure image fits without stretching */
+        color: #0044cc;           /* Blue color for logo */
+    }
+
+    /* Logo text styling */
+    .logo-container span {
+        font-size: 30px;          /* Large text size */
+        color: #0044cc;           /* Blue color matching logo */
+        font-weight: bold;        /* Make text bold */
+    }
+
+    /* Main container for login page */
+    .login-container {
+        display: flex;            /* Split page into two sections */
+        height: 100vh;            /* Full viewport height */
+        width: 100vw;             /* Full viewport width */
+        overflow: hidden;         /* Prevent scrolling */
+    }
+
+    /* Left section containing login form */
+    .login-section {
+        width: 50%;               /* Take up half the screen */
+        padding: 40px;            /* Add padding inside section */
+        display: flex;            /* Use flexbox for centering */
+        flex-direction: column;   /* Stack items vertically */
+        justify-content: center;  /* Center items vertically */
+        align-items: center;      /* Center items horizontally */
+        background-color: #fff;   /* White background */
+    }
+
+    /* Logo image in login section */
+    .login-section img {
+        width: 150px;             /* Set specific width for logo */
+        margin-bottom: 20px;      /* Space below logo */
+    }
+
+    /* Paragraph text in login section */
+    .login-section p {
+        margin-bottom: 20px;      /* Space below paragraph */
+        font-size: 25px;          /* Large text size */
+        color: #0011ff;           /* Blue color for text */
+    }
+
+    /* Main heading in login section */
+    .login-section h1 {
+        margin-bottom: 50px;      /* Large space below heading */
+        font-size: 60px;          /* Very large text size */
+        color: #000000;           /* Blue color for heading */
+        text-align: center;       /* Center the heading */
+    }
+
+    /* Container for form labels and inputs */
+    .label-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Center labels and inputs horizontally */
+      padding-bottom: 15px;
+      width: 100%;
+    }
+
+    /* Input fields in login form */
+    .label-container input {
+      width: 100%;
+      max-width: 400px;        /* Prevents full width stretching */
+      font-size: 20px;
+      padding: 10px;
+      margin-bottom: 15px;
+      background-color: #f9f9f9; /* Light gray background */
+      transition: border-color 0.3s ease; /* Smooth border transition */
+      color: #000000;
+      border-radius: 5px;
+      border: 2px solid #ccc;
+      box-sizing: border-box;
+      height: 60px;
+    }
+
+    /* Labels for input fields */
+    .label-container label {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 1px;
+      text-align: left;
+      width: 100%;
+      max-width: 400px;
+    }
+    .label-container label:hover {
+      color: #0044cc;
+    }
+    /* Individual buttons in login section */
+    .login-section button {
+        width: 20%;               /* Set button width */
+        height: 50px;             /* Set button height */
+        font-size: 20px;          /* Large text size */
+        padding: 10px;            /* Padding inside button */
+        background-color: #0044cc; /* Blue background */
+        color: white;             /* White text */
+        border: none;             /* Remove default border */
+        border-radius: 5px;       /* Rounded corners */
+        cursor: pointer;          /* Show pointer on hover */
+    }
+
+    /* Hover effect for individual buttons */
+    .login-section button:hover {
+        background-color: #001d9e; /* Darker blue on hover */
+    }
+
+    /* Container for multiple buttons */
+    .button-group {
+      display: flex;              /* Arrange buttons horizontally */
+      width: 40%;                 /* Set container width */
+      gap: 100px;                 /* Add space between buttons */
+      padding-top: 30px;          /* Add top padding */
+    }
+
+    /* Buttons within button group */
+    .button-group button {
+      flex: 1;                    /* Make both buttons equal width */
+      padding: 10px;              /* Padding inside buttons */
+      background-color: #0044cc;  /* Blue background */
+      color: white;               /* White text */
+      border: none;               /* Remove default border */
+      border-radius: 5px;         /* Rounded corners */
+      cursor: pointer;            /* Show pointer on hover */
+      transition: transform 0.3s ease; /* Smooth hover transition */
+    }
+
+    /* Hover effect for button group buttons */
+    .button-group button:hover {
+      background-color: #001d9e; /* Lighter blue on hover */
+    }
+
+    /* Right section with background image */
+    .image-section {
+        width: 50%;               /* Take up half the screen */
+        background-image: url('assets/login-bg.png'); /* Background image */
+        background-size: cover;    /* Cover entire section */
+        background-position: center; /* Center the image */
+    }
+
+    /* ===========================================
+            MOBILE MEDIA QUERY
+   =========================================== */
+    @media (max-width: 480px) {
+        /* Make body use the background image for full screen */
+        body {
+            background-image: url('assets/login-bg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            height: 100vh;
+            padding: 0;
+        }
+
+        /* Logo container - positioned absolutely at top */
+        .logo-container {
+            position: absolute;
+            top: 20px; /* Close to the top */
+            left: 0;
+            right: 0;
+            background: transparent;
+            justify-content: center;
+            padding: 10px 0;
+            z-index: 999;
+        }
+
+        .logo-container img {
+            display: block; /* Show the logo image */
+            filter: brightness(0) invert(1); /* Make it white */
+            padding-top: 10px;
+            height: 50px;
+            width: auto;
+            margin-right: 10px;
+            object-fit: contain;
+            content: url('assets/reverse-logo-removebg-preview.png'); /* Use white version of logo */
+        }
+
+        /* Remove the Font Awesome icon */
+        .logo-container::before {
+            display: none;
+        }
+
+        .logo-container span {
+            color: white; /* Make text white */
+        }
+
+        /* Login container - perfectly centered independent of logo */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+            padding: 20px;
+        }
+
+        /* Center the login section as a white card */
+        .login-section {
+            width: 320px;
+            max-width: 90%;
+            padding: 30px 25px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Hide the image section since body has the background */
+        .image-section {
+            display: none;
+        }
+
+        /* Adjust heading size for mobile */
+        .login-section h1 {
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
+
+        /* Adjust input styling for mobile */
+        .label-container input {
+            max-width: 100%;
+            font-size: 16px;
+            height: 50px;
+        }
+
+        .label-container label {
+            font-size: 14px;
+            max-width: 100%;
+        }
+
+        /* Adjust button group for mobile */
+        .button-group {
+            width: 100%;
+            gap: 15px;
+        }
+
+        .button-group button {
+            height: 45px;
+            font-size: 16px;
+        }
+
+        /* Make error message smaller on mobile */
+        #error-msg {
+            font-size: 15px;
+        }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="logo-container">
+    <img src="assets/logo.png" alt="Real Estate System Logo" class="logo" />
+    <span>Price Estimation</span>
+  </div>
+   
+  <div class="login-container">
+    <div class="login-section">
+      <h1 class="login-header">Log in to <br> Price Estimation</h1>
+      <div class="label-container">
+        <label for="username">Username/Email</label><br />
+        <input type="text" id="username" class="login-input" required /><br />
+        <label for="password">Password</label><br />
+        <input type="password" id="password" class="login-input" required />
+      </div>
+       
+      <p id="error-msg" style="color: red; margin-top: 10px;"></p>
+       
+      <div class="button-group">
+        <button type="button" onclick="login()">Login</button>
+        <button type="button" onclick="location.href='register.html'">Register</button>
+      </div>
+    </div>
+     
+    <div class="image-section">
+      <img src="assets/login-bg.png" alt="Login Background Illustration" />
+    </div>
+  </div>
+   
+  <script>
+    // Temporary hardcoded login (replace with Firebase later)
+    const dummyAccount = {
+      username: "123456",
+      password: "123456"
+    };
+     
+    function login() {
+      const usernameInput = document.getElementById("username").value.trim();
+      const passwordInput = document.getElementById("password").value.trim();
+      const errorMsg = document.getElementById("error-msg");
+       
+      if (usernameInput === dummyAccount.username && passwordInput === dummyAccount.password) {
+        alert("Login successful!");
+        // Redirect to dashboard (later, after login is functional)
+        // window.location.href = "dashboard.html";
+      } else {
+        errorMsg.textContent = "Invalid username/email or password.";
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+
+/* ---------- STATS ---------- */
+.stats-container {
+    background: url('/assets/register-bg.png') no-repeat center center;
+    background-size: cover;
+    color: white;
+    border-radius: 10px;
+    padding: 30px;
+    margin-top: 18px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* This creates the outer shadow */    
+    margin-bottom: 30px;
+    margin: 18px 20px 30px 20px; /* top, right, bottom, left */
+
+
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns per row */
+    gap: 20px;
+    padding-bottom: 50px;
+    text-align: center;
+}
+
+.stat-item .stat-number {
+    font-size: 50px;
+    font-weight: bold;
+    padding-top: 50px;
+}
+
+.stat-item .stat-label {
+    margin-top: 5px;
+    font-size: 25px;
+}
+
+/* ---------- TASKS ---------- */
+.tasks-section h3 {
+    font-size: 25px;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    padding-top: 10px;
+}
+
+.tasks-grid {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.task-card {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    padding: 15px 20px;
+    flex: 1;
+    min-width: 200px;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+    margin: 18px 30px 30px 30px; /* top, right, bottom, left */
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.task-badge {
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+.task-list {
+    list-style: decimal;
+    padding-left: 20px;
+}
+
+.task-list li {
+    margin-bottom: 8px;
+}
+.top-nav-icons button {
+    font-size: 30px;
+}
