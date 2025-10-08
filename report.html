@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/v4-shims.min.css" />
     <link rel="stylesheet" href="css/report.css" />
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/settings-dropdown.css" />
+    <link rel="stylesheet" href="css/setting.css" />
     <title>Report | Price Estimation</title>
     
 </head>
@@ -17,22 +17,47 @@
     <!-- Top Navigation -->
     <div class="top-nav">
         <h1>
-            <span class="logo"></span><!-- Add your arrow logo here -->
+            <span class="logo"></span>
             Price Estimation
         </h1>
         <div class="top-nav-icons">
-            <button class="icon-btn" onclick="toggleSettingsDropdown()" title="Settings" id="settingsButton">
-                <i class="fas fa-cog"></i>
-                <div class="settings-dropdown" id="settingsDropdown">
-                    <div class="settings-header">Settings</div>
-                    <div class="dropdown-item" onclick="openPasswordSettings()">Password</div>
-                    <div class="dropdown-item" onclick="openAppearanceSettings()">Appearance</div>
-                    <div class="dropdown-item" onclick="openNotificationSettings()">Notification</div>
-                    <div class="dropdown-item" onclick="openAboutUs()">About Us</div>
-                    <div class="dropdown-item logout" onclick="confirmLogout()">Log out</div>
+            <a href="setting.html">
+            <button class="icon-btn"><i class="fas fa-cog"></i></button></a>
+            <div class="user-dropdown">
+                <button class="icon-btn" onclick="toggleUserDropdown()">
+                    <i class="fas fa-user-circle"></i>
+                </button>
+                <div class="dropdown-content" id="userDropdown">
+                    <div class="dropdown-header">
+                        <div class="dropdown-profile-pic">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="dropdown-user-name">John Doe</div>
+                        <div class="dropdown-user-email">john.doe@example.com</div>
+                    </div>
+                    <div class="dropdown-body">
+                        <button class="dropdown-logout-btn" onclick="showLogoutModal()">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Log out User
+                        </button>
+                    </div>
                 </div>
-            </button>
-            <button class="icon-btn"><i class="fas fa-user-circle"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <h2>Confirm Logout</h2>
+            <p>Are you sure you want to log out?</p>
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-yes" onclick="confirmLogout()">Yes</button>
+                <button class="modal-btn modal-btn-no" onclick="closeLogoutModal()">No</button>
+            </div>
         </div>
     </div>
 
@@ -172,6 +197,6 @@
         </div>
     </main>
     <script src="script/report.js"></script>
-    <script src="script/settings-dropdown.js"></script>
+    <script src="script/setting.js"></script>
 </body>
 </html>
