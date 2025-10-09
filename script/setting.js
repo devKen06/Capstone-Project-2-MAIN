@@ -1,42 +1,67 @@
-       // Toggle User Dropdown
-        function toggleUserDropdown() {
-            const dropdown = document.getElementById('userDropdown');
-            dropdown.classList.toggle('show');
-        }
+// Toggle User Dropdown
+function toggleUserDropdown() {
+    const dropdown = document.getElementById('userDropdown');
+    dropdown.classList.toggle('show');
+}
 
-        // Close dropdown when clicking outside
-        window.onclick = function(event) {
-            if (!event.target.matches('.icon-btn') && !event.target.matches('.fa-user-circle')) {
-                const dropdown = document.getElementById('userDropdown');
-                if (dropdown.classList.contains('show')) {
-                    dropdown.classList.remove('show');
-                }
-            }
-        }
+// Close dropdown when clicking outside
+document.addEventListener('click', function(event) {
+    const dropdown = document.getElementById('userDropdown');
+    const userBtn = event.target.closest('.user-dropdown');
+    
+    if (!userBtn && dropdown) {
+        dropdown.classList.remove('show');
+    }
+});
 
-        // Show Logout Modal
-        function showLogoutModal() {
-            const modal = document.getElementById('logoutModal');
-            modal.classList.add('show');
-            // Close the dropdown
-            document.getElementById('userDropdown').classList.remove('show');
-        }
+// Show Logout Modal
+function showLogoutModal() {
+    const modal = document.getElementById('logoutModal');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+    // Close the user dropdown
+    const dropdown = document.getElementById('userDropdown');
+    if (dropdown) {
+        dropdown.classList.remove('show');
+    }
+}
 
-        // Close Logout Modal
-        function closeLogoutModal() {
-            const modal = document.getElementById('logoutModal');
-            modal.classList.remove('show');
-        }
+// Close Logout Modal
+function closeLogoutModal() {
+    const modal = document.getElementById('logoutModal');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
 
-        // Confirm Logout
-        function confirmLogout() {
-            // Add your logout logic here
-            // For example: redirect to login page
-            window.location.href = 'login.html';
-        }
+// Confirm Logout
+function confirmLogout() {
+    fetch('logout.php', {
+        method: 'POST'
+    })
+    .then(response => response.json())
+    .then(data => {
+        localStorage.removeItem('loggedIn');
+        localStorage.removeItem('user');
+        window.location.href = 'index.html';
+    })
+    .catch(error => {
+        console.error('Logout error:', error);
+        // Still logout locally even if server request fails
+        localStorage.removeItem('loggedIn');
+        localStorage.removeItem('user');
+        window.location.href = 'index.html';
+    });
+}
 
-        // Password Form Handler
-        document.getElementById('passwordForm').addEventListener('submit', function(e) {
+// Password Form Handler
+document.addEventListener('DOMContentLoaded', function() {
+    const passwordForm = document.getElementById('passwordForm');
+    if (passwordForm) {
+        passwordForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
             const currentPassword = document.getElementById('currentPassword').value;
@@ -59,48 +84,54 @@
             // Reset form
             this.reset();
         });
+    }
 
-        // Theme Selection
-        document.querySelectorAll('.theme-option').forEach(option => {
-            option.addEventListener('click', function() {
-                document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('active'));
-                this.classList.add('active');
-            });
+    // Theme Selection
+    document.querySelectorAll('.theme-option').forEach(option => {
+        option.addEventListener('click', function() {
+            document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('active'));
+            this.classList.add('active');
         });
+    });
+});
 
-        // Save Appearance
-        function saveAppearance() {
-            const selectedTheme = document.querySelector('.theme-option.active').dataset.theme;
-            
-            showSuccessMessage();
-        }
+// Save Appearance
+function saveAppearance() {
+    const selectedTheme = document.querySelector('.theme-option.active').dataset.theme;
+    
+    showSuccessMessage();
+}
 
-        // Save Notifications
-        function saveNotifications() {
-            const emailNotif = document.getElementById('emailNotif').checked;
-            const pushNotif = document.getElementById('pushNotif').checked;
-            const taskReminders = document.getElementById('taskReminders').checked;
-            const leadAlerts = document.getElementById('leadAlerts').checked;
-            const dealUpdates = document.getElementById('dealUpdates').checked;
-            
-            showSuccessMessage();
-        }
+// Save Notifications
+function saveNotifications() {
+    const emailNotif = document.getElementById('emailNotif').checked;
+    const pushNotif = document.getElementById('pushNotif').checked;
+    const taskReminders = document.getElementById('taskReminders').checked;
+    const leadAlerts = document.getElementById('leadAlerts').checked;
+    const dealUpdates = document.getElementById('dealUpdates').checked;
+    
+    showSuccessMessage();
+}
 
-        // Show Success Message
-        function showSuccessMessage() {
-            const successMsg = document.getElementById('successMessage');
-            successMsg.classList.add('show');
-            
-            setTimeout(() => {
-                successMsg.classList.remove('show');
-            }, 3000);
+// Show Success Message
+function showSuccessMessage() {
+    const successMsg = document.getElementById('successMessage');
+    if (successMsg) {
+        successMsg.classList.add('show');
+        
+        setTimeout(() => {
+            successMsg.classList.remove('show');
+        }, 3000);
 
-            // Scroll to top to show message
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        // Scroll to top to show message
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
 
-        // Smooth scroll to sections
-        function scrollToSection(sectionId) {
-            const section = document.getElementById(sectionId);
-            section.scrollIntoView({ behavior: 'smooth' });
-        }
+// Smooth scroll to sections
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+    }
+}
