@@ -1,455 +1,1454 @@
+/* Property Management Styles */
+
+.property-content {
+    padding: 20px;
+}
+
+.action-bar {
+    display: none; /* Hide the old action bar */
+}
+
+.btn-add-property {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.btn-add-property:hover {
+    background-color: #0056b3;
+}
+
+.btn-cancel {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-cancel:hover {
+    background-color: #545b62;
+}
+
+/* Add Property Form */
+.add-property-form {
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.add-property-form h2 {
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.form-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.form-section h3 {
+    color: #001d9e;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn-save {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-save:hover {
+    background-color: #218838;
+}
+
+/* Property List */
+.search-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.search-box {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.search-box button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-box button:hover {
+    background-color: #0056b3;
+}
+
+.filter-box select {
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Property Table */
+.table-container {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.property-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.property-table thead {
+    background-color: #001d9e;
+    color: white;
+}
+
+.property-table th {
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.property-table tbody tr {
+    border-bottom: 1px solid #dee2e6;
+    transition: background-color 0.2s;
+}
+
+.property-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.property-table td {
+    padding: 15px;
+}
+
+/* Status/Tags Badge Colors */
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-new-lead {
+    background-color: #00BCD4;
+    color: white;
+}
+
+.status-proposal {
+    background-color: #2196F3;
+    color: white;
+}
+
+.status-follow-up {
+    background-color: #9E9E9E;
+    color: white;
+}
+
+.status-on-progress {
+    background-color: #FFC107;
+    color: #212529;
+}
+
+.status-negotiation {
+    background-color: #9C27B0;
+    color: white;
+}
+
+.status-signing-contract {
+    background-color: #FF9800;
+    color: white;
+}
+
+.status-not-interested {
+    background-color: #F44336;
+    color: white;
+}
+
+.status-closed-deal {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Legacy status classes for backwards compatibility */
+.status-available {
+    background-color: #28a745;
+    color: white;
+}
+
+.status-sold {
+    background-color: #dc3545;
+    color: white;
+}
+
+.status-rented {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.status-pending {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-action {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-edit {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #0056b3;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
+/* Detail View Styles */
+.detail-view {
+    display: none;
+}
+
+.tab-navigation {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.tab-container {
+    display: flex;
+    border: 2px solid #001d9e;
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.tab-button {
+    padding: 12px 30px;
+    background-color: white;
+    color: #001d9e;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.tab-button.active {
+    background-color: #001d9e;
+    color: white;
+}
+
+.tab-button:hover:not(.active) {
+    background-color: #f0f0f0;
+}
+
+.tab-content {
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Lead Information */
+.lead-info-container {
+    background-color: white;
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.lead-info-row {
+    display: flex;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.lead-info-label {
+    font-weight: 600;
+    width: 150px;
+    color: #333;
+}
+
+.lead-info-value {
+    flex: 1;
+    color: #555;
+}
+
+/* Property Information */
+.property-info-section {
+    margin-top: 30px;
+}
+
+.property-info-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.property-info-container {
+    background-color: white;
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    padding: 30px;
+}
+
+.property-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.property-info-item {
+    display: flex;
+    align-items: center;
+}
+
+.property-info-item label {
+    font-weight: 600;
+    width: 140px;
+    color: #333;
+}
+
+.property-info-item span {
+    color: #555;
+}
+
+/* Notes Section */
+.notes-section {
+    margin-top: 30px;
+}
+
+.notes-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.notes-textarea-editable {
+    width: 100%;
+    min-height: 150px;
+    padding: 15px;
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+    resize: vertical;
+    font-family: inherit;
+    background-color: #f8f9fa;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.notes-textarea-editable:focus {
+    outline: none;
+    border-color: #007bff;
+    background-color: white;
+}
+
+.notes-save-indicator {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    color: #28a745;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.notes-save-indicator i {
+    font-size: 16px;
+}
+
+/* Activities Tab */
+.activities-header {
+    background-color: white;
+    padding: 20px;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 20px;
+}
+
+.task-assigned {
+    font-size: 16px;
+    color: #555;
+}
+
+.task-list {
+    margin-bottom: 30px;
+}
+
+.task-item {
+    background-color: white;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.task-tabs-section {
+    margin-top: 30px;
+}
+
+.task-tabs {
+    display: flex;
+    background-color: #001d9e;
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+}
+
+.task-tab {
+    flex: 1;
+    padding: 15px;
+    color: white;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s;
+}
+
+.task-tab:hover {
+    background-color: #0056b3;
+}
+
+.task-tab.active {
+    background-color: #0056b3;
+}
+
+.task-tab-badge {
+    position: absolute;
+    top: -8px;
+    right: 15px;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.task-content {
+    background-color: white;
+    border: 2px solid #001d9e;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    padding: 30px;
+    min-height: 200px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .property-info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .search-section {
+        flex-direction: column;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Activities Tab Styles */
+.activities-content {
+    padding: 20px 0;
+}
+
+.task-assigned-info {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.task-type-tabs {
+    display: flex;
+    background-color: #001d9e;
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+.task-type-tab {
+    flex: 1;
+    padding: 15px;
+    color: white;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s;
+    font-size: 16px;
+}
+
+.task-type-tab:hover {
+    background-color: #0056b3;
+}
+
+.task-type-tab.active {
+    background-color: #0056b3;
+}
+
+.task-count-badge {
+    position: absolute;
+    top: -8px;
+    right: 15px;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.activity-tasks-container {
+    background-color: white;
+    border: 2px solid #001d9e;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    min-height: 300px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.activity-task-item {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    transition: background-color 0.2s;
+}
+
+.activity-task-item:hover {
+    background-color: #f8f9fa;
+}
+
+.activity-task-item:last-child {
+    border-bottom: none;
+}
+
+.task-content-activity {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.task-title-activity {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.task-date-activity {
+    color: #666;
+    font-size: 14px;
+}
+
+.task-assignee-activity {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #666;
+    font-size: 14px;
+}
+
+.task-details-activity {
+    display: flex;
+    gap: 15px;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.task-status-activity,
+.task-priority-activity {
+    font-weight: 600;
+}
+
+.task-notes-activity {
+    color: #666;
+    font-size: 13px;
+    font-style: italic;
+    margin-top: 5px;
+}
+
+/* Task Modal Styles */
+.activity-task-modal {
+    background-color: white;
+    border-radius: 8px;
+    padding: 30px;
+    width: 500px;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal-header {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+    font-size: 14px;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #dee2e6;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.date-time-row {
+    display: flex;
+    gap: 15px;
+}
+
+.date-time-row .form-group {
+    flex: 1;
+}
+
+.form-textarea {
+    min-height: 100px;
+    resize: vertical;
+    font-family: inherit;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.btn-create {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-create:hover {
+    background-color: #218838;
+}
+
+.btn-cancel-modal {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-cancel-modal:hover {
+    background-color: #545b62;
+}
+
+/* Add Task Button */
+.btn-add-task {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    display: none;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+    transition: background-color 0.3s;
+}
+
+.btn-add-task:hover {
+    background-color: #0056b3;
+}
+
+/* Tag Dropdown in Table */
+.tag-dropdown {
+    padding: 8px 30px 8px 12px;
+    border: none;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+    appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 12px;
+    min-width: 150px;
+}
+
+.tag-dropdown:focus {
+    outline: 2px solid rgba(0, 0, 0, 0.3);
+    outline-offset: 2px;
+}
+
+/* Color classes for dropdown */
+.tag-dropdown.status-new-lead {
+    background-color: #00BCD4;
+    color: white;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+}
+
+.tag-dropdown.status-proposal {
+    background-color: #2196F3;
+    color: white;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+}
+
+.tag-dropdown.status-follow-up {
+    background-color: #9E9E9E;
+    color: white;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+}
+
+.tag-dropdown.status-on-progress {
+    background-color: #FFC107;
+    color: #212529;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23212529' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+}
+
+.tag-dropdown.status-negotiation {
+    background-color: #9C27B0;
+    color: white;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+}
+
+.tag-dropdown.status-signing-contract {
+    background-color: #FF9800;
+    color: white;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+}
+
+.tag-dropdown.status-not-interested {
+    background-color: #F44336;
+    color: white;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+}
+
+.tag-dropdown.status-closed-deal {
+    background-color: #4CAF50;
+    color: white;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+}
+
+/* Form Header with Close Button */
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.form-header h2 {
+    margin: 0;
+    color: #333;
+}
+
+.btn-close-form {
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    color: #666;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s;
+}
+
+.btn-close-form:hover {
+    background-color: #f0f0f0;
+    color: #dc3545;
+}
+
+/* Add this to your property-management.css file */
+
+/* Sort Button Styles */
+.sort-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 4px 8px;
+    margin-left: 8px;
+    border-radius: 4px;
+    transition: all 0.3s;
+    font-size: 16px;
+}
+
+.sort-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.sort-btn i {
+    transition: transform 0.3s;
+}
+
+.sort-btn:active {
+    transform: scale(0.95);
+}
+
+/* Make the header cell with sort button flex */
+.property-table th {
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    position: relative;
+}
+
+.property-table th:has(.sort-btn) {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Add this to your property-management.css file */
+
+/* Sort Button Styles - REMOVED, replaced with filter dropdown */
+
+/* Make the header cell with sort button flex */
+.property-table th {
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    position: relative;
+}
+
+/* Tags Filter Dropdown Styles */
+.tags-filter-dropdown {
+    display: inline-block;
+    position: relative;
+    margin-left: 8px;
+}
+
+.tags-filter-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 4px;
+    transition: all 0.3s;
+    font-size: 16px;
+}
+
+.tags-filter-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.tags-filter-btn:active {
+    transform: scale(0.95);
+}
+
+.tags-filter-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    z-index: 1000;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.tags-filter-menu.show {
+    display: block;
+    animation: dropdownFade 0.2s ease-in;
+}
+
+@keyframes dropdownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.filter-option {
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.filter-option:hover {
+    background-color: #f0f0f0;
+}
+
+.filter-option:active {
+    background-color: #e0e0e0;
+}
+
+.filter-option i {
+    width: 16px;
+    color: #666;
+}
+
+.filter-badge {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.filter-divider {
+    height: 1px;
+    background-color: #dee2e6;
+    margin: 4px 0;
+}
+
+/* Tag badge colors in filter */
+.filter-badge.status-new-lead {
+    background-color: #00BCD4;
+}
+
+.filter-badge.status-proposal {
+    background-color: #2196F3;
+}
+
+.filter-badge.status-follow-up {
+    background-color: #9E9E9E;
+}
+
+.filter-badge.status-on-progress {
+    background-color: #FFC107;
+}
+
+.filter-badge.status-negotiation {
+    background-color: #9C27B0;
+}
+
+.filter-badge.status-signing-contract {
+    background-color: #FF9800;
+}
+
+.filter-badge.status-not-interested {
+    background-color: #F44336;
+}
+
+.filter-badge.status-closed-deal {
+    background-color: #4CAF50;
+}
+
+/* Tab Navigation Layout Update */
+.tab-navigation {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+/* Back Button in Detail View - Icon Only, Left Side */
+.btn-back-detail {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    transition: all 0.3s;
+    flex-shrink: 0;
+}
+
+.btn-back-detail:hover {
+    background-color: #545b62;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-back-detail:active {
+    transform: scale(0.95);
+}
+
+.btn-back-detail i {
+    font-size: 16px;
+    margin: 0;
+}
+
+/* Adjust tab container to take remaining space */
+.tab-container {
+    display: flex;
+    border: 2px solid #001d9e;
+    border-radius: 25px;
+    overflow: hidden;
+    flex: 0 0 auto;
+}
+
+/* Add Task button stays on the right */
+.btn-add-task {
+    margin-left: auto;
+}
+
+/* ============================================
+   ADD ALL OF THIS TO YOUR property-management.css FILE
+   ============================================ */
+
+/* ===== 1. SORT BUTTON STYLES ===== */
+.sort-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 4px 8px;
+    margin-left: 8px;
+    border-radius: 4px;
+    transition: all 0.3s;
+    font-size: 16px;
+}
+
+.sort-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.sort-btn i {
+    transition: transform 0.3s;
+}
+
+.sort-btn:active {
+    transform: scale(0.95);
+}
+
+/* ===== 2. DROPDOWN SORT STYLES ===== */
+.dropdown-sort {
+    display: inline-block;
+    position: relative;
+}
+
+.dropdown-sort-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    z-index: 1000;
+    top: 100%;
+    right: 0;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.dropdown-sort-content.show {
+    display: block;
+}
+
+.dropdown-sort-item {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 14px;
+}
+
+.dropdown-sort-item:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown-sort-item i {
+    color: #666;
+    font-size: 14px;
+}
+
+.dropdown-sort-divider {
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 4px 0;
+}
+
+.tag-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+/* ===== 3. TABLE HEADER WITH DROPDOWN ===== */
+.property-table th:has(.dropdown-sort) {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* ===== 4. TAB NAVIGATION UPDATE ===== */
+.tab-navigation {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+/* ===== 5. BACK BUTTON IN DETAIL VIEW ===== */
+.btn-back-detail {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    transition: all 0.3s;
+    flex-shrink: 0;
+}
+
+.btn-back-detail:hover {
+    background-color: #545b62;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-back-detail:active {
+    transform: scale(0.95);
+}
+
+.btn-back-detail i {
+    font-size: 16px;
+    margin: 0;
+}
+
+/* ===== 6. TAB CONTAINER ADJUSTMENTS ===== */
+.tab-container {
+    display: flex;
+    border: 2px solid #001d9e;
+    border-radius: 25px;
+    overflow: hidden;
+    flex: 0 0 auto;
+}
+
+/* ===== 7. ADD TASK BUTTON ALIGNMENT ===== */
+.btn-add-task {
+    margin-left: auto;
+}
+
+/* ===== 8. ALL TASKS SECTION (ACTIVITIES) ===== */
+.all-tasks-section {
+    margin-bottom: 30px;
+}
+
+.activities-section-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.all-tasks-container {
+    background-color: white;
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    padding: 15px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.all-task-item {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    transition: background-color 0.2s;
+}
+
+.all-task-item:hover {
+    background-color: #f8f9fa;
+}
+
+.all-task-item:last-child {
+    border-bottom: none;
+}
+
+.task-checkbox-all {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin-top: 3px;
+    cursor: pointer;
+}
+
+.task-content-all {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.task-title-all {
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+}
+
+.task-date-all {
+    color: #666;
+    font-size: 13px;
+}
+
+.task-assignee-all {
+    color: #666;
+    font-size: 13px;
+}
+
+.task-details-all {
+    display: flex;
+    gap: 12px;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.task-status-all,
+.task-priority-all {
+    font-weight: 600;
+}
+
+/* ===== 9. STATUS AND PRIORITY COLORS ===== */
+.task-status-all.status-not-started {
+    color: #dc3545;
+}
+
+.task-status-all.status-upcoming {
+    color: #ffc107;
+}
+
+.task-status-all.status-on-progress {
+    color: #0dcaf0;
+}
+
+.task-priority-all.priority-high {
+    color: #dc3545;
+}
+
+.task-priority-all.priority-medium {
+    color: #ffc107;
+}
+
+.task-priority-all.priority-low {
+    color: #28a745;
+}
+
+/* ===== 10. SCROLLBAR STYLING FOR ALL TASKS CONTAINER ===== */
+.all-tasks-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.all-tasks-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.all-tasks-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.all-tasks-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
 
-        .tab-navigation {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .back-button {
-            background: none;
-            border: 2px solid #666;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 18px;
-            color: #666;
-        }
-
-        .back-button:hover {
-            background-color: #f0f0f0;
-        }
-
-        .tab-container {
-            border: 2px solid #001d9e;
-            border-radius: 25px;
-            display: flex;
-            overflow: hidden;
-        }
-
-        .tab-button {
-            padding: 10px 30px;
-            background-color: white;
-            color: #001d9e;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .tab-button.active {
-            background-color: #001d9e;
-            color: white;
-        }
-
-        .tab-button:hover:not(.active) {
-            background-color: #f0f0f0;
-        }
-
-        /* ---------- SCROLLABLE CONTENT ---------- */
-        .scrollable-content {
-            padding: 20px;
-        }
-
-        /* ---------- MANAGEMENT TABLE ---------- */
-        .management-container {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .table-container {
-            overflow-x: auto;
-        }
-
-        .management-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 16px;
-        }
-
-        .management-table thead {
-            background-color: #001d9e;
-            color: white;
-        }
-
-        .management-table th {
-            padding: 15px 20px;
-            text-align: left;
-            font-weight: bold;
-            font-size: 18px;
-            position: relative;
-        }
-
-        .management-table th:after {
-            content: '▼';
-            position: absolute;
-            right: 10px;
-            font-size: 12px;
-            opacity: 0.7;
-        }
-
-        .management-table tbody tr {
-            background-color: #f8f9fa;
-            border-bottom: 1px solid #dee2e6;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .management-table tbody tr:nth-child(even) {
-            background-color: #e9ecef;
-        }
-
-        .management-table tbody tr:hover {
-            background-color: #d1ecf1;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .management-table td {
-            padding: 15px 20px;
-            border-right: 1px solid #dee2e6;
-        }
-
-        .management-table td:last-child {
-            border-right: none;
-        }
-
-        /* Status Tags */
-        .status-tag {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: bold;
-            text-align: center;
-            min-width: 100px;
-            display: inline-block;
-        }
-
-        .status-open-deal { background-color: #28a745; color: white; }
-        .status-not-interested { background-color: #dc3545; color: white; }
-        .status-close-deal { background-color: #17a2b8; color: white; }
-        .status-signing-contract { background-color: #ffc107; color: #212529; }
-        .status-new-leads { background-color: #007bff; color: white; }
-
-        /* Search and Filter Section */
-        .filter-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-        }
-
-        .search-box {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .search-box input {
-            padding: 10px 15px;
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            font-size: 16px;
-            width: 300px;
-        }
-
-        .search-box button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .search-box button:hover {
-            background-color: #0056b3;
-        }
-
-        .filter-options {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .filter-options select {
-            padding: 10px;
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        .add-contact-btn {
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .add-contact-btn:hover {
-            background-color: #1e7e34;
-        }
-
-        /* Pagination */
-        .pagination-container {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            padding: 20px;
-            background-color: #f8f9fa;
-        }
-
-        .pagination {
-            display: flex;
-            gap: 5px;
-            align-items: center;
-        }
-
-        .pagination button {
-            padding: 8px 12px;
-            border: 1px solid #dee2e6;
-            background-color: white;
-            color: #007bff;
-            cursor: pointer;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
-        .pagination button:hover {
-            background-color: #e9ecef;
-        }
-
-        .pagination button.active {
-            background-color: #007bff;
-            color: white;
-            border-color: #007bff;
-        }
-
-        .pagination button:disabled {
-            color: #6c757d;
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
-
-        /* ---------- DETAIL VIEW STYLES ---------- */
-        .detail-view {
-            display: none;
-        }
-
-        .detail-view.active {
-            display: block;
-        }
-
-        .lead-info-container {
-            background-color: white;
-            border: 2px solid #dee2e6;
-            border-radius: 10px;
-            padding: 30px;
-            margin-bottom: 30px;
-            font-size: 18px;
-        }
-
-        .lead-info-row {
-            display: flex;
-            margin-bottom: 15px;
-            align-items: center;
-        }
-
-        .lead-info-label {
-            font-weight: bold;
-            width: 150px;
-            margin-right: 20px;
-        }
-
-        .lead-info-value {
-            flex: 1;
-        }
-
-        .property-info-section {
-            margin-top: 40px;
-        }
-
-        .property-info-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .property-info-container {
-            background-color: white;
-            border: 2px solid #dee2e6;
-            border-radius: 10px;
-            padding: 30px;
-            margin-bottom: 30px;
-        }
-
-        .property-info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            font-size: 16px;
-        }
-
-        .property-info-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .property-info-item label {
-            font-weight: bold;
-            width: 140px;
-            margin-right: 10px;
-        }
-
-        .notes-section {
-            margin-top: 30px;
-        }
-
-        .notes-title {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .notes-container {
-            background-color: #f8f9fa;
-            border: 2px solid #dee2e6;
-            border-radius: 10px;
-            padding: 20px;
-            min-height: 150px;
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        /* Activities View */
-        .activities-header {
-            background-color: white;
-            padding: 20px;
-            border-bottom: 1px solid #dee2e6;
-            margin-bottom: 20px;
-        }
-
-        .task-assigned {
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-
-        .task-assigned strong {
-            font-weight: bold;
-        }
-
-        .task-item {
-            background-color: white;
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .task-item-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 10px;
-        }
-
-        .task-checkbox {
-            width: 20px;
-            height: 20px;
-        }
-
-        .task-details {
-            font-size: 16px;
-            line-height: 1.5;
-        }
-
-        .task-status {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .task-tabs-section {
-            margin-top: 30px;
-        }
-
-        .task-tabs {
-            display: flex;
-            background-color: #001d9e;
-            border-radius: 10px 10px 0 0;
-            overflow: absolute;
-        }
-
-        .task-tab {
-            flex: 1;
-            padding: 15px;
-            background-color: #001d9e;
-            color: white;
-            text-align: center;
-            font-weight: bold;
-            font-size: 18px;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .task-tab.active {
-            background-color: #0056b3;
-        }
-
-        .task-tab-badge {
-            position: absolute;
-            top: -5px;
-            right: 10px;
-            background-color: red;
-            color: white;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .task-content {
-            background-color: white;
-            border: 2px solid #001d9e;
-            border-top: none;
-            border-radius: 0 0 10px 10px;
-            padding: 20px;
-            min-height: 200px;
-        }
-
-        .add-task-btn {
-            position: absolute;
-            right: 20px;
-            top: 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .add-task-btn:hover {
-            background-color: #0056b3;
-        }
