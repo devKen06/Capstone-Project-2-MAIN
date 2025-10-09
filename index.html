@@ -40,25 +40,58 @@
   </div>
 
   <script>
-    // Temporary hardcoded login (replace with Firebase later)
-    const dummyAccount = {
-      username: "123456",
-      password: "123456"
-    };
+   function login() {
+    const usernameInput = document.getElementById("username").value.trim();
+    const passwordInput = document.getElementById("password").value.trim();
+    const errorMsg = document.getElementById("error-msg");
 
-    function login() {
-      const usernameInput = document.getElementById("username").value.trim();
-      const passwordInput = document.getElementById("password").value.trim();
-      const errorMsg = document.getElementById("error-msg");
+    // Clear previous error message
+    errorMsg.textContent = "";
 
-      if (usernameInput === dummyAccount.username && passwordInput === dummyAccount.password) {
-        alert("Login successful!");
-        // Redirect to dashboard (later, after login is functional)
-        // window.location.href = "dashboard.html";
-      } else {
-        errorMsg.textContent = "Invalid username/email or password.";
-      }
+    // Validate input
+    if (!usernameInput || !passwordInput) {
+        errorMsg.textContent = "Please fill in all fields.";
+        return;
     }
+
+    // Create FormData object
+    const formData = new FormData();
+    formData.append('username', usernameInput);
+    formData.append('password', passwordInput);
+
+    // Send AJAX request to PHP backend
+    fetch('login.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Store user data in localStorage for frontend use
+            localStorage.setItem('user', JSON.stringify(data.user));
+            localStorage.setItem('loggedIn', 'true');
+            
+            // Show success message briefly then redirect
+            alert(data.message);
+            
+            // Force redirect to dashboard
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 500);
+        } else {
+            errorMsg.textContent = data.message;
+        }
+    })
+    .catch(error => {
+        console.error('Login error:', error);
+        errorMsg.textContent = "An error occurred. Please try again.";
+    })
+    .finally(() => {
+        // Reset button state
+        loginBtn.textContent = originalText;
+        loginBtn.disabled = false;
+    });
+}
   </script>
 </body>
 </html>

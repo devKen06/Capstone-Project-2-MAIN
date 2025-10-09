@@ -6,12 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="icon" href="assets/favicon.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/v4-shims.min.css" />
-    <link rel="stylesheet" href="css/report.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/report.css" />
     <link rel="stylesheet" href="css/setting.css" />
     <title>Report | Price Estimation</title>
-    
 </head>
 <body>
     <!-- Top Navigation -->
@@ -80,7 +78,7 @@
             </div>
         </div>
 
-        <!-- Download Report Button -->
+        <!-- Download Button -->
         <div class="download-container">
             <button class="download-btn" onclick="downloadReport()">
                 Download Report
@@ -94,23 +92,10 @@
                 <div class="report-column">
                     <div class="column-header">
                         Proposal
-                        <div class="notification-badge">2</div>
+                        <div class="notification-badge" id="badge-proposal">0</div>
                     </div>
-                    
-                    <div class="report-item">
-                        <div class="client-name">Arvin Coronel</div>
-                        <div class="report-type">Price Proposal</div>
-                        <div class="client-address">123 Main St</div>
-                        <div class="price">₱150,000.00</div>
-                        <div class="report-date">April 3, 2025</div>
-                    </div>
-
-                    <div class="report-item">
-                        <div class="client-name">Vert Valencia</div>
-                        <div class="report-type">Price Proposal</div>
-                        <div class="client-address">456 Oak Ave</div>
-                        <div class="price">₱180,000.00</div>
-                        <div class="report-date">April 3, 2025</div>
+                    <div id="column-proposal">
+                        <!-- Cards will be loaded here -->
                     </div>
                 </div>
 
@@ -118,15 +103,10 @@
                 <div class="report-column">
                     <div class="column-header">
                         Negotiation
-                        <div class="notification-badge">1</div>
+                        <div class="notification-badge" id="badge-negotiation">0</div>
                     </div>
-                    
-                    <div class="report-item">
-                        <div class="client-name">Jigs Paras</div>
-                        <div class="report-type">Price Negotiation</div>
-                        <div class="client-address">789 Pine St</div>
-                        <div class="price">₱200,000.00</div>
-                        <div class="report-date">April 3, 2025</div>
+                    <div id="column-negotiation">
+                        <!-- Cards will be loaded here -->
                     </div>
                 </div>
 
@@ -134,69 +114,28 @@
                 <div class="report-column">
                     <div class="column-header">
                         Signing Contract
-                        <div class="notification-badge">3</div>
+                        <div class="notification-badge" id="badge-signing-contract">0</div>
                     </div>
-                    
-                    <div class="report-item">
-                        <div class="client-name">Prince Fabros</div>
-                        <div class="report-type">Signing Contract</div>
-                        <div class="client-address">321 Elm St</div>
-                        <div class="price">₱170,000.00</div>
-                        <div class="report-date">April 3, 2025</div>
-                    </div>
-
-                    <div class="report-item">
-                        <div class="client-name">Elmer Gonzales</div>
-                        <div class="report-type">Signing Contract</div>
-                        <div class="client-address">654 Maple Dr</div>
-                        <div class="price">₱500,000.00</div>
-                        <div class="report-date">April 3, 2025</div>
-                    </div>
-
-                    <div class="report-item">
-                        <div class="client-name">Vert Sta Cruz</div>
-                        <div class="report-type">Signing Contract</div>
-                        <div class="client-address">987 Cedar Ln</div>
-                        <div class="price">₱100,000.00</div>
-                        <div class="report-date">April 3, 2025</div>
+                    <div id="column-signing-contract">
+                        <!-- Cards will be loaded here -->
                     </div>
                 </div>
 
-                <!-- Close Deal Column -->
+                <!-- Closed Deal Column -->
                 <div class="report-column">
                     <div class="column-header">
                         Close Deal
-                        <div class="notification-badge">3</div>
+                        <div class="notification-badge" id="badge-closed-deal">0</div>
                     </div>
-                    
-                    <div class="report-item">
-                        <div class="client-name">Ken Coronel</div>
-                        <div class="report-type">Close Deal</div>
-                        <div class="client-address">147 Birch Rd</div>
-                        <div class="price">₱300,000.00</div>
-                        <div class="report-date">April 3, 2025</div>
-                    </div>
-
-                    <div class="report-item">
-                        <div class="client-name">Mark Facun</div>
-                        <div class="report-type">Close Deal</div>
-                        <div class="client-address">258 Spruce Way</div>
-                        <div class="price">₱100,000.00</div>
-                        <div class="report-date">April 3, 2025</div>
-                    </div>
-
-                    <div class="report-item">
-                        <div class="client-name">Arvin Valencia</div>
-                        <div class="report-type">Close Deal</div>
-                        <div class="client-address">369 Willow St</div>
-                        <div class="price">₱100,000.00</div>
-                        <div class="report-date">April 3, 2025</div>
+                    <div id="column-closed-deal">
+                        <!-- Cards will be loaded here -->
                     </div>
                 </div>
             </div>
         </div>
     </main>
-    <script src="script/report.js"></script>
+
     <script src="script/setting.js"></script>
+    <script src="script/report.js"></script>
 </body>
 </html>

@@ -47,5 +47,48 @@
             </form>
         </div>
     </div>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent default form submission
+        
+        const formData = new FormData(form);
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        
+        // Show loading state
+        submitBtn.textContent = "Registering...";
+        submitBtn.disabled = true;
+        
+        // Send AJAX request to PHP backend
+        fetch('register.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                }
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Registration error:', error);
+            alert('An error occurred. Please try again.');
+        })
+        .finally(() => {
+            // Reset button state
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        });
+    });
+});
+</script>
 </body>
 </html>
