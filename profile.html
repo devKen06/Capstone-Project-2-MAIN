@@ -7,11 +7,10 @@
     <link rel="icon" href="assets/favicon.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/v4-shims.min.css" />
-    <link rel="stylesheet" href="css/profile.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/profile.css" />
     <link rel="stylesheet" href="css/setting.css" />
-    <title>Report | Price Estimation</title>
-    
+    <title>Profile | Price Estimation</title>
 </head>
 <body>
     <!-- Top Navigation -->
@@ -22,7 +21,8 @@
         </h1>
         <div class="top-nav-icons">
             <a href="setting.html">
-            <button class="icon-btn"><i class="fas fa-cog"></i></button></a>
+                <button class="icon-btn"><i class="fas fa-cog"></i></button>
+            </a>
             <div class="user-dropdown">
                 <button class="icon-btn" onclick="toggleUserDropdown()">
                     <i class="fas fa-user-circle"></i>
@@ -61,7 +61,7 @@
         </div>
     </div>
 
-    <!-- Main navigation menu - Profile is currently active -->
+    <!-- Sidebar Navigation -->
     <nav class="sidebar">
         <a href="dashboard.html" class="nav-item">Dashboard</a>
         <a href="management.html" class="nav-item">Management</a>
@@ -70,59 +70,51 @@
         <a href="estimation.html" class="nav-item">Estimation</a>
         <a href="profile.html" class="nav-item active">Profile</a>
     </nav>
-
-    <!-- ========== MAIN CONTENT AREA ========== -->
+    
+    <!-- Main Content -->
     <main class="main-content">
-        <!-- Fixed header with page title -->
+        <!-- Fixed Header -->
         <div class="fixed-header">
             <div class="page-header">
                 <h2>Profile</h2>
             </div>
         </div>
 
-        <!-- ========== PROFILE CONTENT ========== -->
+        <!-- Profile Content -->
         <div class="profile-container">
-            
-            <!-- ========== UNIFIED PROFILE CARD ========== -->
-            <!-- All profile information in a single container -->
+            <!-- Main Profile Card -->
             <div class="profile-card">
-                <!-- Profile header section with avatar and basic info -->
+                <!-- Profile Header Section -->
                 <div class="profile-header">
-                    <!-- User avatar/icon -->
                     <div class="profile-avatar">
                         <i class="fas fa-user-circle"></i>
                     </div>
                     
-                    <!-- User basic information -->
                     <div class="profile-info">
-                        <h3 id="userName">Angelo Vert Valencia</h3>
-                        <p id="userEmail">angelo.vert.valencia@gmail.com</p>
+                        <h3 id="userName">Loading...</h3>
+                        <p id="userEmail">Loading...</p>
                     </div>
                     
-                    <!-- Edit profile button -->
                     <button class="edit-btn" onclick="editProfile()">
                         Edit
                     </button>
                 </div>
 
-                <!-- ========== PROFILE DETAILS GRID ========== -->
-                <!-- All user details in a two-column layout -->
+                <!-- Profile Details Grid -->
                 <div class="profile-details">
-                    <!-- Left column -->
                     <div class="detail-item">
                         <div class="detail-label">Full Name</div>
-                        <div class="detail-value" id="fullName">Angelo Vert Valencia</div>
+                        <div class="detail-value" id="fullName">Loading...</div>
                     </div>
                     
-                    <!-- Right column -->
                     <div class="detail-item">
-                        <div class="detail-label">Number</div>
-                        <div class="detail-value" id="phoneNumber">+639123456789</div>
+                        <div class="detail-label">Phone Number</div>
+                        <div class="detail-value" id="phoneNumber">Loading...</div>
                     </div>
                     
                     <div class="detail-item">
                         <div class="detail-label">Gender</div>
-                        <div class="detail-value" id="gender">Male</div>
+                        <div class="detail-value" id="gender">Not specified</div>
                     </div>
                     
                     <div class="detail-item">
@@ -142,40 +134,30 @@
                 </div>
             </div>
 
-            <!-- ========== EMAIL ADDRESSES SECTION (SEPARATE) ========== -->
+            <!-- Email Addresses Section -->
             <div class="contact-section">
                 <h4>My Email Addresses</h4>
-                <!-- List of user's email addresses -->
                 <ul class="contact-list" id="emailList">
                     <li>
                         <i class="fas fa-envelope"></i>
-                        <span>angelo.vert.valencia@gmail.com</span>
-                        <button class="delete-contact" onclick="deleteEmail(this)">
-                            <i class="fas fa-trash"></i> Remove
-                        </button>
+                        <span>Loading...</span>
                     </li>
                 </ul>
-                <!-- Button to add new email address -->
                 <button class="add-contact-btn" onclick="openEmailModal()">
                     <i class="fas fa-plus"></i>
                     Add Email Address
                 </button>
             </div>
 
-            <!-- ========== PHONE NUMBERS SECTION (SEPARATE) ========== -->
+            <!-- Phone Numbers Section -->
             <div class="contact-section">
                 <h4>My Phone Numbers</h4>
-                <!-- List of user's phone numbers -->
                 <ul class="contact-list" id="phoneList">
                     <li>
                         <i class="fas fa-phone"></i>
-                        <span>+639123456789</span>
-                        <button class="delete-contact" onclick="deletePhone(this)">
-                            <i class="fas fa-trash"></i> Remove
-                        </button>
+                        <span>Loading...</span>
                     </li>
                 </ul>
-                <!-- Button to add new phone number -->
                 <button class="add-contact-btn" onclick="openPhoneModal()">
                     <i class="fas fa-plus"></i>
                     Add Phone Number
@@ -184,82 +166,110 @@
         </div>
     </main>
 
-    <!-- ========== EMAIL MODAL ========== -->
-    <!-- Popup form for adding new email address -->
+    <!-- Edit Profile Modal -->
+    <div class="modal-overlay" id="editProfileModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Edit Profile</h3>
+                <button class="close-modal" onclick="cancelEdit()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editProfileForm" onsubmit="updateProfile(event)">
+                    <div class="form-group">
+                        <label for="editFirstName">First Name</label>
+                        <input type="text" id="editFirstName" name="first_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editLastName">Last Name</label>
+                        <input type="text" id="editLastName" name="last_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEmail">Email</label>
+                        <input type="email" id="editEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPhone">Phone Number</label>
+                        <input type="tel" id="editPhone" name="contact_number" placeholder="+63 912 345 6789">
+                    </div>
+                    <div class="form-group">
+                        <label for="editLanguage">Language</label>
+                        <select id="editLanguage" name="language" required>
+                            <option value="English - United States">English - United States</option>
+                            <option value="English - United Kingdom">English - United Kingdom</option>
+                            <option value="Spanish">Spanish</option>
+                            <option value="French">French</option>
+                            <option value="German">German</option>
+                            <option value="Italian">Italian</option>
+                            <option value="Portuguese">Portuguese</option>
+                            <option value="Chinese">Chinese</option>
+                            <option value="Japanese">Japanese</option>
+                            <option value="Korean">Korean</option>
+                            <option value="Filipino">Filipino</option>
+                            <option value="Tagalog">Tagalog</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editGender">Gender</label>
+                        <select id="editGender" name="gender">
+                            <option value="Not specified">Prefer not to say</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" onclick="cancelEdit()">Cancel</button>
+                        <button type="submit" class="btn-primary">Update Profile</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Modal -->
     <div class="modal-overlay" id="emailModal">
         <div class="modal">
             <div class="modal-header">
                 <h3>Add Email Address</h3>
-                <!-- Close button (X) -->
-                <button class="close-modal" onclick="closeEmailModal()">
-                    &times;
-                </button>
+                <button class="close-modal" onclick="closeEmailModal()">&times;</button>
             </div>
-            
-            <!-- Email input form -->
-            <form id="emailForm" onsubmit="addEmail(event)">
-                <div class="form-group">
-                    <label for="newEmail">Email Address</label>
-                    <input 
-                        type="email" 
-                        id="newEmail" 
-                        name="newEmail" 
-                        placeholder="Enter email address"
-                        required
-                    />
-                </div>
-                
-                <!-- Form action buttons -->
-                <div class="modal-actions">
-                    <button type="button" class="btn-secondary" onclick="closeEmailModal()">
-                        Cancel
-                    </button>
-                    <button type="submit" class="btn-primary">
-                        Add
-                    </button>
-                </div>
-            </form>
+            <div class="modal-body">
+                <form id="emailForm" onsubmit="addEmail(event)">
+                    <div class="form-group">
+                        <label for="newEmail">Email Address</label>
+                        <input type="email" id="newEmail" name="newEmail" placeholder="Enter email address" required />
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" onclick="closeEmailModal()">Cancel</button>
+                        <button type="submit" class="btn-primary">Add</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
-    <!-- ========== PHONE MODAL ========== -->
-    <!-- Popup form for adding new phone number -->
+    <!-- Phone Modal -->
     <div class="modal-overlay" id="phoneModal">
         <div class="modal">
             <div class="modal-header">
                 <h3>Add Phone Number</h3>
-                <!-- Close button (X) -->
-                <button class="close-modal" onclick="closePhoneModal()">
-                    &times;
-                </button>
+                <button class="close-modal" onclick="closePhoneModal()">&times;</button>
             </div>
-            
-            <!-- Phone input form -->
-            <form id="phoneForm" onsubmit="addPhone(event)">
-                <div class="form-group">
-                    <label for="newPhone">Phone Number</label>
-                    <input 
-                        type="tel" 
-                        id="newPhone" 
-                        name="newPhone" 
-                        placeholder="Enter phone number (e.g., +639123456789)"
-                        pattern="[+]?[0-9]{10,15}"
-                        required
-                    />
-                </div>
-                
-                <!-- Form action buttons -->
-                <div class="modal-actions">
-                    <button type="button" class="btn-secondary" onclick="closePhoneModal()">
-                        Cancel
-                    </button>
-                    <button type="submit" class="btn-primary">
-                        Add
-                    </button>
-                </div>
-            </form>
+            <div class="modal-body">
+                <form id="phoneForm" onsubmit="addPhone(event)">
+                    <div class="form-group">
+                        <label for="newPhone">Phone Number</label>
+                        <input type="tel" id="newPhone" name="newPhone" placeholder="Enter phone number (e.g., +639123456789)" pattern="[+]?[0-9]{10,15}" required />
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" onclick="closePhoneModal()">Cancel</button>
+                        <button type="submit" class="btn-primary">Add</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
+
     <script src="script/profile.js"></script>
     <script src="script/setting.js"></script>
 </body>

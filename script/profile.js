@@ -21,6 +21,9 @@ const availableLanguages = [
 document.addEventListener('DOMContentLoaded', function() {
     // Load user profile directly - let PHP handle session checking
     loadUserProfile();
+    
+    // Setup modal close listeners
+    setupModalListeners();
 });
 
 // Function to capitalize first letter of each word
@@ -155,6 +158,8 @@ function updatePhoneList(phones) {
     }
 }
 
+// ========== EDIT PROFILE FUNCTIONS ==========
+
 // Edit profile function
 function editProfile() {
     if (isEditing) {
@@ -162,80 +167,23 @@ function editProfile() {
         return;
     }
     
-    // Show edit form modal
     showEditForm();
 }
 
 // Show edit form modal
 function showEditForm() {
-    // Create language options
-    const languageOptions = availableLanguages.map(lang => {
-        const selected = lang.name === userProfile.language ? 'selected' : '';
-        return `<option value="${lang.name}" ${selected}>${lang.name}</option>`;
-    }).join('');
+    // Populate form with current data
+    document.getElementById('editFirstName').value = userProfile.first_name || '';
+    document.getElementById('editLastName').value = userProfile.last_name || '';
+    document.getElementById('editEmail').value = userProfile.email || '';
+    document.getElementById('editPhone').value = (userProfile.phone_number === 'Not provided') ? '' : (userProfile.phone_number || '');
+    document.getElementById('editLanguage').value = userProfile.language || 'English - United States';
+    document.getElementById('editGender').value = userProfile.gender || 'Not specified';
     
-    const modal = document.createElement('div');
-    modal.className = 'modal-overlay';
-    modal.id = 'editProfileModal';
-    modal.innerHTML = `
-        <div class="modal" style="max-width: 500px; max-height: 90vh; overflow-y: auto;">
-            <div class="modal-header">
-                <h3>Edit Profile</h3>
-                <button class="close-modal" onclick="cancelEdit()">&times;</button>
-            </div>
-            <form id="editProfileForm" onsubmit="updateProfile(event)">
-                <div class="form-group">
-                    <label for="editFirstName">First Name</label>
-                    <input type="text" id="editFirstName" name="first_name" 
-                           value="${userProfile.first_name}" 
-                           oninput="this.value = capitalizeWords(this.value)"
-                           required>
-                </div>
-                <div class="form-group">
-                    <label for="editLastName">Last Name</label>
-                    <input type="text" id="editLastName" name="last_name" 
-                           value="${userProfile.last_name}" 
-                           oninput="this.value = capitalizeWords(this.value)"
-                           required>
-                </div>
-                <div class="form-group">
-                    <label for="editEmail">Email</label>
-                    <input type="email" id="editEmail" name="email" 
-                           value="${userProfile.email}" required>
-                </div>
-                <div class="form-group">
-                    <label for="editPhone">Phone Number</label>
-                    <input type="tel" id="editPhone" name="contact_number" 
-                           value="${userProfile.phone_number === 'Not provided' ? '' : userProfile.phone_number || ''}"
-                           placeholder="+63 912 345 6789">
-                </div>
-                <div class="form-group">
-                    <label for="editLanguage">Language</label>
-                    <select id="editLanguage" name="language" required>
-                        ${languageOptions}
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="editGender">Gender</label>
-                    <select id="editGender" name="gender">
-                        <option value="Not specified" ${userProfile.gender === 'Not specified' ? 'selected' : ''}>Prefer not to say</option>
-                        <option value="Male" ${userProfile.gender === 'Male' ? 'selected' : ''}>Male</option>
-                        <option value="Female" ${userProfile.gender === 'Female' ? 'selected' : ''}>Female</option>
-                        <option value="Other" ${userProfile.gender === 'Other' ? 'selected' : ''}>Other</option>
-                    </select>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn-secondary" onclick="cancelEdit()">Cancel</button>
-                    <button type="submit" class="btn-primary">Update Profile</button>
-                </div>
-            </form>
-        </div>
-    `;
-    
-    document.body.appendChild(modal);
-    // Force reflow before adding active class for animation
-    modal.offsetHeight;
+    // Show modal
+    const modal = document.getElementById('editProfileModal');
     modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
     isEditing = true;
 }
 
@@ -285,13 +233,10 @@ function updateProfile(event) {
 function cancelEdit() {
     isEditing = false;
     
-    // Remove edit modal if exists
     const modal = document.getElementById('editProfileModal');
     if (modal) {
         modal.classList.remove('active');
-        setTimeout(() => {
-            modal.remove();
-        }, 300);
+        document.body.style.overflow = 'auto';
     }
 }
 
@@ -300,6 +245,7 @@ function cancelEdit() {
 function openEmailModal() {
     const modal = document.getElementById('emailModal');
     modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
     setTimeout(() => {
         document.getElementById('newEmail').focus();
     }, 100);
@@ -308,12 +254,14 @@ function openEmailModal() {
 function closeEmailModal() {
     const modal = document.getElementById('emailModal');
     modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
     document.getElementById('emailForm').reset();
 }
 
 function openPhoneModal() {
     const modal = document.getElementById('phoneModal');
     modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
     setTimeout(() => {
         document.getElementById('newPhone').focus();
     }, 100);
@@ -322,6 +270,7 @@ function openPhoneModal() {
 function closePhoneModal() {
     const modal = document.getElementById('phoneModal');
     modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
     document.getElementById('phoneForm').reset();
 }
 
@@ -372,8 +321,14 @@ function addPhone(event) {
         }
     }
     
-    // For now, just add to the display
+    // Remove "No phone number added" message if it exists
     const phoneList = document.getElementById('phoneList');
+    const noPhoneMessage = phoneList.querySelector('span[style*="color: #999"]');
+    if (noPhoneMessage) {
+        noPhoneMessage.parentElement.remove();
+    }
+    
+    // Add new phone number
     const newPhoneItem = document.createElement('li');
     newPhoneItem.innerHTML = `
         <i class="fas fa-phone"></i>
@@ -399,6 +354,78 @@ function deletePhone(button) {
     if (confirm('Are you sure you want to remove this phone number?')) {
         const listItem = button.closest('li');
         listItem.remove();
+        
+        // Check if no phone numbers left
+        const phoneList = document.getElementById('phoneList');
+        if (phoneList.children.length === 0) {
+            const noPhoneItem = document.createElement('li');
+            noPhoneItem.innerHTML = `
+                <i class="fas fa-phone"></i>
+                <span style="color: #999;">No phone number added</span>
+            `;
+            phoneList.appendChild(noPhoneItem);
+        }
+        
         alert('Phone number removed! (Note: This is a demo - in production, this would be saved to your profile)');
     }
 }
+
+// ========== MODAL EVENT LISTENERS ==========
+
+function setupModalListeners() {
+    // Close modals when clicking outside
+    document.addEventListener('click', function(event) {
+        const modals = document.querySelectorAll('.modal-overlay');
+        modals.forEach(modal => {
+            if (event.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                isEditing = false;
+            }
+        });
+    });
+    
+    // Close modals with Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            const activeModal = document.querySelector('.modal-overlay.active');
+            if (activeModal) {
+                activeModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                isEditing = false;
+            }
+        }
+    });
+}
+
+// ========== UTILITY FUNCTIONS ==========
+
+// Function to handle input capitalization in real-time
+function handleNameInput(input) {
+    const cursorPosition = input.selectionStart;
+    const originalValue = input.value;
+    input.value = capitalizeWords(input.value);
+    
+    // Restore cursor position
+    if (input.value.length === originalValue.length) {
+        input.setSelectionRange(cursorPosition, cursorPosition);
+    }
+}
+
+// Add input event listeners for name fields when modal opens
+document.addEventListener('DOMContentLoaded', function() {
+    const firstNameInput = document.getElementById('editFirstName');
+    const lastNameInput = document.getElementById('editLastName');
+    
+    if (firstNameInput) {
+        firstNameInput.addEventListener('input', function() {
+            handleNameInput(this);
+        });
+    }
+    
+    if (lastNameInput) {
+        lastNameInput.addEventListener('input', function() {
+            handleNameInput(this);
+        });
+    }
+});

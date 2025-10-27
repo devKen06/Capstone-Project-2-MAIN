@@ -1,492 +1,423 @@
- body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
+/* ========== PROFILE SPECIFIC STYLES ========== */
+/* Main profile container - holds all content */
+.profile-container {
+    padding: 30px;
+    max-width: 1450px;
+    margin: 0 auto;
+}
 
-        .top-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 50px;
-            background-color: #0044cc;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 5px;
-            z-index: 1000;
-        }
+/* ========== UNIFIED PROFILE CARD ========== */
+/* Single container for all profile information */
+.profile-card {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
 
-        .top-nav h1 {
-            display: flex;
-            align-items: center;
-            font-size: 25px;
-            gap: 10px;
-        }
+/* Profile header section within the card */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 30px;
+}
 
-        .logo {
-            width: 45px;
-            height: 45px;
-            background: url('/assets/reverse-logo-removebg-preview.png') no-repeat center center;
-            background-size: contain;
-        }
+/* User avatar circle */
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    background-color: #000000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 100px;
+    color: white;
+    flex-shrink: 0; /* Prevent avatar from shrinking */
+}
 
-        .top-nav-icons button {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 30px;
-            margin-left: 1px;
-            cursor: pointer;
-            padding: 10px;
-        }
+/* User name and email display */
+.profile-info {
+    flex: 1;
+}
 
-        .sidebar {
-            width: 300px;
-            background-color: #e4e4e4;
-            padding-top: 50px;
-            position: fixed;
-            height: 100%;
-            overflow-y: auto;
-        }
+.profile-info h3 {
+    margin: 0 0 10px 0;
+    font-size: 28px;
+    color: #333;
+}
 
-        .nav-item {
-            display: block;
-            padding: 20px 25px;
-            text-decoration: none;
-            color: black;
-            border-bottom: 1px solid #ccc;
-            font-size: 20px;
-            font-weight: bold;
-        }
+.profile-info p {
+    margin: 0;
+    color: #666;
+    font-size: 16px;
+}
 
-        .nav-item.active {
-            background-color: #001d9e;
-            color: white;
-        }
-        .main-content {
-            margin-left: 300px;
-            margin-top: 60px;
-            padding: 0;
-            overflow-y: auto;
-            width: calc(100% - 300px);
-            height: calc(100vh - 60px);
-        }
+/* Edit profile button */
+.edit-btn {
+    background-color: #0044cc;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
-        /* ---------- FIXED HEADER SECTION ---------- */
-        .fixed-header {
-            position: sticky;
-            top: 0;
-            background-color: white;
-            z-index: 100;
-            padding: 10px;
-            border-bottom: 1px solid #dee2e6;
-        }
+.edit-btn:hover {
+    background-color: #0033aa;
+}
 
-        .page-header {
-            background-color: #001d9e;
-            color: white;
-            padding: 1px 10px;
-            clip-path: polygon(0 0, 90% 0, 100% 50%, 90% 100%, 0 100%);
-            width: 15%;
-            height: 40px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-        }
+/* ========== PROFILE DETAILS GRID ========== */
+/* Two-column grid for profile details within the same card */
+.profile-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
 
-        .page-header h2 {
-            margin: 0;
-            font-size: 24px;
-        }
-        /* ========== PROFILE SPECIFIC STYLES ========== */
-        /* Main profile container - holds all content */
-        .profile-container {
-            padding: 30px;
-            max-width: 1450px;
-            margin: 0 auto;
-        }
+/* Individual detail item */
+.detail-item {
+    padding: 15px 0;
+}
 
-        /* ========== UNIFIED PROFILE CARD ========== */
-        /* Single container for all profile information */
-        .profile-card {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
+/* Detail item labels */
+.detail-label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
 
-        /* Profile header section within the card */
-        .profile-header {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid #e0e0e0;
-            margin-bottom: 30px;
-        }
+/* Detail item values */
+.detail-value {
+    font-size: 18px;
+    color: #333;
+    font-weight: 400;
+}
 
-        /* User avatar circle */
-        .profile-avatar {
-            width: 120px;
-            height: 120px;
-            background-color: #000000;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 100px;
-            color: white;
-            flex-shrink: 0; /* Prevent avatar from shrinking */
-        }
+/* ========== SEPARATE CONTACT SECTIONS ========== */
+/* Contact information sections (email & phone) */
+.contact-section {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
 
-        /* User name and email display */
-        .profile-info {
-            flex: 1;
-        }
+.contact-section h4 {
+    margin: 0 0 20px 0;
+    font-size: 20px;
+    color: #333;
+    font-weight: 600;
+}
 
-        .profile-info h3 {
-            margin: 0 0 10px 0;
-            font-size: 28px;
-            color: #333;
-        }
+/* List of email addresses or phone numbers */
+.contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+}
 
-        .profile-info p {
-            margin: 0;
-            color: #666;
-            font-size: 16px;
-        }
+.contact-list li {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background: #f8f9fa;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
 
-        /* Edit profile button */
-        .edit-btn {
-            background-color: #0044cc;
-            color: white;
-            border: none;
-            padding: 10px 30px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+.contact-list li:hover {
+    background: #e9ecef;
+}
 
-        .edit-btn:hover {
-            background-color: #0033aa;
-        }
+.contact-list li i {
+    margin-right: 10px;
+    color: #666;
+    width: 20px;
+}
 
-        /* ========== PROFILE DETAILS GRID ========== */
-        /* Two-column grid for profile details within the same card */
-        .profile-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-        }
+/* Delete button for contact items */
+.delete-contact {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
 
-        /* Individual detail item */
-        .detail-item {
-            padding: 15px 0;
-        }
+.contact-list li:hover .delete-contact {
+    opacity: 1;
+}
 
-        /* Detail item labels */
-        .detail-label {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 600;
-        }
+.delete-contact:hover {
+    color: #c82333;
+}
 
-        /* Detail item values */
-        .detail-value {
-            font-size: 18px;
-            color: #333;
-            font-weight: 400;
-        }
+/* Add new contact button */
+.add-contact-btn {
+    background: none;
+    border: none;
+    color: #0044cc;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.3s;
+}
 
-        /* ========== SEPARATE CONTACT SECTIONS ========== */
-        /* Contact information sections (email & phone) */
-        .contact-section {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
+.add-contact-btn:hover {
+    color: #0033aa;
+    text-decoration: underline;
+}
 
-        .contact-section h4 {
-            margin: 0 0 20px 0;
-            font-size: 20px;
-            color: #333;
-            font-weight: 600;
-        }
+/* ========== MODAL OVERLAY ========== */
+/* Dark background overlay for modals */
+.modal-overlay {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s;
+}
 
-        /* List of email addresses or phone numbers */
-        .contact-list {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 20px 0;
-        }
+.modal-overlay.active {
+    display: flex; /* Show when active */
+}
 
-        .contact-list li {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            background: #f8f9fa;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
+/* ========== MODAL DIALOG ========== */
+/* Popup form container */
+.modal {
+    background: white;
+    padding: 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    min-width: 400px;
+    max-width: 500px;
+    max-height: 90vh;
+    position: relative;
+    animation: slideIn 0.3s;
+}
 
-        .contact-list li:hover {
-            background: #e9ecef;
-        }
+/* Modal header with blue background matching system theme */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+    padding: 20px 30px;
+    background-color: #001d9e;
+    border-radius: 10px 10px 0 0;
+}
 
-        .contact-list li i {
-            margin-right: 10px;
-            color: #666;
-            width: 20px;
-        }
+.modal-header h3 {
+    margin: 0;
+    color: white;
+    font-size: 22px;
+}
 
-        /* Delete button for contact items */
-        .delete-contact {
-            margin-left: auto;
-            background: none;
-            border: none;
-            color: #dc3545;
-            cursor: pointer;
-            padding: 5px 10px;
-            font-size: 14px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
+/* Close button (X) in modal */
+.close-modal {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: white;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s;
+}
 
-        .contact-list li:hover .delete-contact {
-            opacity: 1;
-        }
+.close-modal:hover {
+    opacity: 0.7;
+}
 
-        .delete-contact:hover {
-            color: #c82333;
-        }
+/* Modal body content */
+.modal-body {
+    padding: 30px;
+}
 
-        /* Add new contact button */
-        .add-contact-btn {
-            background: none;
-            border: none;
-            color: #0044cc;
-            font-size: 16px;
-            cursor: pointer;
-            padding: 10px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: color 0.3s;
-            
-        }
+/* ========== FORM STYLES ========== */
+/* Form input container */
+.form-group {
+    margin-bottom: 20px;
+}
 
-        .add-contact-btn:hover {
-            color: #0033aa;
-            text-decoration: underline;
-        }
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 500;
+    font-size: 14px;
+}
 
-        /* ========== MODAL OVERLAY ========== */
-        /* Dark background overlay for modals */
-        .modal-overlay {
-            display: none; /* Hidden by default */
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s;
-        }
+/* Text input fields and select dropdowns */
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
 
-        .modal-overlay.active {
-            display: flex; /* Show when active */
-        }
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #0044cc;
+    box-shadow: 0 0 0 3px rgba(0, 68, 204, 0.1);
+}
 
-        /* ========== MODAL DIALOG ========== */
-        /* Popup form container */
-        .modal {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            min-width: 400px;
-            max-width: 500px;
-            position: relative;
-            animation: slideIn 0.3s;
-        }
+/* Form action buttons */
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
 
-        /* Modal header with blue background matching system theme */
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: -30px -30px 25px -30px;
-            padding: 20px 30px;
-            background-color: #001d9e;
-            border-radius: 10px 10px 0 0;
-        }
+/* Primary action button (Add/Save) */
+.btn-primary {
+    background-color: #0044cc;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
-        .modal-header h3 {
-            margin: 0;
-            color: white;
-            font-size: 22px;
-        }
+.btn-primary:hover {
+    background-color: #0033aa;
+}
 
-        /* Close button (X) in modal */
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 28px;
-            cursor: pointer;
-            color: white;
-            padding: 0;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.3s;
-        }
+.btn-primary:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
 
-        .close-modal:hover {
-            opacity: 0.7;
-        }
+/* Secondary action button (Cancel) */
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
-        /* ========== FORM STYLES ========== */
-        /* Form input container */
-        .form-group {
-            margin-bottom: 20px;
-        }
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
 
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 500;
-            font-size: 14px;
-        }
+/* ========== ANIMATIONS ========== */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 
-        /* Text input fields */
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-            box-sizing: border-box;
-        }
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
 
-        .form-group input:focus {
-            outline: none;
-            border-color: #0044cc;
-            box-shadow: 0 0 0 3px rgba(0, 68, 204, 0.1);
-        }
+/* ========== RESPONSIVE DESIGN ========== */
+/* Tablet and mobile adjustments */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 250px;
+    }
+    
+    .main-content {
+        margin-left: 250px;
+        width: calc(100% - 250px);
+    }
+    
+    .profile-details {
+        grid-template-columns: 1fr;
+    }
+    
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
 
-        /* Form action buttons */
-        .modal-actions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 25px;
-        }
+    .modal {
+        min-width: 90%;
+        margin: 0 20px;
+    }
+}
 
-        /* Primary action button (Add/Save) */
-        .btn-primary {
-            background-color: #0044cc;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+@media (max-width: 600px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+}
 
-        .btn-primary:hover {
-            background-color: #0033aa;
-        }
+/* Enhanced styling for better user experience */
+.profile-info h3 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+}
 
-        /* Secondary action button (Cancel) */
-        .btn-secondary {
-            background-color: #e0e0e0;
-            color: #333;
-            border: none;
-            padding: 12px 30px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+.profile-info p {
+    margin: 5px 0 0 0;
+    color: #666;
+}
 
-        .btn-secondary:hover {
-            background-color: #d0d0d0;
-        }
+/* Enhanced edit button styling */
+.edit-btn {
+    transition: all 0.3s ease;
+}
 
-        /* ========== ANIMATIONS ========== */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(-20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        /* ========== RESPONSIVE DESIGN ========== */
-        /* Tablet and mobile adjustments */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 250px;
-            }
-            
-            .main-content {
-                margin-left: 250px;
-                width: calc(100% - 250px);
-            }
-            
-            .profile-details {
-                grid-template-columns: 1fr;
-            }
-            
-            .profile-header {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .modal {
-                min-width: 90%;
-                margin: 0 20px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .sidebar {
-                transform: translateX(-100%);
-                transition: transform 0.3s;
-            }
-            
-            .main-content {
-                margin-left: 0;
-                width: 100%;
-            }
-        }
+.edit-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}

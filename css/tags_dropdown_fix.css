@@ -1,0 +1,302 @@
+/* ============================================
+   CRITICAL FIX: Tags Dropdown with Proper Z-Index
+   ============================================ */
+
+/* ============================================
+   1. PAGE SCROLLING - Must Work
+   ============================================ */
+
+/* Ensure page can scroll */
+html, body {
+    overflow: auto !important;
+    height: auto !important;
+}
+
+/* Main content area - must scroll */
+.main-content {
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    height: auto !important;
+}
+
+/* Property content - must allow scrolling */
+.property-content {
+    overflow-y: visible;
+    overflow-x: visible;
+    height: auto !important;
+}
+
+.property-list {
+    overflow: visible;
+    height: auto !important;
+}
+
+/* ============================================
+   2. TABLE CONTAINER - Balanced Overflow
+   ============================================ */
+
+/* Allow horizontal scroll for table, but not vertical clipping */
+.table-container {
+    overflow-x: auto;
+    overflow-y: visible;
+    position: relative;
+    height: auto;
+}
+
+/* ============================================
+   3. TABLE ELEMENTS - Controlled Z-Index
+   ============================================ */
+
+.property-table {
+    position: relative;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Table header - moderate z-index */
+.property-table thead {
+    position: relative;
+    z-index: 10;
+}
+
+/* Table body - allow dropdown overflow */
+.property-table tbody {
+    position: relative;
+    z-index: 1;
+}
+
+/* Table rows - baseline z-index */
+.property-table tr {
+    position: relative;
+    z-index: 1;
+}
+
+/* CRITICAL: All table cells have controlled z-index */
+.property-table td {
+    position: relative;
+    z-index: 1;
+}
+
+.property-table th {
+    position: relative;
+}
+
+/* Tags column (5th column) - special handling for dropdown */
+.property-table thead th:nth-child(5) {
+    overflow: visible;
+    z-index: 50;
+    position: relative;
+}
+
+/* Tags cells in body - lower z-index */
+.property-table tbody td:nth-child(5) {
+    overflow: visible;
+    z-index: 2;
+    position: relative;
+}
+
+/* CRITICAL: When dropdown is shown, header gets highest z-index */
+.property-table thead th:nth-child(5):has(.dropdown-sort-content.show) {
+    z-index: 10000 !important;
+}
+
+/* ============================================
+   4. STATUS BADGES - Must Stay Below Dropdown
+   ============================================ */
+
+/* All status badges have controlled z-index */
+.status-badge {
+    position: relative;
+    z-index: 1 !important;
+}
+
+/* CRITICAL: When dropdown is open, all badges must stay below */
+body:has(.dropdown-sort-content.show) .status-badge {
+    z-index: 1 !important;
+}
+
+/* Force badges in tags column to stay below dropdown */
+.property-table tbody td:nth-child(5) .status-badge {
+    z-index: 1 !important;
+}
+
+/* ============================================
+   5. DROPDOWN STYLES - Highest Z-Index
+   ============================================ */
+
+.dropdown-sort {
+    position: relative;
+    display: inline-block;
+    z-index: 100;
+}
+
+.sort-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    color: white;
+    font-size: 16px;
+    transition: background-color 0.2s;
+    border-radius: 4px;
+}
+
+.sort-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* CRITICAL: Dropdown menu - HIGHEST z-index */
+.dropdown-sort-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.3);
+    z-index: 10000 !important;
+    border-radius: 4px;
+    right: 0;
+    top: calc(100% + 5px);
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+}
+
+/* When dropdown is shown - maintain highest z-index */
+.dropdown-sort-content.show {
+    display: block !important;
+    z-index: 10000 !important;
+}
+
+/* ============================================
+   6. DROPDOWN ITEMS
+   ============================================ */
+
+.dropdown-sort-item {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 14px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.dropdown-sort-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-sort-item:hover {
+    background-color: #f5f5f5;
+}
+
+/* Tag dots in dropdown */
+.tag-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+/* Dropdown divider */
+.dropdown-sort-divider {
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 4px 0;
+}
+
+/* ============================================
+   7. ACTION BUTTONS - Don't Interfere
+   ============================================ */
+
+/* Actions column (6th column) should stay below dropdown */
+.property-table tbody td:nth-child(6) {
+    z-index: 1;
+}
+
+.property-table tbody td:nth-child(6) .action-buttons {
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================
+   8. OTHER TABLE COLUMNS - Baseline Z-Index
+   ============================================ */
+
+/* All other columns maintain low z-index */
+.property-table td:nth-child(1),
+.property-table td:nth-child(2),
+.property-table td:nth-child(3),
+.property-table td:nth-child(4) {
+    z-index: 1;
+}
+
+/* ============================================
+   9. PAGE STRUCTURE - No Clipping
+   ============================================ */
+
+/* Fixed header should not block scrolling */
+.fixed-header {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: white;
+}
+
+/* Search and filter area */
+.search-filter-container,
+.search-section {
+    position: relative;
+    overflow: visible;
+    z-index: 1;
+}
+
+/* ============================================
+   10. SMOOTH SCROLLING
+   ============================================ */
+
+* {
+    -webkit-overflow-scrolling: touch;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ============================================
+   11. RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 768px) {
+    .dropdown-sort-content {
+        right: auto;
+        left: 0;
+        min-width: 180px;
+    }
+    
+    .main-content {
+        overflow-y: auto !important;
+    }
+}
+
+/* ============================================
+   12. DEBUGGING HELPERS (Remove in Production)
+   ============================================ */
+
+/* Uncomment to see z-index layers visually */
+/*
+.property-table tbody td:nth-child(5) {
+    background: rgba(255, 0, 0, 0.05);
+}
+
+.dropdown-sort-content.show {
+    background: rgba(0, 255, 0, 0.95);
+}
+
+.status-badge {
+    outline: 1px solid blue;
+}
+*/

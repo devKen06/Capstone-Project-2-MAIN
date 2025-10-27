@@ -4,12 +4,16 @@ let currentActivityTasks = { todo: [], call: [], email: [] };
 let currentActiveTaskType = 'todo';
 let sortDirection = 'asc'; // Track sort direction for tags
 
+// Barangay and street data from zonal_value table
+const locationData = {};
+
 document.addEventListener('DOMContentLoaded', function() {
     if (!localStorage.getItem('loggedIn')) {
         window.location.href = 'index.html';
         return;
     }
     
+    loadLocationData();
     loadProperties();
     
     document.getElementById('searchProperties').addEventListener('keypress', function(e) {
@@ -19,6 +23,78 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Load location data from database
+function loadLocationData() {
+    fetch('get_properties.php?action=get_locations')
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Process location data
+            data.locations.forEach(loc => {
+                if (!locationData[loc.barangay]) {
+                    locationData[loc.barangay] = new Set();
+                }
+                locationData[loc.barangay].add(loc.street);
+            });
+            
+            // Populate barangay dropdown
+            populateBarangays();
+        }
+    })
+    .catch(error => {
+        console.error('Error loading location data:', error);
+    });
+}
+
+// Populate barangay dropdown
+function populateBarangays() {
+    const barangaySelect = document.getElementById('barangay');
+    if (!barangaySelect) return;
+    
+    // Clear existing options except the first one
+    barangaySelect.innerHTML = '<option value="">Select Barangay</option>';
+    
+    // Sort barangays alphabetically
+    const sortedBarangays = Object.keys(locationData).sort();
+    
+    sortedBarangays.forEach(barangay => {
+        const option = document.createElement('option');
+        option.value = barangay;
+        option.textContent = barangay;
+        barangaySelect.appendChild(option);
+    });
+}
+
+// Load streets based on selected barangay
+function loadStreets() {
+    const barangaySelect = document.getElementById('barangay');
+    const streetSelect = document.getElementById('street');
+    
+    if (!barangaySelect || !streetSelect) return;
+    
+    const selectedBarangay = barangaySelect.value;
+    
+    // Clear street dropdown
+    streetSelect.innerHTML = '<option value="">Select Street</option>';
+    
+    if (selectedBarangay && locationData[selectedBarangay]) {
+        // Sort streets alphabetically
+        const streets = Array.from(locationData[selectedBarangay]).sort();
+        
+        streets.forEach(street => {
+            const option = document.createElement('option');
+            option.value = street;
+            option.textContent = street;
+            streetSelect.appendChild(option);
+        });
+        
+        streetSelect.disabled = false;
+    } else {
+        streetSelect.disabled = true;
+        streetSelect.innerHTML = '<option value="">Select Barangay First</option>';
+    }
+}
+
 function showAddPropertyForm() {
     document.getElementById('addPropertyBtn').style.display = 'none';
     document.getElementById('cancelBtn').style.display = 'flex';
@@ -26,12 +102,69 @@ function showAddPropertyForm() {
     document.getElementById('addPropertyForm').style.display = 'block';
 }
 
+// Handle property form submission
+function addProperty() {
+    const form = document.getElementById('propertyForm');
+    const formData = new FormData(form);
+    const propertyId = form.getAttribute('data-property-id');
+    
+    // Determine if this is an update or new property
+    const isUpdate = propertyId && propertyId !== '';
+    const url = isUpdate ? 'update_property.php' : 'add_property.php';
+    
+    // Add property ID to form data if updating
+    if (isUpdate) {
+        formData.append('property_id', propertyId);
+    }
+    
+    // Debug: log form data
+    console.log('Form data being sent:');
+    for (let pair of formData.entries()) {
+        console.log(pair[0] + ': ' + pair[1]);
+    }
+    
+    fetch(url, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Server response:', data);
+        if (data.success) {
+            alert(isUpdate ? 'Property updated successfully!' : 'Property added successfully!');
+            cancelAddProperty();
+            loadProperties();
+        } else {
+            alert('Error: ' + (data.message || 'Failed to save property'));
+        }
+    })
+    .catch(error => {
+        console.error('Error saving property:', error);
+        alert('An error occurred. Please try again.');
+    });
+}
+
 function cancelAddProperty() {
     document.getElementById('addPropertyBtn').style.display = 'flex';
     document.getElementById('cancelBtn').style.display = 'none';
     document.getElementById('propertyList').style.display = 'block';
     document.getElementById('addPropertyForm').style.display = 'none';
-    document.getElementById('propertyForm').reset();
+    
+    // Reset form
+    const form = document.getElementById('propertyForm');
+    form.reset();
+    form.removeAttribute('data-property-id');
+    
+    // Reset form title and button text
+    document.querySelector('.form-header h2').textContent = 'Add New Property';
+    document.querySelector('.btn-save').innerHTML = '<i class="fas fa-save"></i> Save Property';
+    
+    // Reset street dropdown
+    const streetSelect = document.getElementById('street');
+    if (streetSelect) {
+        streetSelect.disabled = true;
+        streetSelect.innerHTML = '<option value="">Select Barangay First</option>';
+    }
 }
 
 function goBack() {
@@ -79,17 +212,26 @@ function showDetailView(propertyId) {
     const statusValue = property.status || 'New Lead';
     const statusClass = statusValue.toLowerCase().replace(/ /g, '-');
     
+    // Valid statuses list
+    const validStatuses = ['New Lead', 'Proposal', 'Follow Up', 'On Progress', 'Negotiation', 'Signing Contract', 'Not Interested', 'Closed Deal'];
+    
+    // Check if status is valid, if not default to 'New Lead'
+    const displayStatus = validStatuses.includes(statusValue) ? statusValue : 'New Lead';
+    const displayStatusClass = displayStatus.toLowerCase().replace(/ /g, '-');
+    
     // Format price safely
     const formattedPrice = property.price ? parseFloat(property.price).toLocaleString() : '0';
     
-    // Safe display values
+    // Safe display values - CHANGED property_class to class
     const ownerName = property.owner_name || 'N/A';
     const email = property.email || 'N/A';
     const contactNumber = property.contact_number || 'N/A';
-    const address = property.address || 'N/A';
+    const barangay = property.barangay || 'N/A';
+    const street = property.street || 'N/A';
     const city = property.city || 'N/A';
     const province = property.province || 'N/A';
     const propertyType = property.property_type || 'N/A';
+    const propertyClass = property.class || 'N/A'; // CHANGED FROM property.property_class
     const floorArea = property.floor_area ? `${property.floor_area} sqm` : 'N/A';
     const lotArea = property.lot_area ? `${property.lot_area} sqm` : 'N/A';
     const bedrooms = property.bedrooms || 'N/A';
@@ -125,7 +267,18 @@ function showDetailView(propertyId) {
                 </div>
                 <div class="lead-info-row">
                     <span class="lead-info-label">Tag :</span>
-                    <span class="lead-info-value"><span class="status-badge status-${statusClass}">${statusValue}</span></span>
+                    <span class="lead-info-value">
+                        <select class="status-dropdown status-${displayStatusClass}" onchange="updatePropertyTag(${property.id}, this.value)">
+                            <option value="New Lead" ${displayStatus === 'New Lead' ? 'selected' : ''}>New Lead</option>
+                            <option value="Proposal" ${displayStatus === 'Proposal' ? 'selected' : ''}>Proposal</option>
+                            <option value="Follow Up" ${displayStatus === 'Follow Up' ? 'selected' : ''}>Follow Up</option>
+                            <option value="On Progress" ${displayStatus === 'On Progress' ? 'selected' : ''}>On Progress</option>
+                            <option value="Negotiation" ${displayStatus === 'Negotiation' ? 'selected' : ''}>Negotiation</option>
+                            <option value="Signing Contract" ${displayStatus === 'Signing Contract' ? 'selected' : ''}>Signing Contract</option>
+                            <option value="Not Interested" ${displayStatus === 'Not Interested' ? 'selected' : ''}>Not Interested</option>
+                            <option value="Closed Deal" ${displayStatus === 'Closed Deal' ? 'selected' : ''}>Closed Deal</option>
+                        </select>
+                    </span>
                 </div>
             </div>
             
@@ -135,7 +288,7 @@ function showDetailView(propertyId) {
                     <div class="property-info-grid">
                         <div class="property-info-item">
                             <label>Address :</label>
-                            <span>${address}, ${city}, ${province}</span>
+                            <span>${street}, ${barangay}, ${city}, ${province}</span>
                         </div>
                         <div class="property-info-item">
                             <label>Price :</label>
@@ -160,6 +313,10 @@ function showDetailView(propertyId) {
                         <div class="property-info-item">
                             <label>Property type :</label>
                             <span>${propertyType}</span>
+                        </div>
+                        <div class="property-info-item">
+                            <label>Class :</label>
+                            <span>${propertyClass}</span>
                         </div>
                     </div>
                 </div>
@@ -656,7 +813,8 @@ function addProperty() {
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
     submitBtn.disabled = true;
     
-    fetch('get_properties.php', {
+    // CHANGED FROM get_properties.php TO add_property.php
+    fetch('add_property.php', {
         method: 'POST',
         body: formData
     })
@@ -714,13 +872,25 @@ function displayProperties(properties) {
     
     tableBody.innerHTML = '';
     
+    // Valid statuses list
+    const validStatuses = ['New Lead', 'Proposal', 'Follow Up', 'On Progress', 'Negotiation', 'Signing Contract', 'Not Interested', 'Closed Deal'];
+    
     properties.forEach(property => {
         const row = document.createElement('tr');
         row.style.cursor = 'pointer';
         
-        const statusValue = property.status || 'New Lead';
+        // Get status and validate it
+        let statusValue = property.status || 'New Lead';
+        
+        // If status is not valid (like "Available"), default to "New Lead"
+        if (!validStatuses.includes(statusValue)) {
+            statusValue = 'New Lead';
+        }
+        
         const statusClass = 'status-' + statusValue.toLowerCase().replace(/ /g, '-');
-        const fullAddress = `${property.address}, ${property.city}, ${property.province}`;
+        
+        // Build address from new fields
+        const fullAddress = `${property.street || ''}, ${property.barangay || ''}, ${property.city || 'Tarlac City'}, ${property.province || 'Tarlac'}`;
         
         // Format price safely
         const formattedPrice = property.price ? parseFloat(property.price).toLocaleString() : '0';
@@ -732,20 +902,11 @@ function displayProperties(properties) {
             <td>${property.contact_number || ''}</td>
             <td>${property.email || ''}</td>
             <td>
-                <select class="tag-dropdown ${statusClass}" onchange="updatePropertyTag(${property.id}, this.value)" onclick="event.stopPropagation()">
-                    <option value="New Lead" ${statusValue === 'New Lead' ? 'selected' : ''}>New Lead</option>
-                    <option value="Proposal" ${statusValue === 'Proposal' ? 'selected' : ''}>Proposal</option>
-                    <option value="Follow Up" ${statusValue === 'Follow Up' ? 'selected' : ''}>Follow Up</option>
-                    <option value="On Progress" ${statusValue === 'On Progress' ? 'selected' : ''}>On Progress</option>
-                    <option value="Negotiation" ${statusValue === 'Negotiation' ? 'selected' : ''}>Negotiation</option>
-                    <option value="Signing Contract" ${statusValue === 'Signing Contract' ? 'selected' : ''}>Signing Contract</option>
-                    <option value="Not Interested" ${statusValue === 'Not Interested' ? 'selected' : ''}>Not Interested</option>
-                    <option value="Closed Deal" ${statusValue === 'Closed Deal' ? 'selected' : ''}>Closed Deal</option>
-                </select>
+                <span class="status-badge ${statusClass}">${statusValue}</span>
             </td>
             <td>
                 <div class="action-buttons">
-                    <button class="btn-action btn-edit" onclick="event.stopPropagation(); editProperty(${property.id})" title="Edit">
+                  <button class="btn-action btn-edit" onclick="event.stopPropagation(); editProperty(${property.id})" title="Edit">
                         <i class="fas fa-edit"></i>
                     </button>
                     <button class="btn-action btn-delete" onclick="event.stopPropagation(); deleteProperty(${property.id})" title="Delete">
@@ -756,9 +917,7 @@ function displayProperties(properties) {
         `;
         
         row.addEventListener('click', function(e) {
-            if (!e.target.classList.contains('tag-dropdown')) {
-                showDetailView(property.id);
-            }
+            showDetailView(property.id);
         });
         
         tableBody.appendChild(row);
@@ -779,17 +938,32 @@ function updatePropertyTag(propertyId, newTag) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
+            // Update property in local array
             const property = allProperties.find(p => p.id == propertyId);
             if (property) {
                 property.status = newTag;
             }
             
-            const dropdown = document.querySelector(`select[onchange*="${propertyId}"]`);
+            // Update the dropdown class to reflect new status
+            const dropdown = document.querySelector('.status-dropdown');
             if (dropdown) {
-                dropdown.className = 'tag-dropdown';
+                dropdown.className = 'status-dropdown';
                 const statusClass = 'status-' + newTag.toLowerCase().replace(/ /g, '-');
                 dropdown.classList.add(statusClass);
             }
+            
+            // Refresh the property list to update the table badge
+            loadProperties();
+            
+            // Show success message
+            const successMsg = document.createElement('div');
+            successMsg.style.cssText = 'position: fixed; top: 80px; right: 20px; background: #4CAF50; color: white; padding: 15px 20px; border-radius: 5px; z-index: 9999; box-shadow: 0 4px 8px rgba(0,0,0,0.2);';
+            successMsg.innerHTML = '<i class="fas fa-check-circle"></i> Status updated successfully!';
+            document.body.appendChild(successMsg);
+            
+            setTimeout(() => {
+                successMsg.remove();
+            }, 3000);
         } else {
             alert('Error: ' + data.message);
             loadProperties();
@@ -806,17 +980,32 @@ function searchProperties() {
     loadProperties();
 }
 
-function toggleSortDropdown() {
-    const dropdown = document.getElementById('sortDropdown');
-    dropdown.classList.toggle('show');
+function toggleSortDropdown(event) {
+    if (event) {
+        event.stopPropagation();
+    }
     
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function closeDropdown(e) {
-        if (!e.target.closest('.dropdown-sort')) {
-            dropdown.classList.remove('show');
-            document.removeEventListener('click', closeDropdown);
-        }
-    });
+    const dropdown = document.getElementById('sortDropdown');
+    const isCurrentlyShowing = dropdown.classList.contains('show');
+    
+    if (isCurrentlyShowing) {
+        // Close the dropdown
+        dropdown.classList.remove('show');
+    } else {
+        // Open the dropdown
+        dropdown.classList.add('show');
+        
+        // Close dropdown when clicking outside (after a small delay)
+        setTimeout(() => {
+            function closeDropdown(e) {
+                if (!e.target.closest('.dropdown-sort')) {
+                    dropdown.classList.remove('show');
+                    document.removeEventListener('click', closeDropdown);
+                }
+            }
+            document.addEventListener('click', closeDropdown);
+        }, 10);
+    }
 }
 
 function sortByTag(tagName) {
@@ -838,9 +1027,52 @@ function sortByTag(tagName) {
 
 function editProperty(propertyId) {
     const property = allProperties.find(p => p.id == propertyId);
-    if (property) {
-        alert('Edit property: ' + property.property_type + '\n(Edit functionality will be implemented)');
+    if (!property) return;
+    
+    // Show the form
+    showAddPropertyForm();
+    
+    // Split owner_name into first and last name
+    const ownerNameParts = (property.owner_name || '').trim().split(' ');
+    const firstName = ownerNameParts[0] || '';
+    const lastName = ownerNameParts.slice(1).join(' ') || '';
+    
+    // Populate form fields with existing property data
+    document.getElementById('first_name').value = firstName;
+    document.getElementById('last_name').value = lastName;
+    document.getElementById('contact_number').value = property.contact_number || '';
+    document.getElementById('email').value = property.email || '';
+    document.getElementById('description').value = property.description || '';
+    document.getElementById('price').value = property.price || '';
+    document.getElementById('property_type').value = property.property_type || '';
+    document.getElementById('property_class').value = property.class || '';
+    
+    // Set location fields
+    if (property.barangay) {
+        document.getElementById('barangay').value = property.barangay;
+        // Trigger street loading
+        loadStreets();
+        // Set street after a small delay to ensure streets are loaded
+        setTimeout(() => {
+            if (property.street) {
+                document.getElementById('street').value = property.street;
+            }
+        }, 100);
     }
+    
+    document.getElementById('city').value = property.city || 'Tarlac City';
+    document.getElementById('province').value = property.province || 'Tarlac';
+    document.getElementById('bedrooms').value = property.bedrooms || '';
+    document.getElementById('bathrooms').value = property.bathrooms || '';
+    document.getElementById('floor_area').value = property.floor_area || '';
+    document.getElementById('lot_area').value = property.lot_area || '';
+    
+    // Change form title and button text
+    document.querySelector('.form-header h2').textContent = 'Edit Property';
+    document.querySelector('.btn-save').innerHTML = '<i class="fas fa-save"></i> Update Property';
+    
+    // Store property ID for update
+    document.getElementById('propertyForm').setAttribute('data-property-id', propertyId);
 }
 
 function deleteProperty(propertyId) {

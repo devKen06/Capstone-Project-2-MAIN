@@ -1,14 +1,7 @@
 /* ===========================================
             LOGIN PAGE STYLES
    =========================================== */
- body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    display: flex;
-    height: 100vh;
-    overflow: hidden;
-}
-
+   
 /* Container for logo and text */
 .logo-container {
     position: fixed;          /* Fixes the logo at the top of page */
@@ -64,7 +57,7 @@
 /* Paragraph text in login section */
 .login-section p {
     margin-bottom: 20px;      /* Space below paragraph */
-                                /* Large text size */
+    font-size: 25px;          /* Large text size */
     color: #0011ff;           /* Blue color for text */
 }
 
@@ -160,148 +153,3 @@
     background-size: cover;    /* Cover entire section */
     background-position: center; /* Center the image */
 }
-/* Tablet and small desktop */
-    @media (max-width: 768px) {
-        .login-container {
-            flex-direction: column; /* Stack sections vertically */
-        }
-        
-        .login-section {
-            width: 100%;           /* Full width on tablet */
-            padding: 30px;         /* Reduce padding */
-        }
-        
-        .image-section {
-            width: 100%;           /* Full width on tablet */
-            height: 200px;         /* Fixed height for background */
-        }
-        
-        .login-section h1 {
-            font-size: 40px;       /* Smaller heading on tablet */
-            margin-bottom: 30px;   /* Less space below heading */
-        }
-        
-        .button-group {
-            width: 60%;            /* Wider button group */
-            gap: 50px;             /* Less gap between buttons */
-        }
-    }
-
-    /* Mobile phones */
-    @media (max-width: 480px) {
-        body {
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: center !important;
-            align-items: center !important;
-            padding: 20px !important;
-            min-height: 100vh !important;
-        }
-        
-        .logo-container {
-            position: static !important;
-            background: transparent !important;
-            justify-content: center !important;
-            padding: 0 0 30px 0 !important;
-            z-index: 1000 !important;
-        }
-        
-        .logo-container img {
-            filter: brightness(0) invert(1) !important;
-            display: block !important;
-            height: 40px !important;
-            width: auto !important;
-        }
-        
-        .logo-container span {
-            color: white !important;
-            font-size: 24px !important;
-        }
-        
-        .login-container {
-            display: block !important;
-            height: auto !important;
-            width: auto !important;
-            background: none !important;
-            position: relative !important;
-            z-index: 100 !important;
-        }
-        
-        .login-section {
-            width: 100% !important;
-            max-width: 350px !important;
-            padding: 40px 30px !important;
-            background: white !important;
-            border-radius: 15px !important;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
-            position: relative !important;
-            z-index: 100 !important;
-            display: flex !important;
-        }
-        
-        .image-section {
-            display: block !important;
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            height: 100% !important;
-            z-index: -1 !important;
-            background-image: url('assets/login-bg.png') !important;
-            background-size: cover !important;
-            background-position: center !important;
-            background-repeat: no-repeat !important;
-        }
-        
-        .image-section img {
-            display: none !important;
-        }
-        
-        .login-section h1 {
-            font-size: 24px;
-            margin-bottom: 30px;
-            line-height: 1.2;
-        }
-        
-        .label-container input {
-            max-width: 100%;
-            font-size: 16px;
-            height: 50px;
-            padding: 12px;
-        }
-        
-        .label-container label {
-            font-size: 16px;
-            max-width: 100%;
-        }
-        
-        .button-group {
-            width: 100%;
-            gap: 15px;
-            padding-top: 20px;
-        }
-        
-        .button-group button {
-            height: 50px;
-            font-size: 16px;
-        }
-    }
-
-    /* Very small phones */
-    @media (max-width: 320px) {
-        .login-container {
-            padding: 0 15px;       /* Less side padding */
-        }
-        
-        .login-section {
-            padding: 25px 20px;    /* Less padding */
-        }
-        
-        .login-section h1 {
-            font-size: 24px;       /* Even smaller heading */
-        }
-        
-        .logo-container span {
-            font-size: 20px;       /* Smaller logo text */
-        }
-    }

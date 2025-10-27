@@ -1,7 +1,6 @@
-
 /* ---------- STATS ---------- */
 .stats-container {
-    background: url('/assets/register-bg.png') no-repeat center center;
+    background: url('../assets/register-bg.png') no-repeat center center;
     background-size: cover;
     color: white;
     border-radius: 10px;
@@ -84,4 +83,168 @@
 }
 .top-nav-icons button {
     font-size: 30px;
+}
+
+/* ---------- STATS ---------- */
+.stats-container {
+    background: url('../assets/register-bg.png') no-repeat center center;
+    background-size: cover;
+    color: white;
+    border-radius: 10px;
+    padding: 30px;
+    margin-top: 18px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    margin-bottom: 30px;
+    margin: 18px 20px 30px 20px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding-bottom: 50px;
+    text-align: center;
+}
+
+.stat-item {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+    padding: 10px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.stat-item:hover {
+    transform: translateY(-5px) scale(1.02);
+    background-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.stat-item:active {
+    transform: translateY(-2px) scale(1.0);
+}
+
+.stat-item .stat-number {
+    font-size: 50px;
+    font-weight: bold;
+    padding-top: 50px;
+}
+
+.stat-item .stat-label {
+    margin-top: 5px;
+    font-size: 25px;
+}
+
+/* ---------- TASKS ---------- */
+.tasks-section h3 {
+    font-size: 25px;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    padding-top: 10px;
+}
+
+.tasks-grid {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.task-card {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    padding: 15px 20px;
+    flex: 1;
+    min-width: 200px;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+    margin: 18px 30px 30px 30px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.6);
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.task-badge {
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 4px 8px;
+    font-size: 12px;
+    min-width: 24px;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.task-badge:hover {
+    transform: scale(1.1);
+}
+
+.task-list {
+    list-style: decimal;
+    padding-left: 20px;
+}
+
+.task-list li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+.top-nav-icons button {
+    font-size: 30px;
+}
+
+/* Click indicator for stat items */
+.stat-item::after {
+    content: '';
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+
+.stat-item:hover::after {
+    width: 60%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stat-item .stat-number {
+        font-size: 40px;
+        padding-top: 30px;
+    }
+    
+    .stat-item .stat-label {
+        font-size: 20px;
+    }
+    
+    .tasks-grid {
+        flex-direction: column;
+    }
+    
+    .task-card {
+        margin: 10px 20px;
+    }
 }

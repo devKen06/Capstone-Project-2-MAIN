@@ -173,8 +173,8 @@
 .table-container {
     background-color: white;
     border-radius: 10px;
-    overflow: hidden;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    /* Overflow handled at bottom of file for dropdown fix */
 }
 
 .property-table {
@@ -213,6 +213,15 @@
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
+    /* CRITICAL FIX: Ensure tags don't overlap dropdown */
+    position: relative;
+    z-index: 1 !important;
+}
+
+/* CRITICAL FIX: When dropdown is open, reduce z-index of all badges */
+.dropdown-sort-content.show ~ .status-badge,
+body:has(.dropdown-sort-content.show) .status-badge {
+    z-index: 1 !important;
 }
 
 .status-new-lead {
@@ -456,99 +465,208 @@
 .notes-save-indicator {
     display: none;
     align-items: center;
-    gap: 6px;
+    gap: 10px;
     margin-top: 10px;
-    color: #28a745;
     font-size: 14px;
+    color: #28a745;
     font-weight: 500;
+}
+
+.notes-save-indicator.visible {
+    display: flex;
 }
 
 .notes-save-indicator i {
     font-size: 16px;
 }
 
-/* Activities Tab */
-.activities-header {
-    background-color: white;
-    padding: 20px;
-    border-bottom: 1px solid #dee2e6;
-    margin-bottom: 20px;
-}
-
-.task-assigned {
-    font-size: 16px;
-    color: #555;
-}
-
-.task-list {
-    margin-bottom: 30px;
-}
-
-.task-item {
-    background-color: white;
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 15px;
-}
-
-.task-tabs-section {
+/* Activities Section */
+.activities-section {
     margin-top: 30px;
 }
 
-.task-tabs {
-    display: flex;
-    background-color: #001d9e;
-    border-radius: 10px 10px 0 0;
-    overflow: hidden;
-}
-
-.task-tab {
-    flex: 1;
-    padding: 15px;
-    color: white;
-    text-align: center;
+.activities-section-title {
+    font-size: 20px;
     font-weight: 600;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.activities-container {
+    background-color: white;
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.activity-item {
+    padding: 15px;
+    border-left: 3px solid #007bff;
+    margin-bottom: 15px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+.activity-item:last-child {
+    margin-bottom: 0;
+}
+
+.activity-date {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.activity-description {
+    font-size: 14px;
+    color: #333;
+}
+
+/* Edit Property Form */
+.edit-form-container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+.edit-form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.edit-form-header h2 {
+    color: #333;
+    margin: 0;
+}
+
+.btn-cancel-edit {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
     cursor: pointer;
-    position: relative;
-    transition: background-color 0.3s;
+    font-size: 14px;
 }
 
-.task-tab:hover {
-    background-color: #0056b3;
+.btn-cancel-edit:hover {
+    background-color: #545b62;
 }
 
-.task-tab.active {
-    background-color: #0056b3;
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s;
 }
 
-.task-tab-badge {
-    position: absolute;
-    top: -8px;
-    right: 15px;
+.modal.show {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.modal-content p {
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.modal-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.modal-btn-confirm {
     background-color: #dc3545;
     color: white;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
 }
 
-.task-content {
-    background-color: white;
-    border: 2px solid #001d9e;
-    border-top: none;
-    border-radius: 0 0 10px 10px;
-    padding: 30px;
-    min-height: 200px;
+.modal-btn-confirm:hover {
+    background-color: #c82333;
+}
+
+.modal-btn-cancel {
+    background-color: #6c757d;
+    color: white;
+}
+
+.modal-btn-cancel:hover {
+    background-color: #545b62;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+}
+
+.empty-state i {
+    font-size: 64px;
+    margin-bottom: 20px;
+    color: #ddd;
+}
+
+.empty-state p {
+    font-size: 18px;
+    margin-bottom: 20px;
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
     .property-info-grid {
         grid-template-columns: 1fr;
     }
@@ -556,356 +674,31 @@
     .search-section {
         flex-direction: column;
     }
-    
-    .form-row {
-        grid-template-columns: 1fr;
+}
+
+@media (max-width: 768px) {
+    .property-content {
+        padding: 10px;
     }
-}
-
-/* Activities Tab Styles */
-.activities-content {
-    padding: 20px 0;
-}
-
-.task-assigned-info {
-    font-size: 16px;
-    color: #555;
-    margin-bottom: 20px;
-}
-
-.task-type-tabs {
-    display: flex;
-    background-color: #001d9e;
-    border-radius: 10px 10px 0 0;
-    overflow: hidden;
-    margin-bottom: 0;
-}
-
-.task-type-tab {
-    flex: 1;
-    padding: 15px;
-    color: white;
-    text-align: center;
-    font-weight: 600;
-    cursor: pointer;
-    position: relative;
-    transition: background-color 0.3s;
-    font-size: 16px;
-}
-
-.task-type-tab:hover {
-    background-color: #0056b3;
-}
-
-.task-type-tab.active {
-    background-color: #0056b3;
-}
-
-.task-count-badge {
-    position: absolute;
-    top: -8px;
-    right: 15px;
-    background-color: #dc3545;
-    color: white;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-}
-
-.activity-tasks-container {
-    background-color: white;
-    border: 2px solid #001d9e;
-    border-top: none;
-    border-radius: 0 0 10px 10px;
-    min-height: 300px;
-    max-height: 500px;
-    overflow-y: auto;
-}
-
-.activity-task-item {
-    padding: 20px;
-    border-bottom: 1px solid #eee;
-    display: flex;
-    align-items: flex-start;
-    gap: 15px;
-    transition: background-color 0.2s;
-}
-
-.activity-task-item:hover {
-    background-color: #f8f9fa;
-}
-
-.activity-task-item:last-child {
-    border-bottom: none;
-}
-
-.task-content-activity {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.task-title-activity {
-    font-size: 16px;
-    font-weight: 600;
-    color: #333;
-}
-
-.task-date-activity {
-    color: #666;
-    font-size: 14px;
-}
-
-.task-assignee-activity {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: #666;
-    font-size: 14px;
-}
-
-.task-details-activity {
-    display: flex;
-    gap: 15px;
-    font-size: 13px;
-    margin-top: 5px;
-}
-
-.task-status-activity,
-.task-priority-activity {
-    font-weight: 600;
-}
-
-.task-notes-activity {
-    color: #666;
-    font-size: 13px;
-    font-style: italic;
-    margin-top: 5px;
-}
-
-/* Task Modal Styles */
-.activity-task-modal {
-    background-color: white;
-    border-radius: 8px;
-    padding: 30px;
-    width: 500px;
-    max-width: 90vw;
-    max-height: 90vh;
-    overflow-y: auto;
-}
-
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 2000;
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-overlay.show {
-    display: flex;
-}
-
-.modal-header {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 25px;
-    color: #333;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 6px;
-    color: #333;
-    font-size: 14px;
-}
-
-.form-input,
-.form-select,
-.form-textarea {
-    width: 100%;
-    padding: 10px;
-    border: 2px solid #dee2e6;
-    border-radius: 5px;
-    font-size: 14px;
-    box-sizing: border-box;
-}
-
-.form-input:focus,
-.form-select:focus,
-.form-textarea:focus {
-    outline: none;
-    border-color: #007bff;
-}
-
-.form-row {
-    display: flex;
-    gap: 15px;
-}
-
-.form-row .form-group {
-    flex: 1;
-}
-
-.date-time-row {
-    display: flex;
-    gap: 15px;
-}
-
-.date-time-row .form-group {
-    flex: 1;
-}
-
-.form-textarea {
-    min-height: 100px;
-    resize: vertical;
-    font-family: inherit;
-}
-
-.modal-buttons {
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-    margin-top: 20px;
-}
-
-.btn-create {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 24px;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.btn-create:hover {
-    background-color: #218838;
-}
-
-.btn-cancel-modal {
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    padding: 10px 24px;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.btn-cancel-modal:hover {
-    background-color: #545b62;
-}
-
-/* Add Task Button */
-.btn-add-task {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    display: none;
-    align-items: center;
-    gap: 6px;
-    margin-left: auto;
-    transition: background-color 0.3s;
-}
-
-.btn-add-task:hover {
-    background-color: #0056b3;
-}
-
-/* Tag Dropdown in Table */
-.tag-dropdown {
-    padding: 8px 30px 8px 12px;
-    border: none;
-    border-radius: 15px;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    cursor: pointer;
-    appearance: none;
-    background-repeat: no-repeat;
-    background-position: right 8px center;
-    background-size: 12px;
-    min-width: 150px;
-}
-
-.tag-dropdown:focus {
-    outline: 2px solid rgba(0, 0, 0, 0.3);
-    outline-offset: 2px;
-}
-
-/* Color classes for dropdown */
-.tag-dropdown.status-new-lead {
-    background-color: #00BCD4;
-    color: white;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
-}
-
-.tag-dropdown.status-proposal {
-    background-color: #2196F3;
-    color: white;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
-}
-
-.tag-dropdown.status-follow-up {
-    background-color: #9E9E9E;
-    color: white;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
-}
-
-.tag-dropdown.status-on-progress {
-    background-color: #FFC107;
-    color: #212529;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23212529' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
-}
-
-.tag-dropdown.status-negotiation {
-    background-color: #9C27B0;
-    color: white;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
-}
-
-.tag-dropdown.status-signing-contract {
-    background-color: #FF9800;
-    color: white;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
-}
-
-.tag-dropdown.status-not-interested {
-    background-color: #F44336;
-    color: white;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
-}
-
-.tag-dropdown.status-closed-deal {
-    background-color: #4CAF50;
-    color: white;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+    
+    .add-property-form,
+    .edit-form-container {
+        padding: 20px;
+    }
+    
+    .property-table {
+        font-size: 12px;
+    }
+    
+    .property-table th,
+    .property-table td {
+        padding: 10px 5px;
+    }
+    
+    .tab-button {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
 }
 
 /* Form Header with Close Button */
@@ -914,223 +707,132 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e9ecef;
 }
 
 .form-header h2 {
-    margin: 0;
     color: #333;
+    margin: 0;
 }
 
 .btn-close-form {
     background-color: transparent;
-    border: none;
-    font-size: 24px;
-    color: #666;
+    color: #dc3545;
+    border: 2px solid #dc3545;
+    padding: 8px 12px;
+    border-radius: 5px;
     cursor: pointer;
-    width: 40px;
-    height: 40px;
+    font-size: 18px;
+    transition: all 0.3s;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
-    transition: all 0.3s;
+    width: 40px;
+    height: 40px;
 }
 
 .btn-close-form:hover {
-    background-color: #f0f0f0;
-    color: #dc3545;
-}
-
-/* Add this to your property-management.css file */
-
-/* Sort Button Styles */
-.sort-btn {
-    background: transparent;
-    border: none;
+    background-color: #dc3545;
     color: white;
-    cursor: pointer;
-    padding: 4px 8px;
-    margin-left: 8px;
-    border-radius: 4px;
-    transition: all 0.3s;
-    font-size: 16px;
-}
-
-.sort-btn:hover {
-    background-color: rgba(255, 255, 255, 0.2);
     transform: scale(1.1);
 }
 
-.sort-btn i {
-    transition: transform 0.3s;
+/* Task Section - Activities Tab */
+.task-section {
+    margin-bottom: 30px;
 }
 
-.sort-btn:active {
-    transform: scale(0.95);
-}
-
-/* Make the header cell with sort button flex */
-.property-table th {
-    padding: 15px;
-    text-align: left;
+.task-section-title {
+    font-size: 18px;
     font-weight: 600;
-    position: relative;
-}
-
-.property-table th:has(.sort-btn) {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-/* Add this to your property-management.css file */
-
-/* Sort Button Styles - REMOVED, replaced with filter dropdown */
-
-/* Make the header cell with sort button flex */
-.property-table th {
-    padding: 15px;
-    text-align: left;
-    font-weight: 600;
-    position: relative;
-}
-
-/* Tags Filter Dropdown Styles */
-.tags-filter-dropdown {
-    display: inline-block;
-    position: relative;
-    margin-left: 8px;
-}
-
-.tags-filter-btn {
-    background: transparent;
-    border: none;
-    color: white;
-    cursor: pointer;
-    padding: 6px 10px;
-    border-radius: 4px;
-    transition: all 0.3s;
-    font-size: 16px;
-}
-
-.tags-filter-btn:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    transform: scale(1.1);
-}
-
-.tags-filter-btn:active {
-    transform: scale(0.95);
-}
-
-.tags-filter-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: white;
-    min-width: 200px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    z-index: 1000;
-    margin-top: 8px;
-    overflow: hidden;
-}
-
-.tags-filter-menu.show {
-    display: block;
-    animation: dropdownFade 0.2s ease-in;
-}
-
-@keyframes dropdownFade {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.filter-option {
-    padding: 12px 16px;
-    cursor: pointer;
-    transition: background-color 0.2s;
+    margin-bottom: 15px;
     color: #333;
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 14px;
 }
 
-.filter-option:hover {
-    background-color: #f0f0f0;
+.task-list {
+    background-color: white;
+    border: 2px solid #dee2e6;
+    border-radius: 10px;
+    padding: 15px;
 }
 
-.filter-option:active {
-    background-color: #e0e0e0;
-}
-
-.filter-option i {
-    width: 16px;
-    color: #666;
-}
-
-.filter-badge {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    display: inline-block;
-}
-
-.filter-divider {
-    height: 1px;
-    background-color: #dee2e6;
-    margin: 4px 0;
-}
-
-/* Tag badge colors in filter */
-.filter-badge.status-new-lead {
-    background-color: #00BCD4;
-}
-
-.filter-badge.status-proposal {
-    background-color: #2196F3;
-}
-
-.filter-badge.status-follow-up {
-    background-color: #9E9E9E;
-}
-
-.filter-badge.status-on-progress {
-    background-color: #FFC107;
-}
-
-.filter-badge.status-negotiation {
-    background-color: #9C27B0;
-}
-
-.filter-badge.status-signing-contract {
-    background-color: #FF9800;
-}
-
-.filter-badge.status-not-interested {
-    background-color: #F44336;
-}
-
-.filter-badge.status-closed-deal {
-    background-color: #4CAF50;
-}
-
-/* Tab Navigation Layout Update */
-.tab-navigation {
+.task-item {
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-bottom: 30px;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s;
 }
 
-/* Back Button in Detail View - Icon Only, Left Side */
+.task-item:hover {
+    background-color: #f8f9fa;
+}
+
+.task-item:last-child {
+    border-bottom: none;
+}
+
+.task-checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.task-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.task-title {
+    font-weight: 600;
+    color: #333;
+}
+
+.task-details {
+    display: flex;
+    gap: 15px;
+    font-size: 13px;
+    color: #666;
+}
+
+.task-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-task-action {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.btn-add-task {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-add-task:hover {
+    background-color: #0056b3;
+}
+
+/* Back button for detail view */
 .btn-back-detail {
     background-color: #6c757d;
     color: white;
@@ -1178,7 +880,7 @@
 }
 
 /* ============================================
-   ADD ALL OF THIS TO YOUR property-management.css FILE
+   SORT BUTTON & DROPDOWN STYLES
    ============================================ */
 
 /* ===== 1. SORT BUTTON STYLES ===== */
@@ -1280,54 +982,7 @@
     margin-bottom: 30px;
 }
 
-/* ===== 5. BACK BUTTON IN DETAIL VIEW ===== */
-.btn-back-detail {
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    transition: all 0.3s;
-    flex-shrink: 0;
-}
-
-.btn-back-detail:hover {
-    background-color: #545b62;
-    transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.btn-back-detail:active {
-    transform: scale(0.95);
-}
-
-.btn-back-detail i {
-    font-size: 16px;
-    margin: 0;
-}
-
-/* ===== 6. TAB CONTAINER ADJUSTMENTS ===== */
-.tab-container {
-    display: flex;
-    border: 2px solid #001d9e;
-    border-radius: 25px;
-    overflow: hidden;
-    flex: 0 0 auto;
-}
-
-/* ===== 7. ADD TASK BUTTON ALIGNMENT ===== */
-.btn-add-task {
-    margin-left: auto;
-}
-
-/* ===== 8. ALL TASKS SECTION (ACTIVITIES) ===== */
+/* ===== 5. ALL TASKS SECTION (ACTIVITIES) ===== */
 .all-tasks-section {
     margin-bottom: 30px;
 }
@@ -1408,7 +1063,7 @@
     font-weight: 600;
 }
 
-/* ===== 9. STATUS AND PRIORITY COLORS ===== */
+/* ===== 6. STATUS AND PRIORITY COLORS ===== */
 .task-status-all.status-not-started {
     color: #dc3545;
 }
@@ -1433,7 +1088,7 @@
     color: #28a745;
 }
 
-/* ===== 10. SCROLLBAR STYLING FOR ALL TASKS CONTAINER ===== */
+/* ===== 7. SCROLLBAR STYLING FOR ALL TASKS CONTAINER ===== */
 .all-tasks-container::-webkit-scrollbar {
     width: 8px;
 }
@@ -1452,3 +1107,188 @@
     background: #555;
 }
 
+/* Status Dropdown Styling for Overview Section */
+.status-dropdown {
+    padding: 8px 12px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+    min-width: 150px;
+}
+
+.status-dropdown:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.status-dropdown:focus {
+    border-color: #2196F3;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+/* Status-specific colors for dropdown */
+.status-dropdown.status-new-lead {
+    background-color: #00BCD4;
+    border-color: #00ACC1;
+}
+
+.status-dropdown.status-proposal {
+    background-color: #2196F3;
+    border-color: #1976D2;
+}
+
+.status-dropdown.status-follow-up {
+    background-color: #9E9E9E;
+    border-color: #757575;
+}
+
+.status-dropdown.status-on-progress {
+    background-color: #FFC107;
+    border-color: #FFA000;
+    color: #333;
+}
+
+.status-dropdown.status-negotiation {
+    background-color: #9C27B0;
+    border-color: #7B1FA2;
+}
+
+.status-dropdown.status-signing-contract {
+    background-color: #FF9800;
+    border-color: #F57C00;
+}
+
+.status-dropdown.status-not-interested {
+    background-color: #F44336;
+    border-color: #D32F2F;
+}
+
+.status-dropdown.status-closed-deal {
+    background-color: #4CAF50;
+    border-color: #388E3C;
+}
+
+/* Dropdown options styling */
+.status-dropdown option {
+    padding: 10px;
+    background: white;
+    color: #333;
+    font-weight: 600;
+}
+
+/* Lead info value adjustment for dropdown */
+.lead-info-value select.status-dropdown {
+    margin: 0;
+}
+
+/* ============================================
+   CRITICAL FIX: Tags Dropdown Z-Index
+   ============================================ */
+
+/* CRITICAL: Enable page scrolling */
+html, body {
+    overflow: auto !important;
+    height: auto !important;
+}
+
+/* Main content - must allow scrolling */
+.main-content {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    height: auto !important;
+}
+
+/* Property content - allow dropdown overflow */
+.property-content {
+    overflow: visible !important;
+    height: auto !important;
+}
+
+.property-list {
+    overflow: visible !important;
+}
+
+/* Table container - horizontal scroll only, vertical visible */
+.table-container {
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    position: relative;
+}
+
+/* Table positioning */
+.property-table {
+    position: relative;
+    width: 100%;
+}
+
+/* Table elements - allow dropdown overflow */
+.property-table tbody,
+.property-table tr {
+    position: relative;
+}
+
+/* CRITICAL FIX: All table cells have controlled z-index */
+.property-table td {
+    position: relative;
+    z-index: 1;
+}
+
+/* Tags column (5th column) - special z-index handling */
+.property-table th:nth-child(5),
+.property-table td:nth-child(5) {
+    overflow: visible !important;
+    position: relative;
+    z-index: 10;
+}
+
+/* CRITICAL: Tag badges must be BELOW dropdown */
+.property-table td:nth-child(5) .status-badge {
+    position: relative;
+    z-index: 1 !important;
+}
+
+/* CRITICAL: When dropdown is open, ensure it's above everything */
+.property-table th:nth-child(5):has(.dropdown-sort-content.show) {
+    z-index: 9999 !important;
+}
+
+/* Dropdown container - high z-index */
+.dropdown-sort {
+    position: relative;
+    z-index: 100;
+}
+
+/* Dropdown menu - HIGHEST z-index */
+.dropdown-sort-content {
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.3);
+    z-index: 10000 !important;
+    border-radius: 4px;
+    right: 0;
+    top: calc(100% + 5px);
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+}
+
+.dropdown-sort-content.show {
+    display: block !important;
+    z-index: 10000 !important;
+}
+
+/* Ensure all row badges stay below the dropdown when it's open */
+body:has(.dropdown-sort-content.show) .property-table tbody td .status-badge {
+    z-index: 1 !important;
+}
+
+/* Actions column should not interfere */
+.property-table td:nth-child(6) {
+    z-index: 1;
+}

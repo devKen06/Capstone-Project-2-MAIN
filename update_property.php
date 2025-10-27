@@ -21,6 +21,26 @@ try {
     
     $agent_id = $_SESSION['user_id'];
     
+    // Get property ID
+    $property_id = $_POST['property_id'] ?? null;
+    
+    if (!$property_id) {
+        echo json_encode(['success' => false, 'message' => 'Property ID is required']);
+        exit;
+    }
+    
+    // Verify property belongs to this agent
+    $check_query = "SELECT id FROM properties WHERE id = :property_id AND agent_id = :agent_id";
+    $check_stmt = $db->prepare($check_query);
+    $check_stmt->bindParam(':property_id', $property_id);
+    $check_stmt->bindParam(':agent_id', $agent_id);
+    $check_stmt->execute();
+    
+    if ($check_stmt->rowCount() === 0) {
+        echo json_encode(['success' => false, 'message' => 'Property not found or access denied']);
+        exit;
+    }
+    
     // Get form data
     $description = trim($_POST['description'] ?? '');
     $barangay = trim($_POST['barangay'] ?? '');
@@ -38,7 +58,6 @@ try {
     $last_name = trim($_POST['last_name'] ?? '');
     $contact_number = trim($_POST['contact_number'] ?? '');
     $email = trim($_POST['email'] ?? '');
-    $status = trim($_POST['status'] ?? 'New Lead');
     
     // Combine first name and last name for owner_name field
     $owner_name = trim($first_name . ' ' . $last_name);
@@ -74,25 +93,35 @@ try {
     $floor_area = $floor_area === '' ? null : $floor_area;
     $lot_area = $lot_area === '' ? null : $lot_area;
     
-    // Create combined address for backward compatibility (optional)
+    // Create combined address for backward compatibility
     $address = $street . ', ' . $barangay;
     
-    // Insert property
-    $query = "INSERT INTO properties (
-        agent_id, description, barangay, street, city, province, price, 
-        property_type, class, bedrooms, bathrooms, floor_area, lot_area, 
-        owner_name, contact_number, email, status
-    ) VALUES (
-        :agent_id, :description, :barangay, :street, :city, :province, :price,
-        :property_type, :class, :bedrooms, :bathrooms, :floor_area, :lot_area,
-        :owner_name, :contact_number, :email, :status
-    )";
+    // Update property
+    $query = "UPDATE properties SET 
+        description = :description,
+        barangay = :barangay,
+        street = :street,
+        address = :address,
+        city = :city,
+        province = :province,
+        price = :price,
+        property_type = :property_type,
+        class = :class,
+        bedrooms = :bedrooms,
+        bathrooms = :bathrooms,
+        floor_area = :floor_area,
+        lot_area = :lot_area,
+        owner_name = :owner_name,
+        contact_number = :contact_number,
+        email = :email,
+        updated_at = CURRENT_TIMESTAMP
+    WHERE id = :property_id AND agent_id = :agent_id";
     
     $stmt = $db->prepare($query);
-    $stmt->bindParam(':agent_id', $agent_id);
     $stmt->bindParam(':description', $description);
     $stmt->bindParam(':barangay', $barangay);
     $stmt->bindParam(':street', $street);
+    $stmt->bindParam(':address', $address);
     $stmt->bindParam(':city', $city);
     $stmt->bindParam(':province', $province);
     $stmt->bindParam(':price', $price);
@@ -105,20 +134,21 @@ try {
     $stmt->bindParam(':owner_name', $owner_name);
     $stmt->bindParam(':contact_number', $contact_number);
     $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':status', $status);
+    $stmt->bindParam(':property_id', $property_id);
+    $stmt->bindParam(':agent_id', $agent_id);
     
     if ($stmt->execute()) {
         echo json_encode([
             'success' => true, 
-            'message' => 'Property added successfully!',
-            'property_id' => $db->lastInsertId()
+            'message' => 'Property updated successfully!',
+            'property_id' => $property_id
         ]);
     } else {
-        echo json_encode(['success' => false, 'message' => 'Failed to add property']);
+        echo json_encode(['success' => false, 'message' => 'Failed to update property']);
     }
     
 } catch (Exception $e) {
-    error_log("Add property error: " . $e->getMessage());
+    error_log("Update property error: " . $e->getMessage());
     echo json_encode(['success' => false, 'message' => 'An error occurred: ' . $e->getMessage()]);
 }
 ?>
