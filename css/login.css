@@ -115,7 +115,7 @@ body {
 .label-container input {
   width: 100%;
   max-width: 400px;        /* Prevents full width stretching */
-  font-size: 20px;
+  font-size: 20px;         /* FIXED: Consistent font size for all states */
   padding: 10px;
   margin-bottom: 15px;
   background-color: #f9f9f9; /* Light gray background */
@@ -125,6 +125,20 @@ body {
   border: 2px solid #ccc;
   box-sizing: border-box;
   height: 60px;
+}
+
+/* 🔧 FIX #1: Force placeholder text to match input text size */
+.label-container input::placeholder {
+  font-size: 20px;          /* Same as input font-size */
+  color: #999;              /* Light gray color for placeholder */
+  opacity: 1;               /* Full opacity - fixes browser inconsistencies */
+}
+
+/* Focus state for inputs */
+.label-container input:focus {
+  outline: none;
+  border-color: #0044cc;    /* Blue border on focus */
+  background-color: white;   /* White background on focus */
 }
 
 /* Labels for input fields */
@@ -186,4 +200,68 @@ body {
     background-image: url('assets/login-bg.png'); /* Background image */
     background-size: cover;    /* Cover entire section */
     background-position: center; /* Center the image */
+}
+
+/* ===========================================
+   RESPONSIVE DESIGN FOR SMALLER SCREENS
+   =========================================== */
+
+/* Tablets and smaller */
+@media screen and (max-width: 968px) {
+  .login-container {
+    flex-direction: column;
+  }
+  
+  .login-section {
+    width: 100%;
+    padding: 20px;
+  }
+  
+  .image-section {
+    width: 100%;
+    min-height: 200px;
+  }
+  
+  .login-section h1 {
+    font-size: 40px;
+  }
+  
+  .button-group {
+    width: 60%;
+    gap: 20px;
+  }
+}
+
+/* Mobile devices */
+@media screen and (max-width: 600px) {
+  .logo-container span {
+    font-size: 20px;
+  }
+  
+  .login-section h1 {
+    font-size: 32px;
+  }
+  
+  .label-container input {
+    font-size: 16px;
+    height: 50px;
+  }
+  
+  .label-container input::placeholder {
+    font-size: 16px;
+  }
+  
+  .label-container label {
+    font-size: 16px;
+  }
+  
+  .button-group {
+    width: 80%;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .login-section button {
+    width: 100%;
+  }
 }

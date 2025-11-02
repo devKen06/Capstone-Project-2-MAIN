@@ -1,21 +1,3 @@
-// Load user profile data
-function loadUserProfile() {
-    fetch('get_profile.php')
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Update dropdown with user info
-            document.getElementById('dropdownUserName').textContent = data.profile.full_name;
-            document.getElementById('dropdownUserEmail').textContent = data.profile.email;
-        } else {
-            console.error('Failed to load profile:', data);
-        }
-    })
-    .catch(error => {
-        console.error('Error loading profile:', error);
-    });
-}
-
 // Toggle User Dropdown
 function toggleUserDropdown() {
     const dropdown = document.getElementById('userDropdown');
@@ -36,7 +18,6 @@ document.addEventListener('click', function(event) {
 function showLogoutModal() {
     const modal = document.getElementById('logoutModal');
     if (modal) {
-        modal.classList.add('show');
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
     }
@@ -51,7 +32,6 @@ function showLogoutModal() {
 function closeLogoutModal() {
     const modal = document.getElementById('logoutModal');
     if (modal) {
-        modal.classList.remove('show');
         modal.style.display = 'none';
         document.body.style.overflow = 'auto';
     }
@@ -64,28 +44,21 @@ function confirmLogout() {
     })
     .then(response => response.json())
     .then(data => {
-        // Clear any local storage
-        localStorage.clear();
-        sessionStorage.clear();
-        
-        // Redirect to login page
+        localStorage.removeItem('loggedIn');
+        localStorage.removeItem('user');
         window.location.href = 'index.html';
     })
     .catch(error => {
         console.error('Logout error:', error);
         // Still logout locally even if server request fails
-        localStorage.clear();
-        sessionStorage.clear();
+        localStorage.removeItem('loggedIn');
+        localStorage.removeItem('user');
         window.location.href = 'index.html';
     });
 }
 
 // Password Form Handler
 document.addEventListener('DOMContentLoaded', function() {
-    // Load user profile on page load
-    loadUserProfile();
-
-    // Password form handler
     const passwordForm = document.getElementById('passwordForm');
     if (passwordForm) {
         passwordForm.addEventListener('submit', function(e) {
@@ -95,7 +68,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const newPassword = document.getElementById('newPassword').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
 
-            // Validation
             if (newPassword !== confirmPassword) {
                 alert('New passwords do not match!');
                 return;
@@ -106,34 +78,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            // Check if new password is same as current
-            if (newPassword === currentPassword) {
-                alert('New password must be different from current password!');
-                return;
-            }
-
-            // Send to server to update password
-            const formData = new FormData();
-            formData.append('current_password', currentPassword);
-            formData.append('new_password', newPassword);
-
-            fetch('update_password.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    showSuccessMessage('Password updated successfully!');
-                    this.reset();
-                } else {
-                    alert('Error: ' + (data.message || 'Failed to update password'));
-                }
-            })
-            .catch(error => {
-                console.error('Password update error:', error);
-                alert('An error occurred while updating password.');
-            });
+            // Show success message
+            showSuccessMessage();
+            
+            // Reset form
+            this.reset();
         });
     }
 
@@ -144,51 +93,34 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.add('active');
         });
     });
-
-    // Load saved theme preference
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.querySelectorAll('.theme-option').forEach(option => {
-        if (option.dataset.theme === savedTheme) {
-            option.classList.add('active');
-        } else {
-            option.classList.remove('active');
-        }
-    });
 });
 
 // Save Appearance
 function saveAppearance() {
     const selectedTheme = document.querySelector('.theme-option.active').dataset.theme;
     
-    // Save to localStorage
-    localStorage.setItem('theme', selectedTheme);
+    showSuccessMessage();
+}
+
+// Save Notifications
+function saveNotifications() {
+    const emailNotif = document.getElementById('emailNotif').checked;
+    const pushNotif = document.getElementById('pushNotif').checked;
+    const taskReminders = document.getElementById('taskReminders').checked;
+    const leadAlerts = document.getElementById('leadAlerts').checked;
+    const dealUpdates = document.getElementById('dealUpdates').checked;
     
-    // Apply theme (for future implementation)
-    if (selectedTheme === 'dark') {
-        document.body.classList.add('dark-theme');
-    } else {
-        document.body.classList.remove('dark-theme');
-    }
-    
-    showSuccessMessage('Appearance settings saved!');
+    showSuccessMessage();
 }
 
 // Show Success Message
-function showSuccessMessage(message = 'Settings saved successfully!') {
+function showSuccessMessage() {
     const successMsg = document.getElementById('successMessage');
     if (successMsg) {
-        // Update message text if custom message provided
-        const msgContent = successMsg.innerHTML;
-        if (message !== 'Settings saved successfully!') {
-            successMsg.innerHTML = '<i class="fas fa-check-circle"></i> ' + message;
-        }
-        
         successMsg.classList.add('show');
         
         setTimeout(() => {
             successMsg.classList.remove('show');
-            // Restore original message
-            successMsg.innerHTML = msgContent;
         }, 3000);
 
         // Scroll to top to show message

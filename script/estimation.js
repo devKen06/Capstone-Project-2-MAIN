@@ -203,12 +203,13 @@ function showSearchError(message) {
     dropdown.style.display = 'block';
 }
 
-// ENHANCED: Perform estimation using zonal value data
+// ENHANCED: Perform estimation using database-driven Python backend
 async function performEstimation() {
     const name = document.getElementById('name').value;
     const barangay = document.getElementById('barangay').value;
     const street = document.getElementById('street').value;
     const propertySize = parseFloat(document.getElementById('property-size').value);
+    const currentPrice = parseFloat(document.getElementById('current-price').value);
     
     // Get property type and class from selected property or hidden fields
     const propertyType = selectedProperty?.property_type || 
@@ -216,22 +217,16 @@ async function performEstimation() {
     const propertyClass = selectedProperty?.property_class || 
                          document.getElementById('property-class')?.value || '';
     
-    // Validate required fields (no current price needed - calculated from zonal values)
-    if (!name || !barangay || !street || !propertySize) {
-        alert('Please fill in all required fields (name, barangay, street, and property size) before estimating');
-        return;
-    }
-    
-    if (!propertyType || !propertyClass) {
-        alert('Please select a property that has Property Type and Class information');
+    if (!name || !barangay || !propertySize || !currentPrice) {
+        alert('Please fill in all required fields (name, barangay, size, and price) before estimating');
         return;
     }
     
     // Show loading state with message
-    showEstimationLoading('Fetching zonal values and calculating price estimation...');
+    showEstimationLoading('Analyzing similar properties in database...');
     
     try {
-        // Call zonal value PHP endpoint (uses zonal_value table for price data)
+        // Call enhanced PHP endpoint with property details (using zonal values)
         const response = await fetch('calculate_estimation_zonal.php', {
             method: 'POST',
             headers: {
@@ -329,50 +324,27 @@ function displayEstimationResults(data) {
 
 // Display data quality indicators
 function displayDataQuality(data) {
-    const zonalInfo = data.zonal_value_info || {};
-    const quality = data.data_quality || {};
-    
-    // Add a data quality indicator to the page
+    // Add a data quality indicator to the page (you can add this element to your HTML)
     const qualityHtml = `
-        <div class="data-quality-indicator" style="background: linear-gradient(135deg, #001d9e, #0033ff); color: white; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-            <div class="quality-badge" style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                <span style="font-size: 24px;">📊</span>
-                <div>
-                    <div style="font-weight: 600; font-size: 16px;">Zonal Value Based Analysis</div>
-                    <div style="font-size: 12px; opacity: 0.9;">Using Official BIR Zonal Values</div>
-                </div>
+        <div class="data-quality-indicator">
+            <div class="quality-badge ${data.data_source === 'database' ? 'high-quality' : 'default-quality'}">
+                ${data.data_source === 'database' ? '📊 Database Analysis' : '📈 BIR Default Rates'}
             </div>
-            <div class="quality-details" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; font-size: 13px;">
-                <div>
-                    <strong>Confidence Score:</strong> ${data.estimation.confidence_score}%
-                </div>
-                ${zonalInfo.best_match ? `
-                    <div>
-                        <strong>Match Quality:</strong> ${zonalInfo.best_match.similarity_score}% ${quality.exact_match ? '(Exact)' : ''}
-                    </div>
-                    <div>
-                        <strong>Data Source:</strong> ${zonalInfo.best_match.data_source || 'BIR'}
-                    </div>
-                    <div>
-                        <strong>Location:</strong> ${zonalInfo.best_match.barangay}, ${zonalInfo.best_match.street || zonalInfo.best_match.vicinity}
-                    </div>
-                ` : ''}
+            <div class="quality-details">
+                <span>Confidence: ${data.estimation.confidence_score}%</span>
+                ${data.data_quality ? `<span>Similar Properties: ${data.data_quality.matches_found}</span>` : ''}
+                ${data.regression ? `<span>Model: ${data.regression.model_type}</span>` : ''}
             </div>
         </div>
     `;
     
-    // Insert before the results container
-    const resultsSection = document.getElementById('results-section');
-    let qualityIndicator = resultsSection.querySelector('.data-quality-indicator');
-    
-    if (qualityIndicator) {
-        qualityIndicator.outerHTML = qualityHtml;
-    } else {
-        const resultsContainer = resultsSection.querySelector('.results-container');
-        if (resultsContainer) {
-            resultsContainer.insertAdjacentHTML('beforebegin', qualityHtml);
-        }
-    }
+    // You can insert this where appropriate in your results section
+    console.log('Data Quality:', {
+        source: data.data_source,
+        confidence: data.estimation.confidence_score + '%',
+        matches: data.data_quality?.matches_found || 0,
+        model: data.regression?.model_type || 'linear'
+    });
 }
 
 // Enhanced chart drawing with data source indication
@@ -387,16 +359,16 @@ function drawChart(chartData, dataSource) {
     const labels = chartData.map(d => d.year.toString());
     const prices = chartData.map(d => d.price_per_sqm);
     
-    // Use consistent blue color for zonal values
-    const lineColor = '#001d9e';
-    const pointColor = '#001d9e';
+    // Different colors based on data source
+    const lineColor = dataSource === 'database' ? '#001d9e' : '#0066cc';
+    const pointColor = dataSource === 'database' ? '#001d9e' : '#0066cc';
     
     chartInstance = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
             datasets: [{
-                label: 'Price per sqm (₱) - BIR Zonal Values',
+                label: `Price per sqm (₱) - ${dataSource === 'database' ? 'Actual Data' : 'BIR Rates'}`,
                 data: prices,
                 borderColor: lineColor,
                 backgroundColor: `${lineColor}20`,
@@ -519,7 +491,7 @@ function clearResults() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Enhanced download report with zonal value information
+// Enhanced download report with database information
 function downloadReport() {
     if (!currentEstimationData) {
         alert('No estimation data available');
@@ -530,13 +502,12 @@ function downloadReport() {
     const est = data.estimation;
     const reg = data.regression;
     const quality = data.data_quality;
-    const zonalInfo = data.zonal_value_info || {};
     
     const report = `
 REAL ESTATE PRICE ESTIMATION REPORT
 ===================================
 Generated: ${new Date().toLocaleDateString()}
-Analysis Method: Zonal Value Based Linear Regression
+Analysis Method: ${data.data_source === 'database' ? 'Database-Driven Linear Regression' : 'Default BIR Rates Linear Regression'}
 
 PROPERTY INFORMATION:
 --------------------
@@ -545,7 +516,7 @@ Property Address: ${data.property_info.address}
 Property Type: ${data.property_info.type || 'N/A'}
 Property Class: ${data.property_info.class || 'N/A'}
 Property Size: ${est.property_size} sqm
-Current Price per sqm (2025): ₱${est.current_price_per_sqm.toLocaleString()}
+Current Price per sqm: ₱${est.current_price_per_sqm.toLocaleString()}
 
 PRICE ANALYSIS:
 --------------
@@ -564,50 +535,29 @@ Regression Equation: ${reg.equation}
 
 DATA QUALITY:
 ------------
-Data Source: Zonal Value Table
-Match Quality: ${zonalInfo.best_match ? zonalInfo.best_match.similarity_score + '%' : 'N/A'}
+Data Source: ${data.data_source === 'database' ? 'Historical Database' : 'BIR Default Rates'}
+Similar Properties Analyzed: ${quality?.matches_found || 0}
 Data Confidence: ${quality?.confidence || est.confidence_score}%
-${zonalInfo.best_match ? `Zonal Source: ${zonalInfo.best_match.data_source || 'BIR'}` : ''}
-Exact Match: ${quality?.exact_match ? 'Yes' : 'No'}
 
-ZONAL VALUE MATCH DETAILS:
---------------------------
-${zonalInfo.best_match ? `
-Matched Barangay: ${zonalInfo.best_match.barangay || 'N/A'}
-Matched Street: ${zonalInfo.best_match.street || 'N/A'}
-Matched Vicinity: ${zonalInfo.best_match.vicinity || 'N/A'}
-Matched Property Type: ${zonalInfo.best_match.property_type || 'N/A'}
-Matched Class: ${zonalInfo.best_match.class || 'N/A'}
-Similarity Score: ${zonalInfo.best_match.similarity_score}%
-` : 'No match details available'}
-
-HISTORICAL PRICE DATA (Per SQM from Zonal Values):
---------------------------------------------------
-${data.price_per_sqm_history ? Object.entries(data.price_per_sqm_history).map(([year, price]) => 
+HISTORICAL PRICE DATA (Per SQM):
+--------------------------------
+${Object.entries(data.historical_data || {}).map(([year, price]) => 
     `${year}: ₱${Math.round(price).toLocaleString()}`
-).join('\n') : 'Historical data not available'}
-
-CALCULATED TOTAL PRICES (Property Size × Zonal Price per SQM):
---------------------------------------------------------------
-${data.calculated_total_prices ? Object.entries(data.calculated_total_prices).map(([year, price]) => 
-    `${year}: ₱${Math.round(price).toLocaleString()}`
-).join('\n') : 'Calculated prices not available'}
+).join('\n')}
 
 METHODOLOGY:
 -----------
-This estimation uses official zonal values from the Bureau of Internal Revenue (BIR)
-and local government records. The system found the best matching zonal value based on:
-- Property location (Barangay and Street)
-- Property type (${data.property_info.type || 'N/A'})
-- Property classification (${data.property_info.class || 'N/A'})
+${data.data_source === 'database' ? 
+'This estimation uses actual historical data from similar properties in the database. ' +
+'Properties were matched based on type, class, and location similarity. ' +
+'The Python scikit-learn model analyzed ' + (quality?.matches_found || 0) + ' similar properties ' +
+'to generate accurate predictions based on real market trends.'
+:
+'This estimation uses standard Bureau of Internal Revenue (BIR) pricing data ' +
+'for Tarlac City as historical data was not available for similar properties.'}
 
-The zonal value provides the official price per square meter for years 2020-2025.
-The current price (2025) is calculated as: Property Size (${est.property_size} sqm) × 
-Zonal Price per SQM (₱${est.current_price_per_sqm.toLocaleString()}) = ₱${est.current_price.toLocaleString()}
-
-Historical zonal values (2020-2024) were analyzed using Python's scikit-learn 
-${reg.model_type} regression model to predict the 2026 zonal value and estimate 
-future property price. The R-squared value of ${reg.r_squared} indicates ${
+The ${reg.model_type} regression model was selected based on data patterns,
+with an R-squared value of ${reg.r_squared} indicating ${
     reg.r_squared > 0.9 ? 'excellent' : 
     reg.r_squared > 0.7 ? 'good' : 
     reg.r_squared > 0.5 ? 'moderate' : 'limited'
@@ -615,19 +565,12 @@ future property price. The R-squared value of ${reg.r_squared} indicates ${
 
 DISCLAIMER:
 -----------
-This estimation is based on official zonal values and is for reference purposes only. 
-Actual market prices may differ from zonal values due to:
-- Property condition and improvements
-- Market demand and supply dynamics
-- Location-specific premium factors
-- Economic conditions and inflation
-- Negotiation and individual circumstances
-
-Please consult with licensed real estate professionals and conduct proper 
-property appraisal for investment and transaction decisions.
+This estimation is for reference purposes only. Actual market conditions
+may vary due to economic factors, location specifics, and market dynamics.
+Please consult with real estate professionals for investment decisions.
 
 Generated by Real Estate Management System
-Powered by Python Linear Regression with BIR Zonal Value Data
+Powered by Python Linear Regression with Database Integration
     `;
     
     // Create downloadable file
@@ -635,11 +578,11 @@ Powered by Python Linear Regression with BIR Zonal Value Data
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `Zonal_Price_Estimation_${data.property_info.name.replace(/\s+/g, '_')}_${new Date().getTime()}.txt`;
+    a.download = `Price_Estimation_${data.property_info.name.replace(/\s+/g, '_')}_${new Date().getTime()}.txt`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
     
-    alert('Zonal value estimation report downloaded successfully!');
+    alert('Enhanced estimation report downloaded successfully!');
 }

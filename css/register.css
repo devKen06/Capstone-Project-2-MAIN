@@ -1,5 +1,5 @@
 /* ===========================================
-   REGISTER PAGE STYLES
+   REGISTER PAGE STYLES - FULLY RESPONSIVE
    =========================================== */
 
 /* Override body styles specifically for register page */
@@ -11,9 +11,12 @@ body.register-page {
     background-size: cover;
     min-height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow-y: auto;          /* Allow vertical scrolling if needed */
+    overflow-x: hidden;        /* Prevent horizontal scrolling */
+    padding: 20px;             /* Padding on all sides */
 }
 
 /* Back button in top-left corner */
@@ -42,113 +45,368 @@ body.register-page {
 
 /* Back button hover effect */
 .back-button a:hover {
-    background-color: #001d9e; /* Lighter blue on hover */
+    background-color: #001d9e; /* Darker blue on hover */
     transform: scale(1.1);     /* Slightly enlarge on hover */
 }
 
-/* Main container for register form */
+/* 🔧 MAIN FIX: Container with proper centering */
 .register-container {
-    display: flex;            /* Use flexbox for centering */
-    justify-content: center;  /* Center horizontally */
-    align-items: center;      /* Center vertically */
-    min-height: 100vh;        /* Minimum full viewport height */
-    padding: 20px;            /* Add padding around container */
+    display: flex;            
+    flex-direction: column;   /* Stack heading and form vertically */
+    justify-content: center;  
+    align-items: center;      
+    width: 100%;              
+    max-width: 600px;         /* Maximum width */
+    margin: auto;             /* Center horizontally and vertically */
+    gap: 25px;                /* Space between heading and form */
+}
+
+/* 🔧 FIXED: Register heading - Now properly responsive */
+.register-container h1 {
+    text-align: center;       
+    color: white;             
+    font-size: clamp(32px, 5vw, 48px); /* Responsive font size: min 32px, ideal 5% viewport, max 48px */
+    font-weight: 900;         
+    margin: 0;                /* Remove default margin */
+    letter-spacing: 8px;      
+    width: 100%;              
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3); /* Add shadow for better visibility */
+    padding: 0 20px;          /* Padding on sides for mobile */
 }
 
 /* White form section */
 .register-section {
-    background-color: white;  /* White background */
-    padding: 40px;            /* Padding inside section */
-    border-radius: 15px;      /* Rounded corners */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Drop shadow */
-    width: 100%;              /* Full width of container */
-    max-width: 600px;         /* Maximum width limit */
-    margin: 0 auto;           /* Center horizontally */
-    padding-bottom: 10px;
-}
-
-/* Register page heading */
-.register-section h1 {
-    text-align: center;       /* Center the text */
-    color: white;             /* White text color */
-    font-size: 48px;          /* Large font size */
-    font-weight: 900;        /* Bold text */
-    margin-bottom: 20px;      /* Space below heading */
-    position: absolute;       /* Position absolutely */
-    top: 80px;                /* 80px from top */
-    left: 50%;                /* 50% from left */
-    transform: translateX(-50%); /* Center horizontally */
-    z-index: 999;             /* Stay above other content */
-    letter-spacing: 10px;
+    background-color: white;  
+    padding: 40px;            
+    border-radius: 15px;      
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); 
+    width: 100%;              
+    box-sizing: border-box;   /* Include padding in width */
 }
 
 /* Form styling */
 form {
-    display: flex;            /* Use flexbox for layout */
-    flex-direction: column;   /* Stack items vertically */
-    gap: 20px;                /* Space between form items */
+    display: flex;            
+    flex-direction: column;   
+    gap: 20px;                
 }
 
 /* Row for first and last name */
 .name-row {
-    display: flex;            /* Arrange side by side */
-    gap: 20px;                /* Space between name fields */
+    display: flex;            
+    gap: 20px;                
 }
 
 /* Individual name field container */
 .name-field {
-    flex: 1;                  /* Equal width for both fields */
-    display: flex;            /* Use flexbox for layout */
-    flex-direction: column;   /* Stack label and input */
+    flex: 1;                  
+    display: flex;            
+    flex-direction: column;   
 }
 
 /* Form label styling */
 label {
-    font-size: 16px;          /* Medium font size */
-    font-weight: bold;        /* Bold text */
-    color: #333;              /* Dark gray color */
-    margin-bottom: 1px;       /* Space below label */
+    font-size: 16px;          
+    font-weight: bold;        
+    color: #333;              
+    margin-bottom: 5px;       
 }
 
 /* Input field styling */
 input[type="text"],
 input[type="email"],
 input[type="password"] {
-    padding: 15px;            /* Padding inside input */
-    border: 2px solid #ddd;   /* Light gray border */
-    border-radius: 8px;       /* Rounded corners */
-    font-size: 16px;          /* Medium font size */
-    transition: border-color 0.3s ease; /* Smooth border transition */
-    background-color: #f9f9f9; /* Light gray background */
+    padding: 15px;            
+    border: 2px solid #ddd;   
+    border-radius: 8px;       
+    font-size: 16px;          
+    transition: all 0.3s ease; 
+    background-color: #f9f9f9; 
+    box-sizing: border-box;   
+}
+
+/* Placeholder styling - consistent font size */
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="password"]::placeholder {
+    font-size: 16px;          
+    color: #999;              
+    opacity: 1;               
 }
 
 /* Input focus effects */
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus {
-    outline: none;            /* Remove default outline */
-    border-color: #000000;    /* Blue border on focus */
-    background-color: white;  /* White background on focus */
+    outline: none;            
+    border-color: #0044cc;    
+    background-color: white;  
+    box-shadow: 0 0 0 3px rgba(0, 68, 204, 0.1); /* Blue glow */
 }
 
 /* Submit button styling */
 button[type="submit"] {
-    background-color: #0044cc; /* Dark blue background */
-    color: white;             /* White text */
-    padding: 15px 30px;       /* Padding inside button */
-    border: none;             /* Remove default border */
-    border-radius: 8px;       /* Rounded corners */
-    font-size: 18px;          /* Large font size */
-    font-weight: bold;        /* Bold text */
-    cursor: pointer;          /* Show pointer on hover */
-    transition: all 0.3s ease; /* Smooth hover transition */
-    margin-top: 20px;         /* Space above button */
-    margin-bottom: 20px;
-    align-self: center;       /* Center button horizontally */
-    width: 150px;             /* Fixed button width */
+    background-color: #0044cc; 
+    color: white;             
+    padding: 15px 30px;       
+    border: none;             
+    border-radius: 8px;       
+    font-size: 18px;          
+    font-weight: bold;        
+    cursor: pointer;          
+    transition: all 0.3s ease; 
+    margin-top: 10px;         
+    align-self: center;       
+    width: 150px;             
 }
 
 /* Submit button hover effect */
 button[type="submit"]:hover {
-    background-color: #001d9e; /* Lighter blue on hover */
+    background-color: #001d9e; 
+    transform: translateY(-2px); 
+    box-shadow: 0 4px 15px rgba(0, 68, 204, 0.3); 
+}
+
+/* Submit button active (clicked) state */
+button[type="submit"]:active {
+    transform: translateY(0); 
+}
+
+/* Disabled button state */
+button[type="submit"]:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ===========================================
+   RESPONSIVE DESIGN - DESKTOP VARIATIONS
+   =========================================== */
+
+/* Large desktops (1920px and above) */
+@media screen and (min-width: 1920px) {
+    .register-container h1 {
+        font-size: 56px;
+        letter-spacing: 12px;
+    }
+    
+    .register-section {
+        padding: 50px;
+    }
+}
+
+/* Standard desktops (1200px to 1919px) */
+@media screen and (min-width: 1200px) and (max-width: 1919px) {
+    .register-container h1 {
+        font-size: 48px;
+        letter-spacing: 10px;
+    }
+    
+    .register-section {
+        padding: 45px;
+    }
+}
+
+/* Smaller desktops and laptops (992px to 1199px) */
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+    .register-container {
+        max-width: 550px;
+        gap: 20px;
+    }
+    
+    .register-container h1 {
+        font-size: 42px;
+        letter-spacing: 8px;
+    }
+    
+    .register-section {
+        padding: 40px;
+    }
+}
+
+/* Small laptops and large tablets (768px to 991px) */
+@media screen and (max-width: 991px) {
+    .register-container {
+        max-width: 500px;
+        gap: 20px;
+    }
+    
+    .register-container h1 {
+        font-size: 38px;
+        letter-spacing: 6px;
+    }
+    
+    .register-section {
+        padding: 35px;
+    }
+}
+
+/* Tablets (768px to 991px) */
+@media screen and (max-width: 768px) {
+    body.register-page {
+        padding: 15px;
+    }
+    
+    .register-container {
+        max-width: 450px;
+        gap: 15px;
+    }
+    
+    .register-container h1 {
+        font-size: 34px;
+        letter-spacing: 5px;
+    }
+    
+    .register-section {
+        padding: 30px 25px;
+    }
+    
+    .name-row {
+        flex-direction: column; 
+        gap: 15px;
+    }
+    
+    form {
+        gap: 18px;
+    }
+}
+
+/* Mobile devices (481px to 767px) */
+@media screen and (max-width: 600px) {
+    body.register-page {
+        padding: 15px 10px;
+    }
+    
+    .register-container {
+        gap: 15px;
+    }
+    
+    .register-container h1 {
+        font-size: 28px;
+        letter-spacing: 4px;
+    }
+    
+    .register-section {
+        padding: 25px 20px;
+    }
+    
+    form {
+        gap: 15px;
+    }
+    
+    label {
+        font-size: 14px;
+    }
+    
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        padding: 12px;
+        font-size: 15px;
+    }
+    
+    input[type="text"]::placeholder,
+    input[type="email"]::placeholder,
+    input[type="password"]::placeholder {
+        font-size: 15px;
+    }
+    
+    button[type="submit"] {
+        width: 100%;
+        padding: 14px;
+        font-size: 16px;
+    }
+}
+
+/* Small mobile devices (480px and below) */
+@media screen and (max-width: 480px) {
+    .register-container h1 {
+        font-size: 26px;
+        letter-spacing: 3px;
+    }
+    
+    .register-section {
+        padding: 20px 15px;
+    }
+    
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    input[type="text"]::placeholder,
+    input[type="email"]::placeholder,
+    input[type="password"]::placeholder {
+        font-size: 14px;
+    }
+    
+    button[type="submit"] {
+        padding: 12px;
+        font-size: 15px;
+    }
+    
+    .back-button a {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+}
+
+/* Extra small mobile devices (360px and below) */
+@media screen and (max-width: 360px) {
+    .register-container h1 {
+        font-size: 22px;
+        letter-spacing: 2px;
+    }
+    
+    .register-section {
+        padding: 18px 12px;
+    }
+}
+
+/* Height-based media queries for short screens */
+@media screen and (max-height: 700px) {
+    body.register-page {
+        padding: 10px;
+    }
+    
+    .register-container {
+        gap: 15px;
+    }
+    
+    .register-container h1 {
+        font-size: 32px;
+        letter-spacing: 5px;
+    }
+    
+    .register-section {
+        padding: 25px;
+    }
+    
+    form {
+        gap: 15px;
+    }
+}
+
+@media screen and (max-height: 600px) {
+    .register-container h1 {
+        font-size: 28px;
+        letter-spacing: 4px;
+    }
+    
+    .register-section {
+        padding: 20px;
+    }
+    
+    form {
+        gap: 12px;
+    }
+    
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+        padding: 10px;
+    }
 }

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/setting.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <title>Settings | Price Estimation</title>
+    <title>Settings | Real Estate System</title>
 </head>
 <body>
     <!-- Top Navigation -->
@@ -19,8 +19,7 @@
         </h1>
         <div class="top-nav-icons">
             <a href="setting.html">
-                <button class="icon-btn"><i class="fas fa-cog"></i></button>
-            </a>
+            <button class="icon-btn"><i class="fas fa-cog"></i></button></a>
             <div class="user-dropdown">
                 <button class="icon-btn" onclick="toggleUserDropdown()">
                     <i class="fas fa-user-circle"></i>
@@ -30,8 +29,8 @@
                         <div class="dropdown-profile-pic">
                             <i class="fas fa-user"></i>
                         </div>
-                        <div class="dropdown-user-name" id="dropdownUserName">Loading...</div>
-                        <div class="dropdown-user-email" id="dropdownUserEmail">Loading...</div>
+                        <div class="dropdown-user-name">John Doe</div>
+                        <div class="dropdown-user-email">john.doe@example.com</div>
                     </div>
                     <div class="dropdown-body">
                         <button class="dropdown-logout-btn" onclick="showLogoutModal()">
@@ -87,7 +86,7 @@
 
             <!-- Password Section -->
             <div class="settings-section" id="password-section">
-                <h3><i class="fas fa-lock"></i> Change Password</h3>
+                <h3><i class="fas fa-lock"></i> Password</h3>
                 <form id="passwordForm">
                     <div class="form-group">
                         <label for="currentPassword">Current Password</label>
@@ -95,7 +94,7 @@
                     </div>
                     <div class="form-group">
                         <label for="newPassword">New Password</label>
-                        <input type="password" id="newPassword" placeholder="Enter new password (min. 8 characters)" required minlength="8">
+                        <input type="password" id="newPassword" placeholder="Enter new password" required>
                     </div>
                     <div class="form-group">
                         <label for="confirmPassword">Confirm New Password</label>
@@ -126,9 +125,71 @@
                 <button type="button" class="btn-primary" onclick="saveAppearance()">Save Appearance</button>
             </div>
 
-            <!-- About Section -->
+            <!-- Notification Section -->
+            <div class="settings-section" id="notification-section">
+                <h3><i class="fas fa-bell"></i> Notifications</h3>
+                
+                <div class="toggle-container">
+                    <div class="toggle-label">
+                        <strong>Email Notifications</strong>
+                        <span>Receive notifications via email</span>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="emailNotif" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="toggle-container">
+                    <div class="toggle-label">
+                        <strong>Push Notifications</strong>
+                        <span>Receive push notifications on your device</span>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="pushNotif" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="toggle-container">
+                    <div class="toggle-label">
+                        <strong>Task Reminders</strong>
+                        <span>Get reminders for upcoming tasks</span>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="taskReminders" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="toggle-container">
+                    <div class="toggle-label">
+                        <strong>New Lead Alerts</strong>
+                        <span>Notify when new leads are added</span>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="leadAlerts" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="toggle-container">
+                    <div class="toggle-label">
+                        <strong>Deal Updates</strong>
+                        <span>Receive updates on deal progress</span>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="dealUpdates" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <button type="button" class="btn-primary" onclick="saveNotifications()" style="margin-top: 20px;">Save Notifications</button>
+            </div>
+
+            <!-- About Us Section -->
             <div class="settings-section" id="about-section">
-                <h3><i class="fas fa-info-circle"></i> About</h3>
+                <h3><i class="fas fa-info-circle"></i> About Us</h3>
                 <div class="about-content">
                     <p>
                         <strong>Real Estate Price Estimation System</strong> is a comprehensive platform designed to streamline 
@@ -142,17 +203,18 @@
                         <strong>Key Features:</strong>
                     </p>
                     <ul>
-                        <li>Advanced price estimation algorithms using linear regression</li>
-                        <li>Comprehensive property management</li>
-                        <li>Task tracking and organization</li>
+                        <li>Advanced price estimation algorithms</li>
+                        <li>Comprehensive lead management</li>
+                        <li>Task tracking and reminders</li>
                         <li>Detailed reporting and analytics</li>
                         <li>User-friendly dashboard</li>
                     </ul>
 
                     <div class="version-info">
                         <p><strong>Version:</strong> 1.0.0</p>
-                        <p><strong>Last Updated:</strong> November 2025</p>
-                        <p><strong>Developed by:</strong> Real Estate Systems Team</p>
+                        <p><strong>Last Updated:</strong> October 2025</p>
+                        <p><strong>Contact:</strong> support@realestate-system.com</p>
+                        <p><strong>Website:</strong> www.realestate-system.com</p>
                     </div>
                 </div>
             </div>
