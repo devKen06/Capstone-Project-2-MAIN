@@ -1,5 +1,4 @@
-
-        /* ========== USER DROPDOWN ========== */
+/* ========== USER DROPDOWN ========== */
         .user-dropdown {
             position: relative;
             display: inline-block;
@@ -100,7 +99,7 @@
         }
 
         /* ========== LOGOUT MODAL ========== */
-.modal {
+#logoutModal.modal {
     display: none;
     position: fixed;
     z-index: 2000;
@@ -112,7 +111,7 @@
     animation: fadeIn 0.3s ease;
 }
 
-.modal.show {
+#logoutModal.modal.show {
     display: flex;
     align-items: center;
     justify-content: center;
