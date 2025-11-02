@@ -1,3 +1,9 @@
+html {
+            overflow: hidden;      /* Prevents scrollbars on html element */
+            height: 100%;          /* Full height */
+            width: 100%;           /* Full width */
+        }
+
  body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -31,8 +37,9 @@
         .logo {
             width: 45px;
             height: 45px;
-            background: url('/assets/reverse-logo-removebg-preview.png') no-repeat center center;
+            background: url('../assets/reverse-logo-removebg-preview.png') no-repeat center center;
             background-size: contain;
+            display: inline-block;
         }
 
         .top-nav-icons button {
@@ -70,11 +77,13 @@
         }
         .main-content {
             margin-left: 300px;
-            margin-top: 60px;
+            margin-top: 50px;
             padding: 0;
-            overflow-y: auto;
             width: calc(100% - 300px);
-            height: calc(100vh - 60px);
+            height: calc(100vh - 50px);
+            overflow-y: auto;
+            overflow-x: hidden;
+            position: relative;
         }
 
         /* ---------- FIXED HEADER SECTION ---------- */
@@ -83,8 +92,9 @@
             top: 0;
             background-color: white;
             z-index: 100;
-            padding: 10px;
+            padding: 10px 10px 5px 10px;
             border-bottom: 1px solid #dee2e6;
+            margin-bottom: 0;
         }
 
         .page-header {

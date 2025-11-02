@@ -1,4 +1,31 @@
 /* ===========================================
+   PREVENT ALL SCROLLING - ADD THIS FIRST
+   =========================================== */
+
+/* Lock HTML element */
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;          /* Prevents scrolling on html */
+}
+
+/* Lock BODY element - THIS IS THE KEY FIX */
+body {
+  margin: 0;                 /* Remove default margin */
+  padding: 0;                /* Remove default padding */
+  height: 100%;              /* Full height */
+  width: 100%;               /* Full width */
+  overflow: hidden;          /* Prevents scrolling on body */
+  position: fixed;           /* CRITICAL: This locks the body in place */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* ===========================================
             LOGIN PAGE STYLES
    =========================================== */
    
@@ -29,12 +56,16 @@
     color: #0044cc;           /* Blue color matching logo */
     font-weight: bold;        /* Make text bold */
 }
+
 /* Main container for login page */
 .login-container {
     display: flex;            /* Split page into two sections */
-    height: 100vh;            /* Full viewport height */
-    width: 100vw;             /* Full viewport width */
+    height: 100vh;   /* Limits container to viewport height */
+    width: 100vw;    /* Limits container to viewport width */
     overflow: hidden;         /* Prevent scrolling */
+    position: fixed;          /* ADD THIS: Locks container */
+    top: 0;                   /* ADD THIS */
+    left: 0;                  /* ADD THIS */
 }
 
 /* Left section containing login form */
@@ -46,6 +77,8 @@
     justify-content: center;  /* Center items vertically */
     align-items: center;      /* Center items horizontally */
     background-color: #fff;   /* White background */
+    overflow-y: auto;         /* ADD THIS: Allow scrolling INSIDE if content is too tall */
+    box-sizing: border-box;   /* ADD THIS: Include padding in width */
 }
 
 /* Logo image in login section */
@@ -93,6 +126,7 @@
   box-sizing: border-box;
   height: 60px;
 }
+
 /* Labels for input fields */
 .label-container label {
   font-size: 20px;
@@ -102,6 +136,7 @@
   width: 100%;
   max-width: 400px;
 }
+
 /* Individual buttons in login section */
 .login-section button {
     width: 20%;               /* Set button width */
@@ -142,7 +177,6 @@
 
 /* Hover effect for button group buttons */
 .button-group button:hover {
- 
   background-color: #001d9e; /* Lighter blue on hover */
 }
 

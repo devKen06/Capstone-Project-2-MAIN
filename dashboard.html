@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/v4-shims.min.css" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/dashboard.css" />
-    <link rel="stylesheet" href="css/tags_dropdown_fix.css" />
     <link rel="stylesheet" href="css/setting.css" />
     <title>Dashboard | Price Estimation</title>
 </head>
@@ -80,8 +79,10 @@
             </div>
         </div>
 
-        <!-- Stats Section -->
-        <div class="stats-container">
+        <!-- Scrollable Content Wrapper -->
+        <div class="scrollable-content">
+            <!-- Stats Section -->
+            <div class="stats-container">
             <div class="stats-grid">
                 <div class="stat-item" onclick="filterManagement('all')" style="cursor: pointer;" title="Click to view all leads">
                     <div class="stat-number">0</div>
@@ -112,7 +113,7 @@
 
         <!-- Tasks Section -->
         <div class="tasks-section">
-            <h3>Recent Activities</h3>
+            <h3>Task</h3>
             <div class="tasks-grid">
                 <!-- To-do Card -->
                 <div class="task-card">
@@ -148,6 +149,7 @@
                 </div>
             </div>
         </div>
+        </div> <!-- Close scrollable-content -->
     </main>
 
     <script src="script/dashboard.js"></script>

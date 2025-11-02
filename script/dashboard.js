@@ -1,5 +1,6 @@
 // Dashboard connection and authentication
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Dashboard loaded');
     // Check if user is logged in
     if (!checkAuthentication()) {
         return;
@@ -28,6 +29,7 @@ function loadDashboardData() {
     fetch('dashboard_data.php')
     .then(response => response.json())
     .then(data => {
+        console.log('Dashboard data received:', data);
         if (data.success) {
             // Update UI with user data
             updateUserDisplay(data.user);
@@ -138,6 +140,7 @@ function easeOutQuart(x) {
 }
 
 function updateTasks(tasks, tasks_count) {
+    console.log('Updating tasks:', tasks, tasks_count);
     // Update To-do tasks
     updateTaskCard('todo', tasks.todo, tasks_count.todo, 'To-do');
     
@@ -160,7 +163,10 @@ function updateTaskCard(taskType, taskList, count, title) {
         }
     });
     
-    if (!targetCard) return;
+    if (!targetCard) {
+        console.warn('Task card not found for:', title);
+        return;
+    }
     
     // Update badge count
     const badge = targetCard.querySelector('.task-badge');
@@ -173,7 +179,7 @@ function updateTaskCard(taskType, taskList, count, title) {
     const taskListElement = targetCard.querySelector('.task-list');
     if (taskListElement) {
         if (taskList.length === 0) {
-            taskListElement.innerHTML = '<li style="list-style: none; color: #999; font-style: italic;">No tasks</li>';
+            taskListElement.innerHTML = '<li style="list-style: none; color: #999; font-style: italic; cursor: default;">No tasks</li>';
         } else {
             taskListElement.innerHTML = taskList.map(task => {
                 let taskText = '';
@@ -208,8 +214,19 @@ function updateTaskCard(taskType, taskList, count, title) {
                     taskText = `<span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: ${color}; margin-right: 6px;"></span>` + taskText;
                 }
                 
-                return `<li>${taskText}</li>`;
+                // Use data attribute to avoid quote issues and add direct event listener
+                return `<li class="clickable-task" data-task-id="${task.id}" data-task-type="${taskType}" title="Click to view task details">${taskText}</li>`;
             }).join('');
+            
+            // Add event listeners to all clickable tasks
+            const clickableTasks = taskListElement.querySelectorAll('.clickable-task');
+            clickableTasks.forEach(taskElement => {
+                taskElement.addEventListener('click', function() {
+                    const taskId = this.getAttribute('data-task-id');
+                    const taskType = this.getAttribute('data-task-type');
+                    navigateToTask(taskId, taskType);
+                });
+            });
         }
     }
 }
@@ -220,6 +237,7 @@ setInterval(() => {
         loadDashboardData();
     }
 }, 300000); // 5 minutes
+
 // Function to filter management page by clicking on stats
 function filterManagement(filter) {
     // Store filter in localStorage
@@ -227,4 +245,26 @@ function filterManagement(filter) {
     
     // Navigate to management page
     window.location.href = 'management.html';
+}
+
+// Function to navigate to task page with specific task
+function navigateToTask(taskId, taskType) {
+    console.log('Navigating to task:', taskId, taskType);
+    
+    try {
+        // Store task filter in localStorage
+        localStorage.setItem('taskFilter', taskType);
+        localStorage.setItem('selectedTaskId', taskId);
+        
+        console.log('localStorage saved:', {
+            taskFilter: localStorage.getItem('taskFilter'),
+            selectedTaskId: localStorage.getItem('selectedTaskId')
+        });
+        
+        // Navigate to task page
+        window.location.href = 'task.html';
+    } catch (error) {
+        console.error('Error in navigateToTask:', error);
+        alert('Error navigating to task page: ' + error.message);
+    }
 }
