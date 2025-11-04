@@ -6,98 +6,9 @@ let priceChart = null;
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
     initializeSearchFunction();
-    initializeUserDropdown();
+    
     checkAuthStatus();
 });
-
-// Check authentication status
-async function checkAuthStatus() {
-    try {
-        const response = await fetch('check_session.php');
-        const data = await response.json();
-        
-        if (!data.authenticated) {
-            window.location.href = 'login.html';
-        } else {
-            // Update user info in dropdown
-            const userName = document.querySelector('.dropdown-user-name');
-            const userEmail = document.querySelector('.dropdown-user-email');
-            if (userName && data.user) {
-                userName.textContent = data.user.name || 'User';
-                userEmail.textContent = data.user.email || '';
-            }
-        }
-    } catch (error) {
-        console.error('Auth check failed:', error);
-    }
-}
-
-// User dropdown functionality
-function toggleUserDropdown() {
-    const dropdown = document.getElementById('userDropdown');
-    dropdown.classList.toggle('show');
-    
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function closeDropdown(e) {
-        if (!e.target.matches('.icon-btn') && !e.target.matches('.fa-user-circle')) {
-            dropdown.classList.remove('show');
-            document.removeEventListener('click', closeDropdown);
-        }
-    });
-}
-
-// Initialize user dropdown
-function initializeUserDropdown() {
-    const userButton = document.querySelector('.icon-btn .fa-user-circle');
-    if (userButton) {
-        userButton.parentElement.addEventListener('click', function(e) {
-            e.stopPropagation();
-            toggleUserDropdown();
-        });
-    }
-}
-
-// Show logout modal
-function showLogoutModal() {
-    const modal = document.getElementById('logoutModal');
-    if (modal) {
-        modal.classList.add('active');
-    }
-}
-
-// Close logout modal
-function closeLogoutModal() {
-    const modal = document.getElementById('logoutModal');
-    if (modal) {
-        modal.classList.remove('active');
-    }
-}
-
-// Confirm logout
-async function confirmLogout() {
-    try {
-        const response = await fetch('logout.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
-            // Redirect to login page
-            window.location.href = 'login.html';
-        } else {
-            alert('Logout failed. Please try again.');
-            closeLogoutModal();
-        }
-    } catch (error) {
-        console.error('Logout error:', error);
-        alert('An error occurred during logout.');
-        closeLogoutModal();
-    }
-}
 
 // Initialize search functionality
 function initializeSearchFunction() {
@@ -299,7 +210,11 @@ function displayResults(data) {
     const est = data.estimation;
     document.getElementById('current-price-display').textContent = `₱${est.current_price.toLocaleString()}`;
     document.getElementById('estimated-price-display').textContent = `₱${est.estimated_price.toLocaleString()}`;
-    document.getElementById('profit-projection-display').textContent = `₱${est.profit_projection.toLocaleString()}`;
+    
+    // Display price projection with percentage
+    const profitSign = est.profit_projection >= 0 ? '+' : '';
+    const percentageSign = est.percentage_growth >= 0 ? '+' : '';
+    document.getElementById('profit-projection-display').textContent = `₱${est.profit_projection.toLocaleString()} (${percentageSign}${est.percentage_growth.toFixed(2)}%)`;
     
     // Update property info
     document.getElementById('info-name').textContent = `: ${data.property_info.name}`;
