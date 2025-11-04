@@ -1,13 +1,39 @@
-/* Property Management Styles */
+/* ===== CRITICAL: Page Scrolling ===== */
+html, body {
+    height: 100vh !important;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
 
+.main-content {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    height: 100% !important;
+    box-sizing: border-box;
+}
+/* Property content - NO SCROLLING HERE */
 .property-content {
+    flex: 1;
+    overflow: hidden !important;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 }
 
+.property-list {
+    overflow: hidden !important;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+}
 .action-bar {
-    display: none; /* Hide the old action bar */
+    display: none;
 }
 
+/* ===== Buttons ===== */
 .btn-add-property {
     background-color: #007bff;
     color: white;
@@ -43,7 +69,154 @@
     background-color: #545b62;
 }
 
-/* Add Property Form */
+.btn-save {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-save:hover {
+    background-color: #218838;
+}
+
+.btn-create {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-create:hover {
+    background-color: #218838;
+}
+
+.btn-cancel-modal {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-cancel-modal:hover {
+    background-color: #545b62;
+}
+
+.btn-add-task {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    display: none;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+    transition: background-color 0.3s;
+}
+
+.btn-add-task:hover {
+    background-color: #0056b3;
+}
+
+.btn-back-detail {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    transition: all 0.3s;
+    flex-shrink: 0;
+}
+
+.btn-back-detail:hover {
+    background-color: #545b62;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-back-detail:active {
+    transform: scale(0.95);
+}
+
+.btn-back-detail i {
+    font-size: 16px;
+    margin: 0;
+}
+
+.btn-close-form {
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    color: #666;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s;
+}
+
+.btn-close-form:hover {
+    background-color: #f0f0f0;
+    color: #dc3545;
+}
+
+.btn-action {
+    padding: 6px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-edit {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #0056b3;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
+/* ===== Add Property Form ===== */
 .add-property-form {
     background-color: white;
     border-radius: 10px;
@@ -53,6 +226,18 @@
 
 .add-property-form h2 {
     margin-bottom: 30px;
+    color: #333;
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.form-header h2 {
+    margin: 0;
     color: #333;
 }
 
@@ -79,28 +264,57 @@
 .form-group {
     display: flex;
     flex-direction: column;
+    margin-bottom: 15px;
 }
 
-.form-group label {
+.form-group label,
+.form-label {
     margin-bottom: 5px;
     font-weight: 500;
     color: #333;
 }
 
+.form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
 .form-group input,
 .form-group select,
-.form-group textarea {
+.form-group textarea,
+.form-input,
+.form-select,
+.form-textarea {
     padding: 10px;
     border: 1px solid #dee2e6;
     border-radius: 5px;
     font-size: 14px;
 }
 
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    border: 2px solid #dee2e6;
+    box-sizing: border-box;
+}
+
 .form-group input:focus,
 .form-group select:focus,
-.form-group textarea:focus {
+.form-group textarea:focus,
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
     outline: none;
     border-color: #007bff;
+}
+
+.form-textarea {
+    min-height: 100px;
+    resize: vertical;
+    font-family: inherit;
 }
 
 .form-actions {
@@ -110,31 +324,26 @@
     margin-top: 30px;
 }
 
-.btn-save {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 12px 30px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
+.date-time-row {
     display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.btn-save:hover {
-    background-color: #218838;
-}
-
-/* Property List */
-.search-section {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
     gap: 15px;
 }
 
+.date-time-row .form-group {
+    flex: 1;
+}
+
+/* Search and filter areas - FIXED at top, no scrolling */
+.search-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    gap: 15px;
+    position: relative;
+    background-color: transparent;
+    z-index: 90;
+    flex-shrink: 0;
+}
 .search-box {
     display: flex;
     gap: 10px;
@@ -169,31 +378,85 @@
     font-size: 14px;
 }
 
-/* Property Table */
+/* ===== Property Table ===== */
 .table-container {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    /* Overflow handled at bottom of file for dropdown fix */
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 400px;
+    height: calc(100vh - 250px);
 }
 
 .property-table {
     width: 100%;
     border-collapse: collapse;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .property-table thead {
     background-color: #001d9e;
     color: white;
+    flex-shrink: 0;
+    z-index: 10;
+}
+
+.property-table thead tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
 }
 
 .property-table th {
     padding: 15px;
     text-align: left;
     font-weight: 600;
+    background-color: #001d9e;
+}
+
+.property-table th:has(.dropdown-sort) {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Scrollable tbody - ONLY THIS SCROLLS */
+.property-table tbody {
+    display: block;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    flex: 1;
+    scrollbar-gutter: stable;
+}
+
+/* Custom scrollbar for tbody */
+.property-table tbody::-webkit-scrollbar {
+    width: 12px;
+}
+
+.property-table tbody::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.property-table tbody::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 6px;
+}
+
+.property-table tbody::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 .property-table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
     border-bottom: 1px solid #dee2e6;
     transition: background-color 0.2s;
 }
@@ -204,23 +467,41 @@
 
 .property-table td {
     padding: 15px;
+    position: relative;
+    z-index: 1;
+}
+/* Tags column (5th column) - special z-index handling */
+.property-table thead th:nth-child(5) {
+    overflow: visible;
+    z-index: 50;
+    position: relative;
 }
 
-/* Status/Tags Badge Colors */
+.property-table tbody td:nth-child(5) {
+    overflow: visible !important;
+    position: relative;
+    z-index: 2;
+}
+
+/* CRITICAL: Tag badges must be BELOW dropdown */
+.property-table td:nth-child(5) .status-badge {
+    position: relative;
+    z-index: 1 !important;
+}
+
+/* CRITICAL: When dropdown is open, ensure it's above everything */
+.property-table thead th:nth-child(5):has(.dropdown-sort-content.show) {
+    z-index: 100 !important;
+}
+
+/* ===== Status/Tags Badge Colors ===== */
 .status-badge {
     padding: 5px 12px;
     border-radius: 15px;
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
-    /* CRITICAL FIX: Ensure tags don't overlap dropdown */
     position: relative;
-    z-index: 1 !important;
-}
-
-/* CRITICAL FIX: When dropdown is open, reduce z-index of all badges */
-.dropdown-sort-content.show ~ .status-badge,
-body:has(.dropdown-sort-content.show) .status-badge {
     z-index: 1 !important;
 }
 
@@ -264,7 +545,7 @@ body:has(.dropdown-sort-content.show) .status-badge {
     color: white;
 }
 
-/* Legacy status classes for backwards compatibility */
+/* Legacy status classes */
 .status-available {
     background-color: #28a745;
     color: white;
@@ -285,38 +566,149 @@ body:has(.dropdown-sort-content.show) .status-badge {
     color: white;
 }
 
-.action-buttons {
-    display: flex;
-    gap: 8px;
+/* ===== Sort Button & Dropdown ===== */
+.sort-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 4px 8px;
+    margin-left: 8px;
+    border-radius: 4px;
+    transition: all 0.3s;
+    font-size: 16px;
 }
 
-.btn-action {
-    padding: 6px 10px;
-    border: none;
+.sort-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.sort-btn i {
+    transition: transform 0.3s;
+}
+
+.sort-btn:active {
+    transform: scale(0.95);
+}
+
+.dropdown-sort {
+    display: inline-block;
+    position: relative;
+    z-index: 100;
+}
+
+.dropdown-sort-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.3);
+    z-index: 101 !important;
     border-radius: 4px;
+    right: 0;
+    top: 100%;
+    margin-top: 5px;
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+}
+
+.dropdown-sort-content.show {
+    display: block !important;
+    z-index: 101 !important;
+    animation: dropdownFade 0.2s ease-in;
+}
+
+@keyframes dropdownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-sort-item {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     cursor: pointer;
+    transition: background-color 0.2s;
     font-size: 14px;
 }
 
-.btn-edit {
-    background-color: #007bff;
-    color: white;
+.dropdown-sort-item:hover {
+    background-color: #f1f1f1;
 }
 
-.btn-edit:hover {
-    background-color: #0056b3;
+.dropdown-sort-item:active {
+    background-color: #e0e0e0;
 }
 
-.btn-delete {
-    background-color: #dc3545;
-    color: white;
+.dropdown-sort-item i {
+    color: #666;
+    font-size: 14px;
+    width: 16px;
 }
 
-.btn-delete:hover {
-    background-color: #c82333;
+.dropdown-sort-divider {
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 4px 0;
 }
 
-/* Detail View Styles */
+.tag-dot,
+.filter-badge {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.filter-badge.status-new-lead {
+    background-color: #00BCD4;
+}
+
+.filter-badge.status-proposal {
+    background-color: #2196F3;
+}
+
+.filter-badge.status-follow-up {
+    background-color: #9E9E9E;
+}
+
+.filter-badge.status-on-progress {
+    background-color: #FFC107;
+}
+
+.filter-badge.status-negotiation {
+    background-color: #9C27B0;
+}
+
+.filter-badge.status-signing-contract {
+    background-color: #FF9800;
+}
+
+.filter-badge.status-not-interested {
+    background-color: #F44336;
+}
+
+.filter-badge.status-closed-deal {
+    background-color: #4CAF50;
+}
+
+/* Ensure all row badges stay below the dropdown when it's open */
+body:has(.dropdown-sort-content.show) .property-table tbody td .status-badge {
+    z-index: 1 !important;
+}
+
+/* ===== Detail View ===== */
 .detail-view {
     display: none;
 }
@@ -333,6 +725,7 @@ body:has(.dropdown-sort-content.show) .status-badge {
     border: 2px solid #001d9e;
     border-radius: 25px;
     overflow: hidden;
+    flex: 0 0 auto;
 }
 
 .tab-button {
@@ -364,7 +757,7 @@ body:has(.dropdown-sort-content.show) .status-badge {
     to { opacity: 1; }
 }
 
-/* Lead Information */
+/* ===== Lead Information ===== */
 .lead-info-container {
     background-color: white;
     border: 2px solid #dee2e6;
@@ -390,7 +783,7 @@ body:has(.dropdown-sort-content.show) .status-badge {
     color: #555;
 }
 
-/* Property Information */
+/* ===== Property Information ===== */
 .property-info-section {
     margin-top: 30px;
 }
@@ -430,7 +823,7 @@ body:has(.dropdown-sort-content.show) .status-badge {
     color: #555;
 }
 
-/* Notes Section */
+/* ===== Notes Section ===== */
 .notes-section {
     margin-top: 30px;
 }
@@ -480,7 +873,11 @@ body:has(.dropdown-sort-content.show) .status-badge {
     font-size: 16px;
 }
 
-/* Activities Section */
+/* ===== Activities Tab ===== */
+.activities-content {
+    padding: 20px 0;
+}
+
 .activities-section {
     margin-top: 30px;
 }
@@ -492,506 +889,15 @@ body:has(.dropdown-sort-content.show) .status-badge {
     color: #333;
 }
 
-.activities-container {
-    background-color: white;
-    border: 2px solid #dee2e6;
-    border-radius: 10px;
-    padding: 20px;
-}
-
-.activity-item {
-    padding: 15px;
-    border-left: 3px solid #007bff;
-    margin-bottom: 15px;
-    background-color: #f8f9fa;
-    border-radius: 5px;
-}
-
-.activity-item:last-child {
-    margin-bottom: 0;
-}
-
-.activity-date {
-    font-size: 12px;
-    color: #666;
-    margin-bottom: 5px;
-}
-
-.activity-description {
-    font-size: 14px;
-    color: #333;
-}
-
-/* Edit Property Form */
-.edit-form-container {
-    background-color: white;
-    border-radius: 10px;
-    padding: 30px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    margin-top: 20px;
-}
-
-.edit-form-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid #e9ecef;
-}
-
-.edit-form-header h2 {
-    color: #333;
-    margin: 0;
-}
-
-.btn-cancel-edit {
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.btn-cancel-edit:hover {
-    background-color: #545b62;
-}
-
-/* Modal Styles */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    animation: fadeIn 0.3s;
-}
-
-.modal.show {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    max-width: 400px;
-    width: 90%;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    animation: slideIn 0.3s;
-}
-
-@keyframes slideIn {
-    from {
-        transform: translateY(-50px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-.modal-content h3 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    color: #333;
-}
-
-.modal-content p {
-    margin-bottom: 20px;
-    color: #666;
-}
-
-.modal-buttons {
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-}
-
-.modal-btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-.modal-btn-confirm {
-    background-color: #dc3545;
-    color: white;
-}
-
-.modal-btn-confirm:hover {
-    background-color: #c82333;
-}
-
-.modal-btn-cancel {
-    background-color: #6c757d;
-    color: white;
-}
-
-.modal-btn-cancel:hover {
-    background-color: #545b62;
-}
-
-/* Empty State */
-.empty-state {
-    text-align: center;
-    padding: 60px 20px;
-    color: #999;
-}
-
-.empty-state i {
-    font-size: 64px;
-    margin-bottom: 20px;
-    color: #ddd;
-}
-
-.empty-state p {
-    font-size: 18px;
+.task-assigned-info {
+    font-size: 16px;
+    color: #555;
     margin-bottom: 20px;
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-    
-    .property-info-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .search-section {
-        flex-direction: column;
-    }
-}
-
-@media (max-width: 768px) {
-    .property-content {
-        padding: 10px;
-    }
-    
-    .add-property-form,
-    .edit-form-container {
-        padding: 20px;
-    }
-    
-    .property-table {
-        font-size: 12px;
-    }
-    
-    .property-table th,
-    .property-table td {
-        padding: 10px 5px;
-    }
-    
-    .tab-button {
-        padding: 10px 15px;
-        font-size: 14px;
-    }
-}
-
-/* Form Header with Close Button */
-.form-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid #e9ecef;
-}
-
-.form-header h2 {
-    color: #333;
-    margin: 0;
-}
-
-.btn-close-form {
-    background-color: transparent;
-    color: #dc3545;
-    border: 2px solid #dc3545;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 18px;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-}
-
-.btn-close-form:hover {
-    background-color: #dc3545;
-    color: white;
-    transform: scale(1.1);
-}
-
-/* Task Section - Activities Tab */
-.task-section {
-    margin-bottom: 30px;
-}
-
-.task-section-title {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 15px;
-    color: #333;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.task-list {
-    background-color: white;
-    border: 2px solid #dee2e6;
-    border-radius: 10px;
-    padding: 15px;
-}
-
-.task-item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 15px;
-    border-bottom: 1px solid #eee;
-    transition: background-color 0.2s;
-}
-
-.task-item:hover {
-    background-color: #f8f9fa;
-}
-
-.task-item:last-child {
-    border-bottom: none;
-}
-
-.task-checkbox {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-}
-
-.task-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.task-title {
-    font-weight: 600;
-    color: #333;
-}
-
-.task-details {
-    display: flex;
-    gap: 15px;
-    font-size: 13px;
-    color: #666;
-}
-
-.task-actions {
-    display: flex;
-    gap: 8px;
-}
-
-.btn-task-action {
-    padding: 6px 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 12px;
-}
-
-.btn-add-task {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.btn-add-task:hover {
-    background-color: #0056b3;
-}
-
-/* Back button for detail view */
-.btn-back-detail {
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    transition: all 0.3s;
-    flex-shrink: 0;
-}
-
-.btn-back-detail:hover {
-    background-color: #545b62;
-    transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.btn-back-detail:active {
-    transform: scale(0.95);
-}
-
-.btn-back-detail i {
-    font-size: 16px;
-    margin: 0;
-}
-
-/* Adjust tab container to take remaining space */
-.tab-container {
-    display: flex;
-    border: 2px solid #001d9e;
-    border-radius: 25px;
-    overflow: hidden;
-    flex: 0 0 auto;
-}
-
-/* Add Task button stays on the right */
-.btn-add-task {
-    margin-left: auto;
-}
-
-/* ============================================
-   SORT BUTTON & DROPDOWN STYLES
-   ============================================ */
-
-/* ===== 1. SORT BUTTON STYLES ===== */
-.sort-btn {
-    background: transparent;
-    border: none;
-    color: white;
-    cursor: pointer;
-    padding: 4px 8px;
-    margin-left: 8px;
-    border-radius: 4px;
-    transition: all 0.3s;
-    font-size: 16px;
-}
-
-.sort-btn:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    transform: scale(1.1);
-}
-
-.sort-btn i {
-    transition: transform 0.3s;
-}
-
-.sort-btn:active {
-    transform: scale(0.95);
-}
-
-/* ===== 2. DROPDOWN SORT STYLES ===== */
-.dropdown-sort {
-    display: inline-block;
-    position: relative;
-}
-
-.dropdown-sort-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    min-width: 200px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    border-radius: 8px;
-    z-index: 1000;
-    top: 100%;
-    right: 0;
-    margin-top: 8px;
-    overflow: hidden;
-}
-
-.dropdown-sort-content.show {
-    display: block;
-}
-
-.dropdown-sort-item {
-    color: #333;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    font-size: 14px;
-}
-
-.dropdown-sort-item:hover {
-    background-color: #f1f1f1;
-}
-
-.dropdown-sort-item i {
-    color: #666;
-    font-size: 14px;
-}
-
-.dropdown-sort-divider {
-    height: 1px;
-    background-color: #e0e0e0;
-    margin: 4px 0;
-}
-
-.tag-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    display: inline-block;
-}
-
-/* ===== 3. TABLE HEADER WITH DROPDOWN ===== */
-.property-table th:has(.dropdown-sort) {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-/* ===== 4. TAB NAVIGATION UPDATE ===== */
-.tab-navigation {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 30px;
-}
-
-/* ===== 5. ALL TASKS SECTION (ACTIVITIES) ===== */
+/* All Tasks Section */
 .all-tasks-section {
     margin-bottom: 30px;
-}
-
-.activities-section-title {
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 15px;
-    color: #333;
 }
 
 .all-tasks-container {
@@ -1001,6 +907,24 @@ body:has(.dropdown-sort-content.show) .status-badge {
     padding: 15px;
     max-height: 300px;
     overflow-y: auto;
+}
+
+.all-tasks-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.all-tasks-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.all-tasks-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.all-tasks-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 .all-task-item {
@@ -1063,7 +987,6 @@ body:has(.dropdown-sort-content.show) .status-badge {
     font-weight: 600;
 }
 
-/* ===== 6. STATUS AND PRIORITY COLORS ===== */
 .task-status-all.status-not-started {
     color: #dc3545;
 }
@@ -1088,26 +1011,172 @@ body:has(.dropdown-sort-content.show) .status-badge {
     color: #28a745;
 }
 
-/* ===== 7. SCROLLBAR STYLING FOR ALL TASKS CONTAINER ===== */
-.all-tasks-container::-webkit-scrollbar {
-    width: 8px;
+/* Task Type Tabs */
+.task-type-tabs {
+    display: flex;
+    background-color: #001d9e;
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+    margin-bottom: 0;
 }
 
-.all-tasks-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
+.task-type-tab {
+    flex: 1;
+    padding: 15px;
+    color: white;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s;
+    font-size: 16px;
 }
 
-.all-tasks-container::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 10px;
+.task-type-tab:hover {
+    background-color: #0056b3;
 }
 
-.all-tasks-container::-webkit-scrollbar-thumb:hover {
-    background: #555;
+.task-type-tab.active {
+    background-color: #0056b3;
 }
 
-/* Status Dropdown Styling for Overview Section */
+.task-count-badge {
+    position: absolute;
+    top: -8px;
+    right: 15px;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.activity-tasks-container {
+    background-color: white;
+    border: 2px solid #001d9e;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    min-height: 300px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.activity-task-item {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    transition: background-color 0.2s;
+}
+
+.activity-task-item:hover {
+    background-color: #f8f9fa;
+}
+
+.activity-task-item:last-child {
+    border-bottom: none;
+}
+
+.task-checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.task-content-activity {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.task-title-activity {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.task-date-activity {
+    color: #666;
+    font-size: 14px;
+}
+
+.task-assignee-activity {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #666;
+    font-size: 14px;
+}
+
+.task-details-activity {
+    display: flex;
+    gap: 15px;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.task-status-activity,
+.task-priority-activity {
+    font-weight: 600;
+}
+
+.task-notes-activity {
+    color: #666;
+    font-size: 13px;
+    font-style: italic;
+    margin-top: 5px;
+}
+
+/* ===== Task Modal ===== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.activity-task-modal {
+    background-color: white;
+    border-radius: 8px;
+    padding: 30px;
+    width: 500px;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+/* ===== Status Dropdown (Overview Section) ===== */
 .status-dropdown {
     padding: 8px 12px;
     border: 2px solid #ddd;
@@ -1131,7 +1200,6 @@ body:has(.dropdown-sort-content.show) .status-badge {
     box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
 }
 
-/* Status-specific colors for dropdown */
 .status-dropdown.status-new-lead {
     background-color: #00BCD4;
     border-color: #00ACC1;
@@ -1173,7 +1241,6 @@ body:has(.dropdown-sort-content.show) .status-badge {
     border-color: #388E3C;
 }
 
-/* Dropdown options styling */
 .status-dropdown option {
     padding: 10px;
     background: white;
@@ -1181,114 +1248,170 @@ body:has(.dropdown-sort-content.show) .status-badge {
     font-weight: 600;
 }
 
-/* Lead info value adjustment for dropdown */
 .lead-info-value select.status-dropdown {
     margin: 0;
 }
 
-/* ============================================
-   CRITICAL FIX: Tags Dropdown Z-Index
-   ============================================ */
-
-/* CRITICAL: Enable page scrolling */
-html, body {
-    overflow: auto !important;
-    height: auto !important;
-}
-
-/* Main content - must allow scrolling */
-.main-content {
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    height: auto !important;
-}
-
-/* Property content - allow dropdown overflow */
-.property-content {
-    overflow: visible !important;
-    height: auto !important;
-}
-
-.property-list {
-    overflow: visible !important;
-}
-
-/* Table container - horizontal scroll only, vertical visible */
-.table-container {
-    overflow-x: auto !important;
-    overflow-y: visible !important;
-    position: relative;
-}
-
-/* Table positioning */
-.property-table {
-    position: relative;
+/* ===== Modal Styles ===== */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
     width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s;
 }
 
-/* Table elements - allow dropdown overflow */
-.property-table tbody,
-.property-table tr {
-    position: relative;
+.modal.show {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* CRITICAL FIX: All table cells have controlled z-index */
-.property-table td {
-    position: relative;
-    z-index: 1;
-}
-
-/* Tags column (5th column) - special z-index handling */
-.property-table th:nth-child(5),
-.property-table td:nth-child(5) {
-    overflow: visible !important;
-    position: relative;
-    z-index: 10;
-}
-
-/* CRITICAL: Tag badges must be BELOW dropdown */
-.property-table td:nth-child(5) .status-badge {
-    position: relative;
-    z-index: 1 !important;
-}
-
-/* CRITICAL: When dropdown is open, ensure it's above everything */
-.property-table th:nth-child(5):has(.dropdown-sort-content.show) {
-    z-index: 9999 !important;
-}
-
-/* Dropdown container - high z-index */
-.dropdown-sort {
-    position: relative;
-    z-index: 100;
-}
-
-/* Dropdown menu - HIGHEST z-index */
-.dropdown-sort-content {
-    position: absolute;
+.modal-content {
     background-color: white;
-    min-width: 200px;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.3);
-    z-index: 10000 !important;
-    border-radius: 4px;
-    right: 0;
-    top: calc(100% + 5px);
-    max-height: 400px;
-    overflow-y: auto;
-    border: 1px solid #ddd;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s;
 }
 
-.dropdown-sort-content.show {
-    display: block !important;
-    z-index: 10000 !important;
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
-/* Ensure all row badges stay below the dropdown when it's open */
-body:has(.dropdown-sort-content.show) .property-table tbody td .status-badge {
-    z-index: 1 !important;
+.modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #333;
 }
 
-/* Actions column should not interfere */
-.property-table td:nth-child(6) {
-    z-index: 1;
+.modal-content p {
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.modal-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.modal-btn-confirm {
+    background-color: #dc3545;
+    color: white;
+}
+
+.modal-btn-confirm:hover {
+    background-color: #c82333;
+}
+
+.modal-btn-cancel {
+    background-color: #6c757d;
+    color: white;
+}
+
+.modal-btn-cancel:hover {
+    background-color: #545b62;
+}
+
+/* ===== Empty State ===== */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+}
+
+.empty-state i {
+    font-size: 64px;
+    margin-bottom: 20px;
+    color: #ddd;
+}
+
+.empty-state p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 1024px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .property-info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .search-section {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+    .property-content {
+        padding: 10px;
+    }
+    
+    .add-property-form,
+    .edit-form-container {
+        padding: 20px;
+    }
+    
+    .property-table {
+        font-size: 12px;
+    }
+    
+    .property-table th,
+    .property-table td {
+        padding: 10px 5px;
+    }
+    
+    .tab-button {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+    
+    .property-info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Responsive dropdown adjustments */
+    .dropdown-sort-content {
+        right: auto;
+        left: 0;
+        min-width: 180px;
+    }
+    
+    .dropdown-sort-item {
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dropdown-sort-content {
+        min-width: 160px;
+        max-height: 300px;
+    }
+}
+
+/* ===== Performance Optimization ===== */
+* {
+    -webkit-overflow-scrolling: touch;
 }
