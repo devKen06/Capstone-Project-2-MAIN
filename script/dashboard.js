@@ -31,7 +31,8 @@ function loadDashboardData() {
     .then(data => {
         console.log('Dashboard data received:', data);
         if (data.success) {
-            // Update UI with user data
+            // Update UI with user data (but user_dropdown.js will handle the dropdown)
+            // We keep this for backward compatibility
             updateUserDisplay(data.user);
             // Update statistics
             updateStatistics(data.stats);
@@ -41,6 +42,7 @@ function loadDashboardData() {
             // Session expired, redirect to login
             localStorage.removeItem('loggedIn');
             localStorage.removeItem('user');
+            localStorage.removeItem('currentUser');
             if (data.redirect) {
                 window.location.href = data.redirect;
             } else {
@@ -70,20 +72,15 @@ function showErrorState() {
 }
 
 function updateUserDisplay(user) {
-    // Update user name in dropdown
-    const userNameElement = document.querySelector('.dropdown-user-name');
-    const userEmailElement = document.querySelector('.dropdown-user-email');
+    // This function is kept for backward compatibility
+    // but user_dropdown.js will handle updating the dropdown from get_profile.php
+    // We only update localStorage here
     
-    if (userNameElement) {
-        userNameElement.textContent = user.name;
+    if (user && user.name && user.email) {
+        // Store updated user data
+        localStorage.setItem('user', JSON.stringify(user));
+        console.log('User data stored in localStorage:', user);
     }
-    
-    if (userEmailElement) {
-        userEmailElement.textContent = user.email;
-    }
-    
-    // Store updated user data
-    localStorage.setItem('user', JSON.stringify(user));
 }
 
 function updateStatistics(stats) {
@@ -92,7 +89,7 @@ function updateStatistics(stats) {
     
     // Map stats to their positions
     const statsMapping = [
-        { value: stats.total_leads, label: 'Leads' },
+        { value: stats.total_leads, label: 'All Leads' },
         { value: stats.open_deals, label: 'Open Deal' },
         { value: stats.new_leads, label: 'New Leads' },
         { value: stats.on_progress, label: 'On Progress' },

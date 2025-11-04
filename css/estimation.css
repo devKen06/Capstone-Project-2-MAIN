@@ -17,7 +17,7 @@
 
 /* ========== PROPERTY FORM BOX ========== */
 .property-form-box {
-    background: #001d9e;
+    background: linear-gradient(135deg, #001d9e, #0033ff);
     color: white;
     padding: 30px;
     border-radius: 15px;
@@ -250,19 +250,19 @@
 
 .btn-clear:hover {
     background-color: #bdbdbd;
-    transform: translateY(-1px);
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .btn-estimate {
-    background:#001d9e;
+    background: linear-gradient(135deg, #001d9e, #0033ff);
     color: white;
 }
 
 .btn-estimate:hover {
-    
-    transform: translateY(-1px);
-    box-shadow: 0 3px 10px rgba(0, 51, 255, 0.4);
+    background: linear-gradient(135deg, #0033ff, #0044ff);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 51, 255, 0.4);
 }
 
 .btn-download {

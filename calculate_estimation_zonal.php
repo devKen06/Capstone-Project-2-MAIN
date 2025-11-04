@@ -5,8 +5,8 @@
  * Process:
  * 1. Find matching zonal value record (barangay, street, type, class)
  * 2. Get price_per_sqm for years 2020-2025 from zonal_value
- * 3. Calculate total prices: property_size × price_per_sqm for each year
- * 4. Current price = property_size × price_2025
+ * 3. Calculate total prices: property_size Ã— price_per_sqm for each year
+ * 4. Current price = property_size Ã— price_2025
  * 5. Use price_per_sqm (2020-2024) for linear regression to predict 2026
  */
 
@@ -14,8 +14,17 @@ session_start();
 require_once 'config/database.php';
 
 header('Content-Type: application/json');
-ini_set('display_errors', 0);
+ini_set('display_errors', 1);
 error_reporting(E_ALL);
+
+// Error log function
+function logError($message, $data = null) {
+    $log = date('Y-m-d H:i:s') . ' - ' . $message;
+    if ($data) {
+        $log .= ' - Data: ' . json_encode($data);
+    }
+    error_log($log);
+}
 
 try {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -27,6 +36,7 @@ try {
     
     $input = json_decode(file_get_contents('php://input'), true);
     
+    // Enhanced validation
     if (!isset($input['property_size'])) {
         throw new Exception('Missing required parameter: property_size');
     }
@@ -38,15 +48,30 @@ try {
     $property_type = $input['property_type'] ?? '';
     $property_class = $input['property_class'] ?? '';
     
+    // Log input for debugging
+    logError('Estimation request received', [
+        'name' => $property_name,
+        'barangay' => $property_barangay,
+        'street' => $property_street,
+        'type' => $property_type,
+        'class' => $property_class,
+        'size' => $property_size
+    ]);
+    
     if ($property_size <= 0) {
         throw new Exception('Property size must be a positive number');
+    }
+    
+    // Check if property type and class are provided
+    if (empty($property_type) || empty($property_class)) {
+        throw new Exception('Property type and class are required for zonal value lookup. Type: ' . $property_type . ', Class: ' . $property_class);
     }
     
     // Fetch zonal value data
     $zonal_data = fetchZonalValue($db, $property_type, $property_class, $property_barangay, $property_street, $property_size);
     
     if (empty($zonal_data['best_match'])) {
-        throw new Exception('No matching zonal value found. Please check property details (barangay, type, class).');
+        throw new Exception('No matching zonal value found. Please check property details (barangay: ' . $property_barangay . ', type: ' . $property_type . ', class: ' . $property_class . ')');
     }
     
     // Get data
@@ -54,7 +79,15 @@ try {
     $price_per_sqm = $zonal_data['price_per_sqm'];
     $current_price = $calculated_prices['2025'];
     
+    // Log zonal value data
+    logError('Zonal value found', [
+        'match' => $zonal_data['best_match'],
+        'price_per_sqm' => $price_per_sqm,
+        'current_price' => $current_price
+    ]);
+    
     // Prepare historical price per sqm for regression (2020-2024)
+    // IMPORTANT: Only pass 2020-2024 to Python, NOT 2025
     $historical_prices_per_sqm = [
         '2020' => $price_per_sqm['2020'],
         '2021' => $price_per_sqm['2021'],
@@ -63,38 +96,57 @@ try {
         '2024' => $price_per_sqm['2024']
     ];
     
+    // Validate historical data
+    foreach ($historical_prices_per_sqm as $year => $price) {
+        if ($price <= 0) {
+            throw new Exception("Invalid zonal value for year {$year}: {$price}");
+        }
+    }
+    
     // Call Python script
-    $python_path = 'python';
+    $python_path = 'python3';  // Try python3 first
     $script_path = __DIR__ . '/python/linear_regression_db.py';
+    
+    // Check if python3 exists, fallback to python
+    exec('which python3', $output_which, $return_var);
+    if ($return_var !== 0) {
+        $python_path = 'python';
+    }
     
     if (!file_exists($script_path)) {
         throw new Exception('Python script not found at: ' . $script_path);
     }
     
     $historical_json = json_encode($historical_prices_per_sqm);
+    
+    // Build command with proper escaping
     $command = sprintf(
-        '%s %s %f %f %s 2>&1',
+        '%s %s %s %s %s 2>&1',
         $python_path,
         escapeshellarg($script_path),
-        $current_price,
-        $property_size,
+        escapeshellarg(strval($current_price)),
+        escapeshellarg(strval($property_size)),
         escapeshellarg($historical_json)
     );
+    
+    logError('Executing Python command', ['command' => $command]);
     
     $output = shell_exec($command);
     
     if ($output === null) {
-        throw new Exception('Failed to execute Python script. Ensure Python is installed.');
+        throw new Exception('Failed to execute Python script. Ensure Python is installed and scikit-learn is available.');
     }
+    
+    logError('Python output', ['output' => $output]);
     
     $result = json_decode($output, true);
     
     if (json_last_error() !== JSON_ERROR_NONE) {
-        throw new Exception('Invalid Python response: ' . $output);
+        throw new Exception('Invalid Python response. Raw output: ' . substr($output, 0, 500));
     }
     
     if (!$result['success']) {
-        throw new Exception($result['message'] ?? 'Calculation failed');
+        throw new Exception($result['message'] ?? 'Calculation failed: ' . ($result['error'] ?? 'Unknown error'));
     }
     
     // Build address
@@ -141,10 +193,15 @@ try {
     $error_response = [
         'success' => false,
         'message' => $e->getMessage(),
-        'error' => true
+        'error' => true,
+        'debug' => [
+            'file' => $e->getFile(),
+            'line' => $e->getLine()
+        ]
     ];
     
-    error_log('Estimation Error: ' . $e->getMessage());
+    logError('Estimation Error: ' . $e->getMessage(), $error_response);
+    
     http_response_code(400);
     echo json_encode($error_response);
 }
@@ -227,7 +284,7 @@ function fetchZonalValue($db, $property_type, $property_class, $barangay, $stree
             '2025' => floatval($zonal_value['price_2025'])
         ];
         
-        // Calculate total prices: property_size × price_per_sqm
+        // Calculate total prices: property_size Ã— price_per_sqm
         $calculated_prices = [];
         foreach ($price_per_sqm as $year => $price_sqm) {
             $calculated_prices[$year] = round($price_sqm * $property_size, 2);
@@ -254,7 +311,7 @@ function fetchZonalValue($db, $property_type, $property_class, $barangay, $stree
         ];
         
     } catch (Exception $e) {
-        error_log("Failed to fetch zonal value: " . $e->getMessage());
+        logError("Failed to fetch zonal value: " . $e->getMessage());
         return [
             'calculated_prices' => [],
             'price_per_sqm' => [],
@@ -330,7 +387,7 @@ function logEstimation($db, $data) {
         $stmt->execute();
         
     } catch (Exception $e) {
-        error_log('Failed to log estimation: ' . $e->getMessage());
+        logError('Failed to log estimation: ' . $e->getMessage());
     }
 }
 ?>
