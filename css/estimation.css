@@ -78,8 +78,8 @@
     pointer-events: none;
 }
 
-/* Search Dropdown */
-.search-dropdown {
+/* Search Dropdown - NAMESPACED to avoid conflicts with user dropdown */
+.search-field-wrapper .search-dropdown {
     position: absolute;
     top: calc(100% + 5px);
     left: 0;
@@ -91,6 +91,11 @@
     overflow-y: auto;
     z-index: 1000;
     display: none;
+}
+
+/* Only show when explicitly set to block */
+.search-field-wrapper .search-dropdown[style*="display: block"] {
+    display: block !important;
 }
 
 .search-item {
@@ -525,81 +530,7 @@
     }
 }
 
-/* ========== MODAL STYLES ========== */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 2000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    animation: fadeIn 0.3s ease;
-}
-
-.modal.active {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    text-align: center;
-    max-width: 400px;
-    animation: slideUp 0.3s ease;
-}
-
-@keyframes slideUp {
-    from {
-        transform: translateY(50px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-.modal-icon {
-    font-size: 48px;
-    color: #ff9800;
-    margin-bottom: 20px;
-}
-
-.modal-buttons {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.modal-btn {
-    padding: 10px 30px;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.modal-btn-yes {
-    background: #dc3545;
-    color: white;
-}
-
-.modal-btn-yes:hover {
-    background: #c82333;
-}
-
-.modal-btn-no {
-    background: #6c757d;
-    color: white;
-}
-
-.modal-btn-no:hover {
-    background: #5a6268;
-}
+/* ========== ESTIMATION-SPECIFIC MODAL STYLES ========== */
+/* NOTE: Logout modal styles are in setting.css */
+/* This section is reserved for future estimation-specific modals only */
+/* DO NOT add generic modal styles here to prevent conflicts */
