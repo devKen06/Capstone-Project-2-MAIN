@@ -62,8 +62,7 @@ try {
             WHEN 'High' THEN 1
             WHEN 'Medium' THEN 2
             WHEN 'Low' THEN 3
-        END
-    LIMIT 10";
+        END";
     
     $stmt = $db->prepare($tasks_query);
     $stmt->bindParam(':user_id', $user_id);
@@ -86,40 +85,34 @@ try {
     foreach ($all_tasks as $task) {
         $task_type = $task['task_type'];
         
-        // Count all tasks
-        $count_query = "SELECT COUNT(*) as count FROM tasks WHERE user_id = :user_id AND task_type = :task_type AND is_completed = 0";
-        $count_stmt = $db->prepare($count_query);
-        $count_stmt->bindParam(':user_id', $user_id);
-        $count_stmt->bindParam(':task_type', $task_type);
-        $count_stmt->execute();
-        $count_result = $count_stmt->fetch();
-        $tasks_count[$task_type] = $count_result['count'];
-        
-        // Add to respective array (limit to 3 per type for display)
-        if (count($tasks[$task_type]) < 3) {
-            // Get property info if task is linked to a property
-            $property_info = null;
-            if ($task['property_id']) {
-                $prop_query = "SELECT owner_name FROM properties WHERE id = :property_id";
-                $prop_stmt = $db->prepare($prop_query);
-                $prop_stmt->bindParam(':property_id', $task['property_id']);
-                $prop_stmt->execute();
-                $property = $prop_stmt->fetch();
-                if ($property) {
-                    $property_info = $property['owner_name'];
-                }
+        // Get property info if task is linked to a property
+        $property_info = null;
+        if ($task['property_id']) {
+            $prop_query = "SELECT owner_name FROM properties WHERE id = :property_id";
+            $prop_stmt = $db->prepare($prop_query);
+            $prop_stmt->bindParam(':property_id', $task['property_id']);
+            $prop_stmt->execute();
+            $property = $prop_stmt->fetch();
+            if ($property) {
+                $property_info = $property['owner_name'];
             }
-            
-            $tasks[$task_type][] = [
-                'id' => $task['id'],
-                'title' => $task['title'],
-                'status' => $task['status'],
-                'priority' => $task['priority'],
-                'assigned_to' => $task['assigned_to'],
-                'due_date' => $task['due_date'],
-                'property_name' => $property_info
-            ];
         }
+        
+        // Add to respective array (NO MORE LIMIT!)
+        $tasks[$task_type][] = [
+            'id' => $task['id'],
+            'title' => $task['title'],
+            'status' => $task['status'],
+            'priority' => $task['priority'],
+            'assigned_to' => $task['assigned_to'],
+            'due_date' => $task['due_date'],
+            'property_name' => $property_info
+        ];
+    }
+    
+    // Count all tasks per type
+    foreach (['todo', 'call', 'email'] as $type) {
+        $tasks_count[$type] = count($tasks[$type]);
     }
     
     // Return complete dashboard data
