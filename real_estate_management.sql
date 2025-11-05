@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 28, 2025 at 12:36 AM
+-- Generation Time: Nov 05, 2025 at 01:59 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -63,7 +63,34 @@ INSERT INTO `estimation_logs` (`id`, `property_name`, `property_address`, `prope
 (13, 'Ana Garcia', 'BINAUGANAN ROAD, BINAUGANAN', 'RESIDENTIAL', 'A2', 8100.00, 7140.00, -960.00, -11.85, 79, 'zonal_value', NULL, '2025-10-27 15:02:58'),
 (14, 'Fernando Santiago', 'PROVINCIAL ROAD, SAN SEBASTIAN', 'AGRICULTURE', 'A1', 666000.00, 726180.00, 60180.00, 9.04, 87, 'zonal_value', NULL, '2025-10-27 15:04:17'),
 (15, 'Ana Garcia', 'ALL LOTS, BINAUGANAN', 'Agricultural', 'A2', 108000.00, 95200.00, -12800.00, -11.85, 79, 'zonal_value', NULL, '2025-10-27 15:11:16'),
-(16, 'Nill Valencio', 'DON BENITO SUBD., SAN RAFAEL', 'Residential', 'RR', 722400.00, 1129363.20, 406963.20, 56.33, 72, 'zonal_value', NULL, '2025-10-27 15:39:35');
+(16, 'Nill Valencio', 'DON BENITO SUBD., SAN RAFAEL', 'Residential', 'RR', 722400.00, 1129363.20, 406963.20, 56.33, 72, 'zonal_value', NULL, '2025-10-27 15:39:35'),
+(17, 'Ana Garcia', 'BINAUGANAN ROAD, BINAUGANAN', 'RESIDENTIAL', 'A2', 8100.00, 7140.00, -960.00, -11.85, 79, 'zonal_value', NULL, '2025-11-02 03:13:13'),
+(18, 'Benjamin Reyes', 'INDUSTRIAL ROAD, PARAISO', 'INDUSTRIAL', 'I', 210000.00, 306201.00, 96201.00, 45.81, 76, 'zonal_value', NULL, '2025-11-02 03:14:32'),
+(19, 'arvin coronel', 'MAIN ROAD, SAN VICENTE', 'INDUSTRIAL', 'I', 36000.00, 52491.60, 16491.60, 45.81, 76, 'zonal_value', NULL, '2025-11-02 03:17:09'),
+(20, 'arvin coronel', 'MAC ARTHUR HIGHWAY, POBLACION', 'COMMERCIAL', 'RR', 2531750.00, 3982947.15, 1451197.15, 57.32, 72, 'zonal_value', NULL, '2025-11-02 03:17:44'),
+(21, 'Ana Garcia', 'BINAUGANAN ROAD, BINAUGANAN', 'RESIDENTIAL', 'A2', 8100.00, 7140.00, -960.00, -11.85, 79, 'zonal_value', NULL, '2025-11-02 05:37:52'),
+(22, 'Ana Garcia', 'BINAUGANAN ROAD, BINAUGANAN', 'RESIDENTIAL', 'A2', 8100.00, 7140.00, -960.00, -11.85, 79, 'zonal_value', NULL, '2025-11-02 09:55:04'),
+(23, 'Ana Garcia', 'BINAUGANAN ROAD, BINAUGANAN', 'RESIDENTIAL', 'A2', 8100.00, 7140.00, -960.00, -11.85, 79, 'zonal_value', NULL, '2025-11-02 09:55:32'),
+(24, 'arvin coronel', 'MAIN ROAD, SAN VICENTE', 'INDUSTRIAL', 'I', 36000.00, 52491.60, 16491.60, 45.81, 76, 'zonal_value', NULL, '2025-11-02 09:56:47'),
+(25, 'Jose Ramos', 'MAC ARTHUR HIGHWAY, DOLORES', 'COMMERCIAL', 'CR', 550000.00, 858534.60, 308534.60, 56.10, 73, 'zonal_value', NULL, '2025-11-02 10:16:22'),
+(26, 'Ana Garcia', 'ALL LOTS, BINAUGANAN', 'Agricultural', 'A2', 108000.00, 95200.00, -12800.00, -11.85, 79, 'zonal_value', NULL, '2025-11-03 01:07:58'),
+(27, 'arvin coronel', 'MAC ARTHUR HIGHWAY, POBLACION', 'COMMERCIAL', 'RR', 2531750.00, 3982947.15, 1451197.15, 57.32, 72, 'zonal_value', NULL, '2025-11-03 01:08:47'),
+(28, 'arvin coronel', 'MAIN ROAD, SAN VICENTE', 'INDUSTRIAL', 'I', 36000.00, 52491.60, 16491.60, 45.81, 76, 'zonal_value', NULL, '2025-11-03 01:10:10'),
+(29, 'Ana Garcia', 'ALL LOTS, BINAUGANAN', 'Agricultural', 'A2', 108000.00, 95200.00, -12800.00, -11.85, 79, 'zonal_value', NULL, '2025-11-03 01:13:17'),
+(30, 'Diana Pascual', 'MAIN ROAD, BALINGCANAWAY', 'RESIDENTIAL', 'A41', 7480.00, 3794.56, -3685.44, -49.27, 63, 'zonal_value', NULL, '2025-11-03 01:23:40'),
+(31, 'arvin coronel', 'MAIN ROAD, SAN VICENTE', 'INDUSTRIAL', 'I', 36000.00, 52491.60, 16491.60, 45.81, 76, 'zonal_value', NULL, '2025-11-04 06:25:03'),
+(32, 'Ana Garcia', 'BINAUGANAN ROAD, BINAUGANAN', 'RESIDENTIAL', 'A2', 8100.00, 7140.00, -960.00, -11.85, 79, 'zonal_value', NULL, '2025-11-04 08:15:33'),
+(33, 'Ana Garcia', 'ALL LOTS, BINAUGANAN', 'Agricultural', 'A2', 108000.00, 95200.00, -12800.00, -11.85, 79, 'zonal_value', NULL, '2025-11-04 10:47:24'),
+(34, 'arvin coronel', 'MAIN ROAD, SAN VICENTE', 'INDUSTRIAL', 'I', 36000.00, 52491.60, 16491.60, 45.81, 76, 'zonal_value', NULL, '2025-11-04 11:31:15'),
+(35, 'Jose Ramos', 'MAC ARTHUR HIGHWAY, DOLORES', 'COMMERCIAL', 'CR', 550000.00, 858534.60, 308534.60, 56.10, 73, 'zonal_value', NULL, '2025-11-04 11:32:32'),
+(36, 'Antonio Villanueva', 'SAN ROQUE MAIN ROAD, SAN ROQUE', 'RESIDENTIAL', 'A40', 309500.00, 483955.50, 174455.50, 56.37, 72, 'zonal_value', NULL, '2025-11-04 12:07:42'),
+(37, 'Ana Garcia', 'ALL LOTS, BINAUGANAN', 'Agricultural', 'A2', 108000.00, 95200.00, -12800.00, -11.85, 79, 'zonal_value', NULL, '2025-11-04 12:21:52'),
+(38, 'Diana Pascual', 'MAIN ROAD, BALINGCANAWAY', 'RESIDENTIAL', 'A41', 7480.00, 3794.56, -3685.44, -49.27, 63, 'zonal_value', NULL, '2025-11-04 12:36:56'),
+(39, 'arvin coronel', 'MAIN ROAD, SAN VICENTE', 'INDUSTRIAL', 'I', 36000.00, 52491.60, 16491.60, 45.81, 76, 'zonal_value', NULL, '2025-11-04 12:38:06'),
+(40, 'Ana Garcia', 'ALL LOTS, BINAUGANAN', 'Agricultural', 'A2', 108000.00, 95200.00, -12800.00, -11.85, 79, 'zonal_value', NULL, '2025-11-04 13:44:50'),
+(41, 'Antonio Villanueva', 'SAN ROQUE MAIN ROAD, SAN ROQUE', 'RESIDENTIAL', 'A40', 309500.00, 483955.50, 174455.50, 56.37, 72, 'zonal_value', NULL, '2025-11-04 13:56:45'),
+(42, 'Ana Garcia', 'BINAUGANAN ROAD, BINAUGANAN', 'RESIDENTIAL', 'A2', 8100.00, 7140.00, -960.00, -11.85, 79, 'zonal_value', NULL, '2025-11-05 01:28:04'),
+(43, 'Carmen Lopez', 'ROMULO BOULEVARD, CENTRAL', 'RESIDENTIAL', 'A15', 9250.00, 5414.50, -3835.50, -41.46, 63, 'zonal_value', NULL, '2025-11-05 01:28:50');
 
 -- --------------------------------------------------------
 
@@ -442,7 +469,7 @@ INSERT INTO `properties` (`id`, `agent_id`, `description`, `barangay`, `street`,
 (7, 1, 'happy lang', 'MATATALAIB', 'ROMULO HIGHWAY', 'Tarlac City', 'Tarlac', 1200000.00, 'INDUSTRIAL', 'I', 2, 1, 150, 190, 'Kenneth James', '09802344561', 'kenken@gmail.com', 'Closed Deal', '2025-10-08 18:07:02', '2025-10-27 14:22:11'),
 (8, 1, 'Wahahahaha', 'CARANGIAN', 'CARANGIAN MAIN ROAD', 'Tarlac City', 'Tarlac', 1500.00, 'COMMERCIAL', 'A1', NULL, NULL, NULL, NULL, 'Elmer Gragasin', '09428975327', 'elmer@gmail.com', 'New Lead', '2025-10-21 13:56:12', '2025-10-27 14:22:11'),
 (9, 1, 'hindi ko', 'POBLACION', 'MAC ARTHUR HIGHWAY', 'Tarlac City', 'Tarlac', 16999023.00, 'COMMERCIAL', 'RR', 1, 1, 124, 130, 'arvin coronel', '09296735489', 'arvincalapuz@gmail.com', 'Negotiation', '2025-10-23 10:25:12', '2025-10-27 14:22:11'),
-(10, 1, 'Spacious residential property with modern amenities', 'SAN NICOLAS', 'AIRPORT ROAD', 'Tarlac City', 'Tarlac', 2500000.00, 'RESIDENTIAL', 'A1', 3, 2, 120, 200, 'Maria Santos', '09171234567', 'maria.santos@email.com', 'New Lead', '2025-10-23 13:40:10', '2025-10-27 14:22:11'),
+(10, 1, 'Spacious residential property with modern amenities', 'SAN NICOLAS', 'AIRPORT ROAD', 'Tarlac City', 'Tarlac', 2500000.00, 'RESIDENTIAL', 'A1', 3, 2, 120, 200, 'Maria Santos', '09171234567', 'maria.santos@email.com', 'On Progress', '2025-10-23 13:40:10', '2025-10-31 18:41:21'),
 (11, 1, 'Commercial building suitable for retail business', 'MALIGAYA', 'ZAMORA STREET', 'Tarlac City', 'Tarlac', 5000000.00, 'COMMERCIAL', 'CR', NULL, 3, 250, 300, 'Juan Dela Cruz', '09181234567', 'juan.delacruz@email.com', 'On Progress', '2025-10-23 13:40:10', '2025-10-27 14:22:11'),
 (12, 1, 'Agricultural land with irrigation system', 'SALAPUNGAN', 'MC ARTHUR HIGHWAY', 'Tarlac City', 'Tarlac', 3500000.00, 'AGRICULTURE', 'A1', NULL, NULL, NULL, 5000, 'Pedro Reyes', '09191234567', 'pedro.reyes@email.com', 'Signing Contract', '2025-10-23 13:40:10', '2025-10-27 14:22:11'),
 (13, 1, 'Vacant lot ready for development', 'BINAUGANAN', 'BINAUGANAN ROAD', 'Tarlac City', 'Tarlac', 1800000.00, 'RESIDENTIAL', 'A2', NULL, NULL, NULL, 150, 'Ana Garcia', '09201234567', 'ana.garcia@email.com', 'Proposal', '2025-10-23 13:40:10', '2025-10-27 14:22:11'),
@@ -469,8 +496,8 @@ INSERT INTO `properties` (`id`, `agent_id`, `description`, `barangay`, `street`,
 (34, 1, 'Commercial space with high foot traffic', 'ARMENIA', 'COMMERCIAL DISTRICT', 'Tarlac City', 'Tarlac', 4200000.00, 'COMMERCIAL', 'CR', NULL, 2, 200, 250, 'Rodrigo Manalo', '09411234567', 'rodrigo.manalo@email.com', 'Proposal', '2025-10-23 13:40:10', '2025-10-27 14:22:11'),
 (35, 1, 'wa', 'BALIBAGO 1ST', 'MC ARTHUR HIGHWAY', 'Tarlac City', 'Tarlac', 1000000.00, 'RESIDENTIAL', 'RR', 2, 21, 100, 200, 'Elmer Steves', '09428975327', 'elmer@gmail.com', 'Proposal', '2025-10-25 14:34:53', '2025-10-27 14:22:11'),
 (36, 1, 'Residential property near schools', 'AGUSO', 'AGRICULTURAL AREAS', 'Tarlac City', 'Tarlac', 2800000.00, 'AGRICULTURE', 'A17', 3, 2, 130, 180, 'Linda Martinez', '09241234567', 'linda.martinez@email.com', 'Proposal', '2025-10-26 15:50:50', '2025-10-27 14:22:11'),
-(37, 1, 'Vacant lot ready for development', 'BINAUGANAN', 'ALL LOTS', 'Tarlac City', 'Tarlac', 1800000.00, 'Agricultural', 'A2', NULL, NULL, NULL, 2000, 'Ana Garcia', '09201234567', 'ana.garcia@email.com', 'Proposal', '2025-10-27 15:10:41', '2025-10-27 15:10:41'),
-(38, 1, 'happy?', 'SAN RAFAEL', 'DON BENITO SUBD.', 'Tarlac City', 'Tarlac', 100000.00, 'Residential', 'RR', 2, 2, 100, 240, 'Nill Valencio', '09387984497', 'nill@gmail.com', 'New Lead', '2025-10-27 15:39:21', '2025-10-27 15:39:21');
+(42, 1, 'Vacant lot ready for development', 'BINAUGANAN', 'ALL LOTS', 'Tarlac City', 'Tarlac', 1800000.00, 'AGRICULTURE', 'A37', NULL, NULL, NULL, 150, 'Ana Garcia', '09201234567', 'ana.garcia@email.com', 'Proposal', '2025-11-05 01:47:39', '2025-11-05 02:17:20'),
+(48, 1, '123', 'SAN MIGUEL', 'MC. ARTHUR HIGHWAY', 'Tarlac City', 'Tarlac', 1200000.00, 'RESIDENTIAL', 'RR', 2, 2, 300, 350, 'wawa carvi', '09201234567', 'fsoriano_07@yahoo.com', 'On Progress', '2025-11-05 02:19:30', '2025-11-05 11:18:39');
 
 -- --------------------------------------------------------
 
@@ -636,7 +663,10 @@ INSERT INTO `tasks` (`id`, `user_id`, `property_id`, `title`, `task_type`, `stat
 (9, 1, 6, 'meet', 'todo', 'On Progress', 'Medium', 'arvin', '2025-10-16', '20:56:00', 1, NULL, 1, '2025-10-08 12:55:29', '2025-10-25 15:03:00'),
 (10, 1, NULL, 'hi arvin', 'todo', 'Upcoming', 'Medium', 'arvin', '2025-10-01', '16:22:00', 2, '1000', 0, '2025-10-26 06:20:31', '2025-10-26 06:20:31'),
 (11, 1, 35, 'gg', 'call', NULL, NULL, 'arvin', '2025-09-30', '19:59:00', 1, NULL, 0, '2025-10-26 11:57:23', '2025-10-26 11:57:23'),
-(12, 1, 35, 'pogi ako', 'todo', 'Upcoming', 'Medium', 'elmer', '2025-10-02', '01:29:00', 2, 'hindi kaya', 0, '2025-10-26 17:26:54', '2025-10-26 17:26:54');
+(12, 1, 35, 'pogi ako', 'todo', 'Upcoming', 'Medium', 'elmer', '2025-10-02', '01:29:00', 2, 'hindi kaya', 1, '2025-10-26 17:26:54', '2025-11-02 02:07:37'),
+(13, 1, NULL, 'asfaga', 'todo', 'Not Started', 'Low', 'vin', '2025-10-29', '00:07:00', 2, 'gagd', 0, '2025-11-02 02:07:29', '2025-11-02 02:07:29'),
+(14, 1, NULL, 'me and me', 'todo', 'On Progress', 'Medium', 'vin', '2025-11-11', '14:40:00', 1, NULL, 0, '2025-11-02 06:39:05', '2025-11-02 06:39:05'),
+(16, 1, 48, '911', 'todo', 'Upcoming', 'Medium', 'vin', '2025-11-26', '18:47:00', 1, 'aaa', 0, '2025-11-05 10:42:22', '2025-11-05 10:42:22');
 
 -- --------------------------------------------------------
 
@@ -647,6 +677,8 @@ INSERT INTO `tasks` (`id`, `user_id`, `property_id`, `title`, `task_type`, `stat
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
+  `theme_preference` varchar(10) DEFAULT 'light',
+  `task_reminders` tinyint(1) DEFAULT 1,
   `password_hash` varchar(255) NOT NULL,
   `first_name` varchar(50) NOT NULL,
   `last_name` varchar(50) NOT NULL,
@@ -663,11 +695,13 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `password_hash`, `first_name`, `last_name`, `contact_number`, `user_type`, `is_active`, `created_at`, `updated_at`, `gender`, `language`) VALUES
-(1, 'arvincalapuz@gmail.com', '$2y$10$LENLNfI8a5uxW8PYMWUPf.tQOkCitv3KZLcX0ghXhEij4b8YaIDce', 'Arvin', 'Coronel', '09468539156', 'client', 1, '2025-09-17 10:44:17', '2025-10-03 15:33:12', 'Male', 'English - United States'),
-(2, 'angelo.vert.valencia@gmail.com', '$2y$10$F6ywQaoK5hqCFJjRi8rTouEP414snagmY5hb965dLweAjorMS30yC', 'nill', 'Valencio', '09387984497', 'client', 1, '2025-09-17 12:23:38', '2025-09-24 07:39:20', 'Not specified', 'English - United States'),
-(3, 'regutaro@gmail.com', '$2y$10$5i2snc7Tj4tldD1vIqa64OyRKQWXuN25z6YxiUBIg7aqJ.TIdzwpa', 'regu', 'taro', '09098029269', 'client', 1, '2025-09-22 17:16:33', '2025-09-22 17:16:33', 'Not specified', 'English - United States'),
-(4, 'mermer@gmail.com', '$2y$10$nyZHZFux1qNSmYdFLWxMTe7v5i0gRLToAfMZhCtJDH9tWbA0TMhGi', 'Elmerson', 'Sta. Cruz', 'passme23', 'client', 1, '2025-10-21 14:11:53', '2025-10-21 14:11:53', 'Not specified', 'English - United States');
+INSERT INTO `users` (`id`, `email`, `theme_preference`, `task_reminders`, `password_hash`, `first_name`, `last_name`, `contact_number`, `user_type`, `is_active`, `created_at`, `updated_at`, `gender`, `language`) VALUES
+(1, 'arvincalapuz@gmail.com', 'light', 1, '$2y$10$jFAEWznvkNi7fGp4.mJ66O07Rp3QJnC1QOm.D.QwQLLmVOJh8ite.', 'Arvin', 'Coronel', '09468539156', 'client', 1, '2025-09-17 10:44:17', '2025-11-05 11:23:30', 'Male', 'Korean'),
+(2, 'angelo.vert.valencia@gmail.com', 'light', 1, '$2y$10$F6ywQaoK5hqCFJjRi8rTouEP414snagmY5hb965dLweAjorMS30yC', 'nill', 'Valencio', '09387984497', 'client', 1, '2025-09-17 12:23:38', '2025-09-24 07:39:20', 'Not specified', 'English - United States'),
+(3, 'regutaro@gmail.com', 'light', 1, '$2y$10$5i2snc7Tj4tldD1vIqa64OyRKQWXuN25z6YxiUBIg7aqJ.TIdzwpa', 'regu', 'taro', '09098029269', 'client', 1, '2025-09-22 17:16:33', '2025-09-22 17:16:33', 'Not specified', 'English - United States'),
+(4, 'mermer@gmail.com', 'light', 1, '$2y$10$nyZHZFux1qNSmYdFLWxMTe7v5i0gRLToAfMZhCtJDH9tWbA0TMhGi', 'Elmerson', 'Sta. Cruz', 'passme23', 'client', 1, '2025-10-21 14:11:53', '2025-10-21 14:11:53', 'Not specified', 'English - United States'),
+(5, 'nill@gmail.com', 'light', 1, '$2y$10$XHaAQifJl6StG.T2ke/li.8L3RAO7pSSKO/xtsWBXVpPgvwnQ44eu', 'nill', 'Facun', '09669157612', 'client', 1, '2025-11-02 10:09:50', '2025-11-02 10:09:50', 'Not specified', 'English - United States'),
+(6, 'mermermer@gmail.com', 'light', 1, '$2y$10$8Je4HDRn2XTDvju/uUKYS./gyLTMo.bpG4/VmEDFY7rzHG1XFzA5W', 'elmer', 'dizon', '09090929269', 'client', 1, '2025-11-04 14:10:24', '2025-11-04 14:10:24', 'Not specified', 'English - United States');
 
 -- --------------------------------------------------------
 
@@ -1738,7 +1772,7 @@ ALTER TABLE `zonal_value`
 -- AUTO_INCREMENT for table `estimation_logs`
 --
 ALTER TABLE `estimation_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `historical_prices_2020`
@@ -1774,19 +1808,19 @@ ALTER TABLE `historical_prices_2024`
 -- AUTO_INCREMENT for table `properties`
 --
 ALTER TABLE `properties`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `zonal_value`
