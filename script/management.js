@@ -245,6 +245,12 @@ function showAddPropertyForm() {
     form.reset();
     form.removeAttribute('data-property-id');
     
+    // Clear hidden input
+    const hiddenInput = document.getElementById('property_id_hidden');
+    if (hiddenInput) {
+        hiddenInput.value = '';
+    }
+    
     // Reset form title and button
     document.querySelector('.form-header h2').textContent = 'Add New Property';
     document.querySelector('.btn-save').innerHTML = '<i class="fas fa-save"></i> Save Property';
@@ -268,42 +274,82 @@ function showAddPropertyForm() {
 
 // Handle property form submission
 function addProperty() {
+    console.log('=== ADD/UPDATE PROPERTY FUNCTION CALLED ===');
+    
     const form = document.getElementById('propertyForm');
-    const formData = new FormData(form);
-    const propertyId = form.getAttribute('data-property-id');
+    const hiddenInput = document.getElementById('property_id_hidden');
     
-    // Determine if this is an update or new property
-    const isUpdate = propertyId && propertyId !== '';
-    const url = isUpdate ? 'update_property.php' : 'add_property.php';
+    // Try to get property ID from hidden input FIRST (most reliable)
+    let propertyId = hiddenInput ? hiddenInput.value : null;
     
-    // Add property ID to form data if updating
-    if (isUpdate) {
-        formData.append('property_id', propertyId);
+    // If not in hidden input, try data attribute
+    if (!propertyId || propertyId === '' || propertyId === 'null') {
+        propertyId = form.getAttribute('data-property-id');
     }
     
-    // Debug: log form data
-    console.log('Form data being sent:');
+    console.log('=== PROPERTY ID DETECTION ===');
+    console.log('Hidden input element:', hiddenInput);
+    console.log('Hidden input value:', hiddenInput ? hiddenInput.value : 'N/A');
+    console.log('Data attribute value:', form.getAttribute('data-property-id'));
+    console.log('Final property ID:', propertyId);
+    console.log('Property ID type:', typeof propertyId);
+    
+    // Determine if this is an update or new property
+    const isUpdate = propertyId && propertyId !== '' && propertyId !== 'null' && propertyId !== null;
+    const url = isUpdate ? 'update_property.php' : 'add_property.php';
+    
+    console.log('=== DECISION ===');
+    console.log('Is Update:', isUpdate);
+    console.log('URL to call:', url);
+    
+    const formData = new FormData(form);
+    
+    // IMPORTANT: If it's an update, make sure property_id is in formData
+    if (isUpdate) {
+        const existingPropertyId = formData.get('property_id');
+        console.log('property_id in FormData:', existingPropertyId);
+        
+        if (!existingPropertyId || existingPropertyId === '' || existingPropertyId === 'null') {
+            formData.set('property_id', propertyId);
+            console.log('✓ Manually added property_id to formData:', propertyId);
+        } else {
+            console.log('✓ property_id already in formData:', existingPropertyId);
+        }
+    } else {
+        formData.delete('property_id');
+        console.log('✗ Removed property_id from formData (new property)');
+    }
+    
+    // Debug: log all form data
+    console.log('=== FORM DATA ===');
     for (let pair of formData.entries()) {
         console.log(pair[0] + ': ' + pair[1]);
     }
+    
+    console.log('=== SENDING REQUEST TO:', url, '===');
     
     fetch(url, {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
+    .then(response => {
+        console.log('Response status:', response.status);
+        return response.json();
+    })
     .then(data => {
-        console.log('Server response:', data);
+        console.log('=== SERVER RESPONSE ===', data);
+        
         if (data.success) {
             alert(isUpdate ? 'Property updated successfully!' : 'Property added successfully!');
             cancelAddProperty();
             loadProperties();
         } else {
             alert('Error: ' + (data.message || 'Failed to save property'));
+            console.error('Server error:', data);
         }
     })
     .catch(error => {
-        console.error('Error saving property:', error);
+        console.error('=== FETCH ERROR ===', error);
         alert('An error occurred. Please try again.');
     });
 }
@@ -318,6 +364,12 @@ function cancelAddProperty() {
     const form = document.getElementById('propertyForm');
     form.reset();
     form.removeAttribute('data-property-id');
+    
+    // Clear hidden input
+    const hiddenInput = document.getElementById('property_id_hidden');
+    if (hiddenInput) {
+        hiddenInput.value = '';
+    }
     
     // Reset form title and button text
     document.querySelector('.form-header h2').textContent = 'Add New Property';
@@ -975,40 +1027,6 @@ function createActivityTask() {
     });
 }
 
-function addProperty() {
-    const form = document.getElementById('propertyForm');
-    const formData = new FormData(form);
-    
-    const submitBtn = document.querySelector('.btn-save');
-    const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
-    submitBtn.disabled = true;
-    
-    // CHANGED FROM get_properties.php TO add_property.php
-    fetch('add_property.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('Property added successfully!');
-            cancelAddProperty();
-            loadProperties();
-        } else {
-            alert('Error: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error adding property:', error);
-        alert('An error occurred. Please try again.');
-    })
-    .finally(() => {
-        submitBtn.innerHTML = originalText;
-        submitBtn.disabled = false;
-    });
-}
-
 function loadProperties() {
     const searchTerm = document.getElementById('searchProperties').value;
     
@@ -1199,11 +1217,44 @@ function sortByTag(tagName) {
 }
 
 function editProperty(propertyId) {
-    const property = allProperties.find(p => p.id == propertyId);
-    if (!property) return;
+    console.log('=== EDIT PROPERTY CALLED ===');
+    console.log('Property ID received:', propertyId);
+    console.log('Property ID type:', typeof propertyId);
     
-    // Show the form
-    showAddPropertyForm();
+    const property = allProperties.find(p => p.id == propertyId);
+    if (!property) {
+        console.error('Property not found with ID:', propertyId);
+        return;
+    }
+    
+    console.log('Found property:', property);
+    
+    // Hide list view
+    document.getElementById('addPropertyBtn').style.display = 'none';
+    document.getElementById('cancelBtn').style.display = 'flex';
+    document.getElementById('propertyList').style.display = 'none';
+    document.getElementById('addPropertyForm').style.display = 'block';
+    
+    // Get the form element
+    const form = document.getElementById('propertyForm');
+    
+    // CRITICAL: Set property ID in BOTH places for maximum reliability
+    // 1. Set in hidden input field (this will be sent with FormData automatically)
+    const hiddenInput = document.getElementById('property_id_hidden');
+    if (hiddenInput) {
+        hiddenInput.value = String(propertyId); // Convert to string
+        console.log('✓ Set hidden input value:', hiddenInput.value);
+    } else {
+        console.error('✗ Hidden input field not found!');
+    }
+    
+    // 2. Set as data attribute on form (backup method)
+    form.setAttribute('data-property-id', String(propertyId));
+    console.log('✓ Set data-property-id on form:', form.getAttribute('data-property-id'));
+    
+    // Change form title and button text
+    document.querySelector('.form-header h2').textContent = 'Edit Property';
+    document.querySelector('.btn-save').innerHTML = '<i class="fas fa-save"></i> Update Property';
     
     // Split owner_name into first and last name
     const ownerNameParts = (property.owner_name || '').trim().split(' ');
@@ -1256,12 +1307,19 @@ function editProperty(propertyId) {
     document.getElementById('floor_area').value = property.floor_area || '';
     document.getElementById('lot_area').value = property.lot_area || '';
     
-    // Change form title and button text
-    document.querySelector('.form-header h2').textContent = 'Edit Property';
-    document.querySelector('.btn-save').innerHTML = '<i class="fas fa-save"></i> Update Property';
+    // Set the status/tag dropdown
+    const statusSelect = document.getElementById('status');
+    if (statusSelect && property.status) {
+        statusSelect.value = property.status;
+        console.log('Set status/tag to:', property.status);
+    }
     
-    // Store property ID for update
-    document.getElementById('propertyForm').setAttribute('data-property-id', propertyId);
+    // Double-check the property IDs are still set after 200ms
+    setTimeout(() => {
+        console.log('=== FINAL CHECK (after 200ms) ===');
+        console.log('Hidden input value:', document.getElementById('property_id_hidden')?.value);
+        console.log('Data attribute:', form.getAttribute('data-property-id'));
+    }, 200);
 }
 
 function deleteProperty(propertyId) {
