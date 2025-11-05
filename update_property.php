@@ -21,25 +21,37 @@ try {
     
     $agent_id = $_SESSION['user_id'];
     
+    // DEBUG: Log all POST data
+    error_log("=== UPDATE PROPERTY DEBUG ===");
+    error_log("POST data: " . print_r($_POST, true));
+    error_log("Agent ID: " . $agent_id);
+    
     // Get property ID
     $property_id = $_POST['property_id'] ?? null;
     
+    error_log("Property ID received: " . ($property_id ?? 'NULL'));
+    
     if (!$property_id) {
+        error_log("ERROR: Property ID is missing!");
         echo json_encode(['success' => false, 'message' => 'Property ID is required']);
         exit;
     }
     
     // Verify property belongs to this agent
-    $check_query = "SELECT id FROM properties WHERE id = :property_id AND agent_id = :agent_id";
+    $check_query = "SELECT id, status FROM properties WHERE id = :property_id AND agent_id = :agent_id";
     $check_stmt = $db->prepare($check_query);
     $check_stmt->bindParam(':property_id', $property_id);
     $check_stmt->bindParam(':agent_id', $agent_id);
     $check_stmt->execute();
     
     if ($check_stmt->rowCount() === 0) {
+        error_log("ERROR: Property not found or access denied!");
         echo json_encode(['success' => false, 'message' => 'Property not found or access denied']);
         exit;
     }
+    
+    $existing_property = $check_stmt->fetch(PDO::FETCH_ASSOC);
+    error_log("Found existing property: " . print_r($existing_property, true));
     
     // Get form data
     $description = trim($_POST['description'] ?? '');
@@ -59,6 +71,16 @@ try {
     $contact_number = trim($_POST['contact_number'] ?? '');
     $email = trim($_POST['email'] ?? '');
     
+    // Get status from form if provided, otherwise keep existing status
+    $status = trim($_POST['status'] ?? '');
+    if (empty($status)) {
+        // If no status provided in form, keep the existing one
+        $status = $existing_property['status'];
+        error_log("No status in form, keeping existing: " . $status);
+    } else {
+        error_log("Status from form: " . $status);
+    }
+    
     // Combine first name and last name for owner_name field
     $owner_name = trim($first_name . ' ' . $last_name);
     
@@ -77,12 +99,14 @@ try {
     if (empty($email)) $errors[] = 'Email is required';
     
     if (!empty($errors)) {
+        error_log("Validation errors: " . implode(', ', $errors));
         echo json_encode(['success' => false, 'message' => implode(', ', $errors)]);
         exit;
     }
     
     // Validate email format
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        error_log("Invalid email format: " . $email);
         echo json_encode(['success' => false, 'message' => 'Invalid email format']);
         exit;
     }
@@ -93,15 +117,14 @@ try {
     $floor_area = $floor_area === '' ? null : $floor_area;
     $lot_area = $lot_area === '' ? null : $lot_area;
     
-    // Create combined address for backward compatibility
-    $address = $street . ', ' . $barangay;
+    error_log("Executing UPDATE query for property_id: " . $property_id);
     
-    // Update property
+    // Update property (including status to preserve it)
+    // NOTE: 'address' column removed - it doesn't exist in the properties table
     $query = "UPDATE properties SET 
         description = :description,
         barangay = :barangay,
         street = :street,
-        address = :address,
         city = :city,
         province = :province,
         price = :price,
@@ -114,6 +137,7 @@ try {
         owner_name = :owner_name,
         contact_number = :contact_number,
         email = :email,
+        status = :status,
         updated_at = CURRENT_TIMESTAMP
     WHERE id = :property_id AND agent_id = :agent_id";
     
@@ -121,7 +145,6 @@ try {
     $stmt->bindParam(':description', $description);
     $stmt->bindParam(':barangay', $barangay);
     $stmt->bindParam(':street', $street);
-    $stmt->bindParam(':address', $address);
     $stmt->bindParam(':city', $city);
     $stmt->bindParam(':province', $province);
     $stmt->bindParam(':price', $price);
@@ -134,21 +157,26 @@ try {
     $stmt->bindParam(':owner_name', $owner_name);
     $stmt->bindParam(':contact_number', $contact_number);
     $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':status', $status);
     $stmt->bindParam(':property_id', $property_id);
     $stmt->bindParam(':agent_id', $agent_id);
     
     if ($stmt->execute()) {
+        error_log("SUCCESS: Property updated successfully!");
         echo json_encode([
             'success' => true, 
             'message' => 'Property updated successfully!',
             'property_id' => $property_id
         ]);
     } else {
+        error_log("ERROR: Failed to execute UPDATE query");
+        error_log("Error info: " . print_r($stmt->errorInfo(), true));
         echo json_encode(['success' => false, 'message' => 'Failed to update property']);
     }
     
 } catch (Exception $e) {
-    error_log("Update property error: " . $e->getMessage());
+    error_log("EXCEPTION: Update property error: " . $e->getMessage());
+    error_log("Stack trace: " . $e->getTraceAsString());
     echo json_encode(['success' => false, 'message' => 'An error occurred: ' . $e->getMessage()]);
 }
 ?>

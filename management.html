@@ -90,6 +90,9 @@
                     </button>
                 </div>
                 <form id="propertyForm" onsubmit="event.preventDefault(); addProperty();">
+                    <!-- Hidden field to store property ID for updates -->
+                    <input type="hidden" id="property_id_hidden" name="property_id" value="">
+                    
                     <div class="form-sections">
                         <!-- Owner Information -->
                         <div class="form-section">
