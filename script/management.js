@@ -4,8 +4,9 @@ let currentActivityTasks = { todo: [], call: [], email: [] };
 let currentActiveTaskType = 'todo';
 let sortDirection = 'asc'; // Track sort direction for tags
 
-// Barangay and street data from zonal_value table
 const locationData = {};
+const propertyTypes = new Set();
+const propertyClassesByType = {}; 
 
 document.addEventListener('DOMContentLoaded', function() {
     if (!localStorage.getItem('loggedIn')) {
@@ -21,6 +22,12 @@ document.addEventListener('DOMContentLoaded', function() {
             searchProperties();
         }
     });
+    
+    // Add event listener for barangay dropdown
+    const barangaySelect = document.getElementById('barangay');
+    if (barangaySelect) {
+        barangaySelect.addEventListener('change', loadStreets);
+    }
 });
 
 // Load location data from database
@@ -31,19 +38,151 @@ function loadLocationData() {
         if (data.success) {
             // Process location data
             data.locations.forEach(loc => {
+                // Store barangay and street relationships
                 if (!locationData[loc.barangay]) {
                     locationData[loc.barangay] = new Set();
                 }
                 locationData[loc.barangay].add(loc.street);
+                
+                // Store property types and their associated classes
+                if (loc.property_type) {
+                    propertyTypes.add(loc.property_type);
+                    
+                    // Create Set for this property type if it doesn't exist
+                    if (!propertyClassesByType[loc.property_type]) {
+                        propertyClassesByType[loc.property_type] = new Set();
+                    }
+                    
+                    // Add class to this property type's Set
+                    if (loc.class) {
+                        propertyClassesByType[loc.property_type].add(loc.class);
+                    }
+                }
             });
             
-            // Populate barangay dropdown
+            // Populate initial dropdowns
             populateBarangays();
+            populatePropertyTypes();
         }
     })
     .catch(error => {
         console.error('Error loading location data:', error);
     });
+}
+
+// REPLACE THE ENTIRE populatePropertyTypes() FUNCTION WITH THIS:
+
+function populatePropertyTypes() {
+    const propertyTypeSelect = document.getElementById('property_type');
+    if (!propertyTypeSelect) return;
+    
+    // Clear existing options
+    propertyTypeSelect.innerHTML = '<option value="">Select Type</option>';
+    
+    // Sort property types alphabetically
+    const sortedTypes = Array.from(propertyTypes).sort();
+    
+    // Add options to dropdown
+    sortedTypes.forEach(type => {
+        const option = document.createElement('option');
+        option.value = type;
+        option.textContent = type;
+        propertyTypeSelect.appendChild(option);
+    });
+    
+    // Add onchange event to load classes when property type is selected
+    propertyTypeSelect.onchange = loadClassesByPropertyType;
+}
+
+// ADD THIS NEW FUNCTION (replaces old populatePropertyClasses):
+
+function loadClassesByPropertyType() {
+    const propertyTypeSelect = document.getElementById('property_type');
+    const propertyClassSelect = document.getElementById('property_class');
+    
+    if (!propertyTypeSelect || !propertyClassSelect) return;
+    
+    const selectedType = propertyTypeSelect.value;
+    
+    // Clear class dropdown
+    propertyClassSelect.innerHTML = '<option value="">Select Class</option>';
+    
+    if (selectedType && propertyClassesByType[selectedType]) {
+        // Get classes for selected property type
+        const classes = Array.from(propertyClassesByType[selectedType]);
+        
+        // Sort classes with smart alphanumeric sorting
+        const sortedClasses = classes.sort((a, b) => {
+            // Put pure letters first (AGRI, CR, I, RR)
+            const aIsLetter = /^[A-Z]+$/.test(a);
+            const bIsLetter = /^[A-Z]+$/.test(b);
+            
+            if (aIsLetter && !bIsLetter) return -1;
+            if (!aIsLetter && bIsLetter) return 1;
+            
+            // For alphanumeric (A1, A2, etc), sort by letter then number
+            const aMatch = a.match(/^([A-Z]+)(\d*)$/);
+            const bMatch = b.match(/^([A-Z]+)(\d*)$/);
+            
+            if (aMatch && bMatch) {
+                // Compare letter parts
+                if (aMatch[1] !== bMatch[1]) {
+                    return aMatch[1].localeCompare(bMatch[1]);
+                }
+                // Compare number parts
+                const aNum = parseInt(aMatch[2] || '0');
+                const bNum = parseInt(bMatch[2] || '0');
+                return aNum - bNum;
+            }
+            
+            return a.localeCompare(b);
+        });
+        
+        // Populate dropdown with sorted classes
+        sortedClasses.forEach(className => {
+            const option = document.createElement('option');
+            option.value = className;
+            option.textContent = className;
+            propertyClassSelect.appendChild(option);
+        });
+        
+        // Enable the class dropdown
+        propertyClassSelect.disabled = false;
+    } else {
+        // No property type selected - disable class dropdown
+        propertyClassSelect.disabled = true;
+        propertyClassSelect.innerHTML = '<option value="">Select Property Type First</option>';
+    }
+    
+    // Show/hide bedrooms and bathrooms based on property type
+    toggleBedroomsBathrooms(selectedType);
+}
+
+// NEW FUNCTION: Toggle visibility of bedrooms and bathrooms fields
+function toggleBedroomsBathrooms(propertyType) {
+    const bedroomsGroup = document.getElementById('bedrooms')?.closest('.form-group');
+    const bathroomsGroup = document.getElementById('bathrooms')?.closest('.form-group');
+    
+    if (!bedroomsGroup || !bathroomsGroup) return;
+    
+    // Check if property type is agricultural
+    const isAgricultural = propertyType && 
+                          (propertyType.toLowerCase().includes('agricult') || 
+                           propertyType.toLowerCase().includes('agri'));
+    
+    if (isAgricultural) {
+        // Hide bedrooms and bathrooms for agricultural properties
+        bedroomsGroup.style.display = 'none';
+        bathroomsGroup.style.display = 'none';
+        
+        // Clear values when hiding
+        document.getElementById('bedrooms').value = '';
+        document.getElementById('bathrooms').value = '';
+    } else {
+        // Show bedrooms and bathrooms for other property types
+        bedroomsGroup.style.display = '';
+        bathroomsGroup.style.display = '';
+    }
 }
 
 // Populate barangay dropdown
@@ -100,6 +239,31 @@ function showAddPropertyForm() {
     document.getElementById('cancelBtn').style.display = 'flex';
     document.getElementById('propertyList').style.display = 'none';
     document.getElementById('addPropertyForm').style.display = 'block';
+    
+    // Reset form
+    const form = document.getElementById('propertyForm');
+    form.reset();
+    form.removeAttribute('data-property-id');
+    
+    // Reset form title and button
+    document.querySelector('.form-header h2').textContent = 'Add New Property';
+    document.querySelector('.btn-save').innerHTML = '<i class="fas fa-save"></i> Save Property';
+    
+    // Reset and disable dependent dropdowns
+    const streetSelect = document.getElementById('street');
+    const classSelect = document.getElementById('property_class');
+    
+    streetSelect.disabled = true;
+    streetSelect.innerHTML = '<option value="">Select Barangay First</option>';
+    
+    classSelect.disabled = true;
+    classSelect.innerHTML = '<option value="">Select Property Type First</option>';
+    
+    // Show bedrooms and bathrooms by default
+    const bedroomsGroup = document.getElementById('bedrooms')?.closest('.form-group');
+    const bathroomsGroup = document.getElementById('bathrooms')?.closest('.form-group');
+    if (bedroomsGroup) bedroomsGroup.style.display = '';
+    if (bathroomsGroup) bathroomsGroup.style.display = '';
 }
 
 // Handle property form submission
@@ -162,9 +326,16 @@ function cancelAddProperty() {
     // Reset street dropdown
     const streetSelect = document.getElementById('street');
     if (streetSelect) {
-        streetSelect.disabled = true;
-        streetSelect.innerHTML = '<option value="">Select Barangay First</option>';
+    streetSelect.disabled = true;
+    streetSelect.innerHTML = '<option value="">Select Barangay First</option>';
     }
+
+    // Reset class dropdown
+    const classSelect = document.getElementById('property_class');
+    if (classSelect) {
+    classSelect.disabled = true;
+    classSelect.innerHTML = '<option value="">Select Property Type First</option>';
+}
 }
 
 function goBack() {
@@ -924,6 +1095,8 @@ function displayProperties(properties) {
     });
 }
 
+
+
 function updatePropertyTag(propertyId, newTag) {
     fetch('update_property_tag.php', {
         method: 'POST',
@@ -1044,8 +1217,24 @@ function editProperty(propertyId) {
     document.getElementById('email').value = property.email || '';
     document.getElementById('description').value = property.description || '';
     document.getElementById('price').value = property.price || '';
+    
+    // Set property type FIRST
     document.getElementById('property_type').value = property.property_type || '';
-    document.getElementById('property_class').value = property.class || '';
+    
+    // Load classes based on property type, then set the class value
+    if (property.property_type) {
+        loadClassesByPropertyType();
+        
+        // Set class after a small delay to ensure classes are loaded
+        setTimeout(() => {
+            if (property.class) {
+                document.getElementById('property_class').value = property.class;
+            }
+        }, 100);
+    } else {
+        // If no property type, make sure bedrooms/bathrooms are visible
+        toggleBedroomsBathrooms('');
+    }
     
     // Set location fields
     if (property.barangay) {
